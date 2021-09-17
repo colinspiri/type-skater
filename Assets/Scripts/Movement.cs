@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,12 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Movement : MonoBehaviour {
     public float pushForce;
+    public float maxVelocity;
+
+    public float minJumpForce;
+    public float maxJumpForce;
+
+    public bool onGround;
 
     private Rigidbody2D rb;
     
@@ -13,12 +20,21 @@ public class Movement : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.Space)) {
+    public void Push() {
+        if (rb.velocity.x < maxVelocity && onGround) {
             rb.AddForce(new Vector2(pushForce, 0));
         }
-        // transform.Translate(speed * Time.deltaTime, 0f, 0f);
+    }
+
+    public void Jump() {
+        if (!onGround) return;
+
+        float t = rb.velocity.x / maxVelocity;
+        rb.AddForce(new Vector2(0, Mathf.Lerp(minJumpForce, maxJumpForce, t)));
+        onGround = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.CompareTag("Ground")) onGround = true;
     }
 }
