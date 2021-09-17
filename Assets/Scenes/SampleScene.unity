@@ -524,6 +524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   words:
   - text: push
+    trickScore: 0
     onTyped:
       m_PersistentCalls:
         m_Calls:
@@ -539,8 +540,8 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - text: ollie
     trickScore: 0
-  - text: jump
     onTyped:
       m_PersistentCalls:
         m_Calls:
@@ -556,12 +557,51 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    trickScore: 0
-  - text: flip
+  - text: fakie
+    trickScore: 1
     onTyped:
       m_PersistentCalls:
         m_Calls: []
-    trickScore: 100
+  - text: switch
+    trickScore: 1
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
+  - text: kickflip
+    trickScore: 2
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
+  - text: heelflip
+    trickScore: 2
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
+  - text: 180
+    trickScore: 3
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
+  - text: 360
+    trickScore: 3
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
+  - text: varial flip
+    trickScore: 4
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
+  - text: backside 180
+    trickScore: 5
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
+  - text: pop shove-it
+    trickScore: 8
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
   display: {fileID: 1655410450}
   currentTricks: []
 --- !u!4 &561132901

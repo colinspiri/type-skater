@@ -1,0 +1,18 @@
+TODO
+
+-obstacles you need to jump over
+-stairs? rails?
+-after completing a trick, make text stay on screen and fade out nicely 
+-screen shake?
+-display possible tricks on left
+-display completed tricks
+-show when you bail out and lose points
+-show when you secure the landing and get points
+-effects when you complete a trick
+-add timer
+-construct level of jumps and obstacles
+
+ideas
+-maybe fakie and switch make things harder but they give u more points
+-maybe a trick gives you a mini double jump
+-rail where you have to keep tying "grind" to maintain balance but if you're quick enough you can do tricks in between

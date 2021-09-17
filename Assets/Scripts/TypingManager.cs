@@ -64,9 +64,9 @@ public class TypingManager : MonoBehaviour {
 [System.Serializable]
 public class Word {
     public string text;
-    public UnityEvent onTyped;
     public int trickScore;
-    
+    public UnityEvent onTyped;
+
     private string hasTyped;
     private int curChar;
 
