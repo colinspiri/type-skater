@@ -9,17 +9,14 @@ public class GroundManager : MonoBehaviour {
     public GameObject mostRecentGround;
     private List<GameObject> grounds;
     
-    public Transform player;
-
     private void Start() {
-        grounds = new List<GameObject>();
-        grounds.Add(mostRecentGround);
+        grounds = new List<GameObject> {mostRecentGround};
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (player.position.x > mostRecentGround.transform.position.x - mostRecentGround.transform.localScale.x / 2) {
+        if (Player.Instance.transform.position.x > mostRecentGround.transform.position.x - mostRecentGround.transform.localScale.x / 2) {
             mostRecentGround = Instantiate(groundPrefab, new Vector3(mostRecentGround.transform.position.x + mostRecentGround.transform.localScale.x / 2, mostRecentGround.transform.position.y, 0), Quaternion.identity);
             grounds.Add(mostRecentGround);
             // remove off-screen grounds

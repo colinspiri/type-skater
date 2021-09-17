@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -8,12 +9,29 @@ public class TypingManager : MonoBehaviour {
     public List<Word> words;
     public TextMeshProUGUI display;
 
+    public List<Word> currentTricks = new List<Word>();
+    private bool securedTricks;
+
+    private void Start() {
+        Player.Instance.onJump += () => securedTricks = false;
+        Player.Instance.onLand += () => {
+            if (securedTricks) {
+                foreach (Word trick in currentTricks) {
+                    Score.Instance.AddScore(trick.trickScore);
+                }
+            }
+            currentTricks.Clear();
+            display.text = "";
+        };
+    }
+
     // Update is called once per frame
     void Update() {
         string input = Input.inputString;
         if (input.Equals("")) return;
-
+        
         if (Input.GetKeyDown(KeyCode.Backspace)) display.text = "";
+        if (Input.GetKeyDown(KeyCode.Return)) securedTricks = true;
 
         char c = input[0];
         bool match = false;
@@ -26,7 +44,11 @@ public class TypingManager : MonoBehaviour {
                 display.text = typed;
                 // if user typed the whole word
                 if (typed.Equals(w.text)) {
-                    Debug.Log("TYPED: " + w.text);
+                    // Debug.Log("TYPED: " + w.text);
+                    // add to current tricks
+                    if (!Player.Instance.onGround && !securedTricks) {
+                        currentTricks.Add(w);
+                    }
                     // clear current typing
                     display.text = "";
                     break;
@@ -43,7 +65,9 @@ public class TypingManager : MonoBehaviour {
 public class Word {
     public string text;
     public UnityEvent onTyped;
-    [SerializeField] private string hasTyped;
+    public int trickScore;
+    
+    private string hasTyped;
     private int curChar;
 
     public Word(string t) {
