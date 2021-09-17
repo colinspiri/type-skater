@@ -12,6 +12,8 @@ public class TypingManager : MonoBehaviour {
     public List<Word> currentTricks = new List<Word>();
     private bool securedTricks;
 
+    public GameObject completedTextPrefab;
+
     private void Start() {
         Player.Instance.onJump += () => securedTricks = false;
         Player.Instance.onLand += () => {
@@ -34,29 +36,35 @@ public class TypingManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Return)) securedTricks = true;
 
         char c = input[0];
-        bool match = false;
+        Word currentWord = null;
         foreach (Word w in words) {
             // if the current input matches a word
             if (w.ContinueText(c)) {
-                match = true;
-                string typed = w.GetTyped();
-                // set display text 
-                display.text = typed;
+                if (currentWord == null || w.GetTyped().Length > currentWord.GetTyped().Length) {
+                    currentWord = w;
+                    w.Clear();
+                }
                 // if user typed the whole word
-                if (typed.Equals(w.text)) {
-                    // Debug.Log("TYPED: " + w.text);
+                if (w.GetTyped().Equals(w.text)) {
                     // add to current tricks
                     if (!Player.Instance.onGround && !securedTricks) {
                         currentTricks.Add(w);
                     }
+                    // animate completed text
+                    TextMeshProUGUI completedText = Instantiate(completedTextPrefab, display.transform.parent, false).GetComponent<TextMeshProUGUI>();
+                    completedText.text = w.text;
                     // clear current typing
                     display.text = "";
+                    currentWord = null;
                     break;
                 }
             }
         }
-        if (!match) {
+        if (currentWord == null) {
             display.text = "";
+        }
+        else {
+            display.text = currentWord.GetTyped();
         }
     }
 }
@@ -90,9 +98,13 @@ public class Word {
             return true;
         }
         // if c doesn't match
+        Clear();
+        return false;
+    }
+
+    public void Clear() {
         curChar = 0;
         hasTyped = "";
-        return false;
     }
 
     public string GetTyped() {
