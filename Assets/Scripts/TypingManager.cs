@@ -30,9 +30,19 @@ public class TypingManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         string input = Input.inputString;
+        Debug.Log(input);
         if (input.Equals("")) return;
-        
-        if (Input.GetKeyDown(KeyCode.Backspace)) display.text = "";
+        if (securedTricks) {
+            Debug.Log("secured");
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Backspace)) {
+            foreach (Word word in words) {
+                word.Clear();
+            }
+            display.text = "";
+        }
         if (Input.GetKeyDown(KeyCode.Return)) securedTricks = true;
 
         char c = input[0];
