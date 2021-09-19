@@ -5,7 +5,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class TypingManager : MonoBehaviour {
+public class TypingManager : MonoBehaviour
+{
     public List<Word> words;
     public TextMeshProUGUI display;
 
@@ -14,11 +15,15 @@ public class TypingManager : MonoBehaviour {
 
     public GameObject completedTextPrefab;
 
-    private void Start() {
+    private void Start()
+    {
         Player.Instance.onJump += () => securedTricks = false;
-        Player.Instance.onLand += () => {
-            if (securedTricks) {
-                foreach (Word trick in currentTricks) {
+        Player.Instance.onLand += () =>
+        {
+            if (securedTricks)
+            {
+                foreach (Word trick in currentTricks)
+                {
                     Score.Instance.AddScore(trick.trickScore);
                 }
             }
@@ -28,17 +33,21 @@ public class TypingManager : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         string input = Input.inputString;
         Debug.Log(input);
         if (input.Equals("")) return;
-        if (securedTricks) {
+        if (securedTricks)
+        {
             Debug.Log("secured");
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Backspace)) {
-            foreach (Word word in words) {
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            foreach (Word word in words)
+            {
                 word.Clear();
             }
             display.text = "";
@@ -47,17 +56,22 @@ public class TypingManager : MonoBehaviour {
 
         char c = input[0];
         Word currentWord = null;
-        foreach (Word w in words) {
+        foreach (Word w in words)
+        {
             // if the current input matches a word
-            if (w.ContinueText(c)) {
-                if (currentWord == null || w.GetTyped().Length > currentWord.GetTyped().Length) {
+            if (w.ContinueText(c))
+            {
+                if (currentWord == null || w.GetTyped().Length > currentWord.GetTyped().Length)
+                {
                     currentWord = w;
                     w.Clear();
                 }
                 // if user typed the whole word
-                if (w.GetTyped().Equals(w.text)) {
+                if (w.GetTyped().Equals(w.text))
+                {
                     // add to current tricks
-                    if (!Player.Instance.onGround && !securedTricks) {
+                    if (!Player.Instance.onGround && !securedTricks)
+                    {
                         currentTricks.Add(w);
                     }
                     // animate completed text
@@ -70,17 +84,20 @@ public class TypingManager : MonoBehaviour {
                 }
             }
         }
-        if (currentWord == null) {
+        if (currentWord == null)
+        {
             display.text = "";
         }
-        else {
+        else
+        {
             display.text = currentWord.GetTyped();
         }
     }
 }
 
 [System.Serializable]
-public class Word {
+public class Word
+{
     public string text;
     public int trickScore;
     public UnityEvent onTyped;
@@ -88,20 +105,24 @@ public class Word {
     private string hasTyped;
     private int curChar;
 
-    public Word(string t) {
+    public Word(string t)
+    {
         text = t;
         hasTyped = "";
         curChar = 0;
     }
 
-    public bool ContinueText(char c) {
+    public bool ContinueText(char c)
+    {
         // if c matches
-        if (c.Equals(text[curChar])) {
+        if (c.Equals(text[curChar]))
+        {
             curChar++;
             hasTyped = text.Substring(0, curChar);
 
             // if we typed the whole word
-            if (curChar >= text.Length) {
+            if (curChar >= text.Length)
+            {
                 onTyped?.Invoke();
                 curChar = 0;
             }
@@ -112,12 +133,14 @@ public class Word {
         return false;
     }
 
-    public void Clear() {
+    public void Clear()
+    {
         curChar = 0;
         hasTyped = "";
     }
 
-    public string GetTyped() {
+    public string GetTyped()
+    {
         return hasTyped;
     }
 }
