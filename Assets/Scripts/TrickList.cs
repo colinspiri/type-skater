@@ -6,35 +6,16 @@ using TMPro;
 public class TrickList : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject typingManager;
-    public List<Word> tricklist;
+    public TypingManager typingManager;
     public TextMeshProUGUI trickDisplay;
-    private string display;
+    
+    
     void Start()
     {
-        GameObject typingManager = GameObject.Find("Typing Manager");
-        TypingManager manager = typingManager.GetComponent<TypingManager>();
-        tricklist = manager.words;
-        display = "Tricks\tPoints\n";
-        foreach (Word w in tricklist)
-        {
-            display += w.text + '\t' + w.trickScore + '\n';
+        trickDisplay.text = "Tricks\n";
+        foreach (Word w in typingManager.words) {
+            if (w.trickScore == 0) continue;
+            trickDisplay.text += w.trickScore + " " + '\t' + w.text + '\n';
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        trickDisplay.text = display;
-        /*if (Input.GetKeyDown(KeyCode.T))
-        {
-            trickDisplay.text = display;
-        }
-        else
-        {
-            trickDisplay.text = "";
-        }*/
-    }
-
-
 }

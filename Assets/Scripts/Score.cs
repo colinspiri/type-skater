@@ -18,10 +18,6 @@ public class Score : MonoBehaviour {
         scoreDisplay.text = score.ToString();
     }
 
-    private void Update() {
-        if (Input.GetKeyUp(KeyCode.Alpha1)) AddScore(1);
-    }
-
     public void AddScore(int addition) {
         score += addition;
         scoreDisplay.text = score.ToString();

@@ -1,7 +1,6 @@
 TODO
 
 -obstacles you need to jump over
--after completing a trick, make text stay on screen and fade out nicely 
 -screen shake?
 -display possible tricks on left
 -display completed tricks

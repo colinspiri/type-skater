@@ -8,27 +8,36 @@ using UnityEngine.Events;
 public class TypingManager : MonoBehaviour
 {
     public List<Word> words;
-    public TextMeshProUGUI display;
+    public TextMeshProUGUI typingText;
 
     public List<Word> currentTricks = new List<Word>();
     private bool securedTricks;
+    
+    public GameObject unsecuredScorePrefab;
+    private TextMeshProUGUI unsecuredScoreText;
+    private Animator unsecuredScoreAnimator;
 
     public GameObject completedTextPrefab;
     
     private void Start() {
         Player.Instance.onJump += () => {
-            // this doesn't run for some reason?
+            // Debug.Log("onJump");
+            GameObject unsecuredScore = Instantiate(unsecuredScorePrefab, Score.Instance.scoreDisplay.transform, false);
+            unsecuredScoreText = unsecuredScore.GetComponent<TextMeshProUGUI>();
+            unsecuredScoreAnimator = unsecuredScore.GetComponent<Animator>();
             securedTricks = false;
         };
         Player.Instance.onLand += () => {
+            // Debug.Log("onLand");
             if (securedTricks) {
+                // Debug.Log("onSecuredLanding");
                 foreach (Word trick in currentTricks) {
                     Score.Instance.AddScore(trick.trickScore);
                 }
             }
             securedTricks = false;
             currentTricks.Clear();
-            display.text = "";
+            typingText.text = "";
         };
     }
 
@@ -36,28 +45,24 @@ public class TypingManager : MonoBehaviour
     void Update()
     {
         string input = Input.inputString;
-        if (input.Equals("")) return;
+        if (input.Equals("") || securedTricks) return;
 
-        if (securedTricks) {
+        // Debug.Log(input);
+
+        if (Input.GetKeyDown(KeyCode.Return)) {
+            securedTricks = true;
+            unsecuredScoreAnimator.SetBool("secured", true);
+            unsecuredScoreText = null;
+            unsecuredScoreAnimator = null;
             return;
         }
-        
-        Debug.Log(input);
-
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            foreach (Word word in words)
-            {
-                word.Clear();
-            }
-            display.text = "";
-        }
-        if (Input.GetKeyDown(KeyCode.Return)) securedTricks = true;
 
         char c = input[0];
         Word currentWord = null;
-        foreach (Word w in words)
-        {
+        foreach (Word w in words) {
+            // skip tricks that you've already done
+            if (currentTricks.Contains(w)) continue;
+            
             // if the current input matches a word
             if (w.ContinueText(c)) {
                 if (currentWord == null) {
@@ -74,12 +79,18 @@ public class TypingManager : MonoBehaviour
                     if (!Player.Instance.onGround && !securedTricks)
                     {
                         currentTricks.Add(w);
+                        // update unsecured score text
+                        int score = 0;
+                        foreach (Word trick in currentTricks) {
+                            score += trick.trickScore;
+                        }
+                        unsecuredScoreText.text = score.ToString();
                     }
                     // animate completed text
-                    TextMeshProUGUI completedText = Instantiate(completedTextPrefab, display.transform.parent, false).GetComponent<TextMeshProUGUI>();
+                    TextMeshProUGUI completedText = Instantiate(completedTextPrefab, typingText.transform.parent, false).GetComponent<TextMeshProUGUI>();
                     completedText.text = w.text;
                     // clear current typing
-                    display.text = "";
+                    typingText.text = "";
                     currentWord = null;
                     break;
                 }
@@ -87,16 +98,16 @@ public class TypingManager : MonoBehaviour
         }
         if (currentWord == null)
         {
-            display.text = "";
+            typingText.text = "";
         }
         else
         {
-            display.text = currentWord.GetTyped();
+            typingText.text = currentWord.GetTyped();
         }
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class Word
 {
     public string text;

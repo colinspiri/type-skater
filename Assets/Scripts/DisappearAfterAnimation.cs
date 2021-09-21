@@ -15,7 +15,6 @@ public class DisappearAfterAnimation : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName(animationName)) {
-            Debug.Log("destroyed game object");
             Destroy(gameObject);
         }
     }
