@@ -1,6 +1,8 @@
 TODO
 
 -construct rails
+-make player spin when you complete a trick
+-make player rotated when in the air and unsecured & parallel to the ground when secured
 -show when you bail out and lose points
 -construct level of jumps and obstacles
 -music and SFX
@@ -9,6 +11,6 @@ ideas
 -maybe fakie and switch make things harder but they give u more points
 -maybe a trick gives you a mini double jump
 -rail where you have to keep tying "grind" to maintain balance but if you're quick enough you can do tricks in between
-
+-holding ENTER to secure the landing 
 
 when you fall off the rail, disable rail's collider
