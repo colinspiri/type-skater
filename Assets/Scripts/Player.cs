@@ -72,12 +72,14 @@ public class Player : MonoBehaviour
 
     public void Jump()
     {
-        if (state != State.OnGround) return;
+        if (state == State.Midair) return;
+        bool wasOnRail = state == State.OnRail;
 
         rb.AddForce(new Vector2(0, Mathf.Lerp(minJumpForce, maxJumpForce, rb.velocity.x / maxVelocity)));
         state = State.Midair;
         Time.timeScale = midairTimeScale;
-        onJump?.Invoke();
+        
+        if(!wasOnRail) onJump?.Invoke();
     }
 
     public void Slow() {
@@ -104,6 +106,12 @@ public class Player : MonoBehaviour
                 //     state = State.Midair;
                 //     Time.timeScale = midairTimeScale;
                 // }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.CompareTag("Ramp")) {
+            Jump();
         }
     }
 }
