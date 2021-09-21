@@ -30,12 +30,13 @@ public class TypingManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         string input = Input.inputString;
-        Debug.Log(input);
         if (input.Equals("")) return;
         if (securedTricks) {
             Debug.Log("secured");
             return;
         }
+        
+        Debug.Log(input);
 
         if (Input.GetKeyDown(KeyCode.Backspace)) {
             foreach (Word word in words) {
@@ -50,9 +51,12 @@ public class TypingManager : MonoBehaviour {
         foreach (Word w in words) {
             // if the current input matches a word
             if (w.ContinueText(c)) {
-                if (currentWord == null || w.GetTyped().Length > currentWord.GetTyped().Length) {
+                if (currentWord == null) {
                     currentWord = w;
-                    w.Clear();
+                }
+                else if(w.GetTyped().Length > currentWord.GetTyped().Length) {
+                    currentWord.Clear();
+                    currentWord = w;
                 }
                 // if user typed the whole word
                 if (w.GetTyped().Equals(w.text)) {
