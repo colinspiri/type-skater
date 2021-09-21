@@ -1,9 +1,9 @@
 TODO
 
--obstacles you need to jump over
+-construct rails
 -show when you bail out and lose points
--effects when you complete a trick
 -construct level of jumps and obstacles
+-music and SFX
 
 ideas
 -maybe fakie and switch make things harder but they give u more points

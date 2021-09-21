@@ -20,6 +20,7 @@ public class TypingManager : MonoBehaviour
     public GameObject completedTextPrefab;
     
     private void Start() {
+        typingText.text = "";
         Player.Instance.onJump += () => {
             // Debug.Log("onJump");
             GameObject unsecuredScore = Instantiate(unsecuredScorePrefab, Score.Instance.scoreDisplay.transform, false);
@@ -28,18 +29,21 @@ public class TypingManager : MonoBehaviour
             securedTricks = false;
         };
         Player.Instance.onLand += () => {
-            // Debug.Log("onLand");
+            // calculate score
+            int scoreAdded = 0;
+            foreach (Word trick in currentTricks) {
+                scoreAdded += trick.trickScore;
+            }
+            // if secured
             if (securedTricks) {
-                // Debug.Log("onSecuredLanding");
-                int scoreAdded = 0;
-                foreach (Word trick in currentTricks) {
-                    scoreAdded += trick.trickScore;
-                }
                 Score.Instance.AddScore(scoreAdded);
                 float multiplier = Mathf.Lerp(0.7f, 2.0f, scoreAdded/10.0f);
                 Player.Instance.Push(multiplier);
             }
+            // if crash landing
             else {
+                // screen shake
+                StartCoroutine(CameraShake.Instance.Shake(0.2f + scoreAdded*0.1f));
                 Destroy(unsecuredScoreAnimator.gameObject);
                 unsecuredScoreAnimator = null;
                 unsecuredScoreText = null;

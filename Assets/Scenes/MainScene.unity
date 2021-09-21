@@ -157,8 +157,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 92, y: 50}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 160.01968, y: 50}
+  m_SizeDelta: {x: 336.0393, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8112193
 CanvasRenderer:
@@ -1129,6 +1129,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rail
       objectReference: {fileID: 0}
+    - target: {fileID: 1759728035082517889, guid: 1f32940baa5514821bdc2cd51a8df5d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f32940baa5514821bdc2cd51a8df5d8, type: 3}
 --- !u!1 &1655410448
@@ -1163,10 +1167,10 @@ RectTransform:
   m_Father: {fileID: 8112192}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 168, y: 0}
+  m_SizeDelta: {x: 336, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1655410450
 MonoBehaviour:
@@ -1315,10 +1319,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3166f1b619b044bff9966fb7a7979faa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeRemaining: 90
-  timerIsRunning: 0
-  timeText: {fileID: 0}
-  scoreDisplay: {fileID: 1689680767}
+  timeRemaining: 60
+  gameOverPrefab: {fileID: 142869858993317319, guid: dbd7e0bf9abca4aca8805151b180530f, type: 3}
+  objectsToDisable:
+  - {fileID: 8112191}
+  - {fileID: 561132899}
+  - {fileID: 259753995}
+  - {fileID: 977560000}
+  cameraFollow: {fileID: 1367640661}
 --- !u!114 &1689680767
 MonoBehaviour:
   m_ObjectHideFlags: 0
