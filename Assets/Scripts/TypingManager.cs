@@ -14,19 +14,19 @@ public class TypingManager : MonoBehaviour
     private bool securedTricks;
 
     public GameObject completedTextPrefab;
-
-    private void Start()
-    {
-        Player.Instance.onJump += () => securedTricks = false;
-        Player.Instance.onLand += () =>
-        {
-            if (securedTricks)
-            {
-                foreach (Word trick in currentTricks)
-                {
+    
+    private void Start() {
+        Player.Instance.onJump += () => {
+            // this doesn't run for some reason?
+            securedTricks = false;
+        };
+        Player.Instance.onLand += () => {
+            if (securedTricks) {
+                foreach (Word trick in currentTricks) {
                     Score.Instance.AddScore(trick.trickScore);
                 }
             }
+            securedTricks = false;
             currentTricks.Clear();
             display.text = "";
         };
@@ -37,9 +37,8 @@ public class TypingManager : MonoBehaviour
     {
         string input = Input.inputString;
         if (input.Equals("")) return;
-        if (securedTricks)
-        {
-            Debug.Log("secured");
+
+        if (securedTricks) {
             return;
         }
         

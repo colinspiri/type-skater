@@ -712,7 +712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68a6b52f243d74e48aff7fa807e49bfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resetKey: 114
+  resetKey: 276
   quitKey: 27
 --- !u!1 &859722516 stripped
 GameObject:
