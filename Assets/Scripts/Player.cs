@@ -14,7 +14,8 @@ public class Player : MonoBehaviour
     public float minJumpForce;
     public float maxJumpForce;
 
-    public bool onGround;
+    [NonSerialized]
+    public bool onGround = true;
     public float slowTimeScale;
 
     public delegate void OnJump();
@@ -37,11 +38,11 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void Push()
+    public void Push(float multiplier = 1.0f)
     {
         if (rb.velocity.x < maxVelocity && onGround)
         {
-            rb.AddForce(new Vector2(pushForce, 0));
+            rb.AddForce(new Vector2(pushForce * multiplier, 0));
         }
     }
 
@@ -58,7 +59,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Ground"))
+        if (!onGround && (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Rail")))
         {
             onGround = true;
             Time.timeScale = 1.0f;

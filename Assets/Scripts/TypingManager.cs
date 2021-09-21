@@ -31,9 +31,18 @@ public class TypingManager : MonoBehaviour
             // Debug.Log("onLand");
             if (securedTricks) {
                 // Debug.Log("onSecuredLanding");
+                int scoreAdded = 0;
                 foreach (Word trick in currentTricks) {
-                    Score.Instance.AddScore(trick.trickScore);
+                    scoreAdded += trick.trickScore;
                 }
+                Score.Instance.AddScore(scoreAdded);
+                float multiplier = Mathf.Lerp(0.7f, 2.0f, scoreAdded/10.0f);
+                Player.Instance.Push(multiplier);
+            }
+            else {
+                Destroy(unsecuredScoreAnimator.gameObject);
+                unsecuredScoreAnimator = null;
+                unsecuredScoreText = null;
             }
             securedTricks = false;
             currentTricks.Clear();
@@ -49,7 +58,7 @@ public class TypingManager : MonoBehaviour
 
         // Debug.Log(input);
 
-        if (Input.GetKeyDown(KeyCode.Return)) {
+        if (Input.GetKeyDown(KeyCode.Return) && !Player.Instance.onGround) {
             securedTricks = true;
             unsecuredScoreAnimator.SetBool("secured", true);
             unsecuredScoreText = null;

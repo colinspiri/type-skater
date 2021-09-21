@@ -1,7 +1,6 @@
 TODO
 
 -obstacles you need to jump over
--screen shake?
 -show when you bail out and lose points
 -effects when you complete a trick
 -construct level of jumps and obstacles
