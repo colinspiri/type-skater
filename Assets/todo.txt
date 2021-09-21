@@ -1,7 +1,6 @@
 TODO
 
 -set rails
--end of rail there's a trigger that gives the player a little mini jump at the end and sets state to Midair
 -music and SFX
 -rail: faster you're going, the less often u have to type "grind" (the slower your balance declines)
 
