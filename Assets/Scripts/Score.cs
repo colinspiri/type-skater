@@ -21,5 +21,6 @@ public class Score : MonoBehaviour {
     public void AddScore(int addition) {
         score += addition;
         scoreDisplay.text = score.ToString();
+        StartCoroutine(CameraShake.Instance.Shake(0.3f + addition*0.1f));
     }
 }
