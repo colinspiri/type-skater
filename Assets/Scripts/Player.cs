@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
     public static Player Instance;
 
     public float pushForce;
@@ -22,25 +23,34 @@ public class Player : MonoBehaviour {
     public delegate void OnLand();
     public OnLand onLand;
 
-    
+
     private Rigidbody2D rb;
 
-    private void Awake() {
+    private void Awake()
+    {
         if (Instance == null) Instance = this;
     }
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
         rb = GetComponent<Rigidbody2D>();
     }
+    private void Update()
+    {
 
-    public void Push() {
-        if (rb.velocity.x < maxVelocity && onGround) {
+    }
+
+    public void Push()
+    {
+        if (rb.velocity.x < maxVelocity && onGround)
+        {
             rb.AddForce(new Vector2(pushForce, 0));
         }
     }
 
-    public void Jump() {
+    public void Jump()
+    {
         if (!onGround) return;
 
         float t = rb.velocity.x / maxVelocity;
@@ -50,8 +60,10 @@ public class Player : MonoBehaviour {
         onJump?.Invoke();
     }
 
-    private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.CompareTag("Ground")) {
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Ground"))
+        {
             onGround = true;
             Time.timeScale = 1.0f;
             onLand?.Invoke();
