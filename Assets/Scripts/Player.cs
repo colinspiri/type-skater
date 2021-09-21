@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     public static Player Instance;
 
     public float pushForce;
+    public float minVelocity;
     public float maxVelocity;
 
     public float minJumpForce;
@@ -22,7 +23,7 @@ public class Player : MonoBehaviour
     public State state;
     public float midairTimeScale;
     public float railTimeScale;
-    public float railSpeed;
+    private float railSpeed;
     // private GameObject currentRail;
 
     public bool safe;
@@ -55,6 +56,10 @@ public class Player : MonoBehaviour
         if (state == State.OnRail) {
             rb.velocity = new Vector2(railSpeed, rb.velocity.y);
         }
+
+        if (rb.velocity.x < minVelocity) {
+            Slow();
+        }
     }
 
     public void Push(float multiplier = 1.0f)
@@ -74,6 +79,10 @@ public class Player : MonoBehaviour
         Time.timeScale = midairTimeScale;
         onJump?.Invoke();
     }
+
+    public void Slow() {
+        rb.velocity = new Vector2(minVelocity, rb.velocity.y);
+    }
     
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -85,15 +94,16 @@ public class Player : MonoBehaviour
         
         if (other.gameObject.CompareTag("Rail")) {
             // if (safe) {
-                state = State.OnRail;
-                Time.timeScale = railTimeScale;
-            // }
-            // else {
-            //     other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            //     StartCoroutine(CameraShake.Instance.Shake());
-            //     state = State.Midair;
-            //     Time.timeScale = midairTimeScale;
-            // }
+            state = State.OnRail;
+            Time.timeScale = railTimeScale;
+            railSpeed = rb.velocity.x;
+                // }
+                // else {
+                //     other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                //     StartCoroutine(CameraShake.Instance.Shake());
+                //     state = State.Midair;
+                //     Time.timeScale = midairTimeScale;
+                // }
         }
     }
 }
