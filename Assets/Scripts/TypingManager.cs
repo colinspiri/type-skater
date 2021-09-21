@@ -11,7 +11,6 @@ public class TypingManager : MonoBehaviour
     public TextMeshProUGUI typingText;
 
     public List<Word> currentTricks = new List<Word>();
-    private bool securedTricks;
     
     public GameObject unsecuredScorePrefab;
     private TextMeshProUGUI unsecuredScoreText;
@@ -26,7 +25,6 @@ public class TypingManager : MonoBehaviour
             GameObject unsecuredScore = Instantiate(unsecuredScorePrefab, Score.Instance.scoreDisplay.transform, false);
             unsecuredScoreText = unsecuredScore.GetComponent<TextMeshProUGUI>();
             unsecuredScoreAnimator = unsecuredScore.GetComponent<Animator>();
-            securedTricks = false;
         };
         Player.Instance.onLand += () => {
             // calculate score
@@ -34,11 +32,17 @@ public class TypingManager : MonoBehaviour
             foreach (Word trick in currentTricks) {
                 scoreAdded += trick.trickScore;
             }
-            // if secured
-            if (securedTricks) {
+            // if safe landing
+            if (Player.Instance.safe) {
+                // add score
                 Score.Instance.AddScore(scoreAdded);
+                // push
                 float multiplier = Mathf.Lerp(0.7f, 2.0f, scoreAdded/10.0f);
                 Player.Instance.Push(multiplier);
+                // animate score
+                unsecuredScoreAnimator.SetBool("secured", true);
+                unsecuredScoreText = null;
+                unsecuredScoreAnimator = null;
             }
             // if crash landing
             else {
@@ -48,7 +52,7 @@ public class TypingManager : MonoBehaviour
                 unsecuredScoreAnimator = null;
                 unsecuredScoreText = null;
             }
-            securedTricks = false;
+            // securedTricks = false;
             currentTricks.Clear();
             typingText.text = "";
         };
@@ -58,18 +62,8 @@ public class TypingManager : MonoBehaviour
     void Update()
     {
         string input = Input.inputString;
-        if (input.Equals("") || securedTricks) return;
-
-        // Debug.Log(input);
-
-        if (Input.GetKeyDown(KeyCode.Return) && !Player.Instance.onGround) {
-            securedTricks = true;
-            unsecuredScoreAnimator.SetBool("secured", true);
-            unsecuredScoreText = null;
-            unsecuredScoreAnimator = null;
-            return;
-        }
-
+        if (input.Equals("")) return;
+        
         char c = input[0];
         Word currentWord = null;
         foreach (Word w in words) {
@@ -89,7 +83,7 @@ public class TypingManager : MonoBehaviour
                 if (w.GetTyped().Equals(w.text))
                 {
                     // add to current tricks
-                    if (!Player.Instance.onGround && !securedTricks)
+                    if (!Player.Instance.onGround)
                     {
                         currentTricks.Add(w);
                         // update unsecured score text

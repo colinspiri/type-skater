@@ -18,24 +18,37 @@ public class Player : MonoBehaviour
     public bool onGround = true;
     public float slowTimeScale;
 
+    public bool safe;
+    public float unsafeRotationZ;
+
     public delegate void OnJump();
     public OnJump onJump;
 
     public delegate void OnLand();
     public OnLand onLand;
-
+    
 
     private Rigidbody2D rb;
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
+        
+        onJump += () => transform.eulerAngles = new Vector3(0, 0, unsafeRotationZ);
     }
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Update() {
+        bool oldSafe = safe;
+        safe = Input.GetKey(KeyCode.Return);
+        if (!onGround && oldSafe != safe) {
+            transform.eulerAngles = new Vector3(0, 0, safe ? 0 : unsafeRotationZ);
+        }
     }
 
     public void Push(float multiplier = 1.0f)
