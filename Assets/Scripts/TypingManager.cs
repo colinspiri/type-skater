@@ -11,6 +11,7 @@ public class TypingManager : MonoBehaviour
     public TextMeshProUGUI typingText;
 
     public List<Word> currentTricks = new List<Word>();
+    public Animator playerAnimator;
     
     public GameObject unsecuredScorePrefab;
     private TextMeshProUGUI unsecuredScoreText;
@@ -92,6 +93,8 @@ public class TypingManager : MonoBehaviour
                             score += trick.trickScore;
                         }
                         unsecuredScoreText.text = score.ToString();
+                        // do player animation
+                        if(w.trickScore > 0) playerAnimator.SetTrigger("trick");
                     }
                     // animate completed text
                     TextMeshProUGUI completedText = Instantiate(completedTextPrefab, typingText.transform.parent, false).GetComponent<TextMeshProUGUI>();
