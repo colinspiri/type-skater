@@ -41,17 +41,21 @@ public class TypingManager : MonoBehaviour
                 float multiplier = Mathf.Lerp(0.7f, 2.0f, scoreAdded/10.0f);
                 Player.Instance.Push(multiplier);
                 // animate score
-                unsecuredScoreAnimator.SetBool("secured", true);
-                unsecuredScoreText = null;
-                unsecuredScoreAnimator = null;
+                if (unsecuredScoreAnimator != null) {
+                    unsecuredScoreAnimator.SetBool("secured", true);
+                    unsecuredScoreText = null;
+                    unsecuredScoreAnimator = null;
+                }
             }
             // if crash landing
             else {
                 // screen shake
                 StartCoroutine(CameraShake.Instance.Shake(0.2f + scoreAdded*0.1f));
-                Destroy(unsecuredScoreAnimator.gameObject);
-                unsecuredScoreAnimator = null;
-                unsecuredScoreText = null;
+                if (unsecuredScoreAnimator != null) {
+                    Destroy(unsecuredScoreAnimator.gameObject);
+                    unsecuredScoreAnimator = null;
+                    unsecuredScoreText = null;
+                }
             }
             // securedTricks = false;
             currentTricks.Clear();
@@ -84,7 +88,7 @@ public class TypingManager : MonoBehaviour
                 if (w.GetTyped().Equals(w.text))
                 {
                     // add to current tricks
-                    if (!Player.Instance.onGround)
+                    if (Player.Instance.state != Player.State.OnGround)
                     {
                         currentTricks.Add(w);
                         // update unsecured score text

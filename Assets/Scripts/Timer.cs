@@ -35,7 +35,7 @@ public class Timer : MonoBehaviour
                 cameraFollow.speed = 0f;
                 Time.timeScale = 1.0f;
                 timeDisplay.enabled = false;
-                Player.Instance.enabled = false;
+                // Player.Instance.enabled = false;
                 foreach (GameObject o in objectsToDisable) {
                     o.SetActive(false);
                 }

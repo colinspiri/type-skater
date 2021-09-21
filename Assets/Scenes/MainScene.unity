@@ -1134,6 +1134,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7445852183693257668, guid: 1f32940baa5514821bdc2cd51a8df5d8, type: 3}
+      propertyPath: m_Size.x
+      value: 4.6112604
+      objectReference: {fileID: 0}
+    - target: {fileID: 7445852183693257668, guid: 1f32940baa5514821bdc2cd51a8df5d8, type: 3}
+      propertyPath: m_Size.y
+      value: 0.37793493
+      objectReference: {fileID: 0}
+    - target: {fileID: 7445852183693257668, guid: 1f32940baa5514821bdc2cd51a8df5d8, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.10735655
+      objectReference: {fileID: 0}
+    - target: {fileID: 7445852183693257668, guid: 1f32940baa5514821bdc2cd51a8df5d8, type: 3}
+      propertyPath: m_Offset.y
+      value: 1.2129064
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f32940baa5514821bdc2cd51a8df5d8, type: 3}
 --- !u!1 &1655410448
@@ -1544,7 +1560,7 @@ GameObject:
   - component: {fileID: 2008911373}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1655,7 +1671,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2008911367}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.57, y: -1.78, z: 0}
+  m_LocalPosition: {x: -5, y: -2.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 266320487}
@@ -1678,7 +1694,10 @@ MonoBehaviour:
   maxVelocity: 5
   minJumpForce: 100
   maxJumpForce: 260
-  slowTimeScale: 0.4
+  state: 0
+  midairTimeScale: 0.4
+  railTimeScale: 0.8
+  railSpeed: 5
   safe: 1
   unsafeRotationZ: 27
 --- !u!95 &2008911373

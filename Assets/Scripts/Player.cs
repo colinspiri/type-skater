@@ -13,10 +13,18 @@ public class Player : MonoBehaviour
 
     public float minJumpForce;
     public float maxJumpForce;
-
-    [NonSerialized]
-    public bool onGround = true;
-    public float slowTimeScale;
+    
+    public enum State {
+        Midair,
+        OnGround,
+        OnRail,
+    }
+    public State state;
+    public float midairTimeScale;
+    public float railTimeScale;
+    public float railSpeed;
+    public float railBalance = 1.0f;
+    private float balance;
 
     public bool safe;
     public float unsafeRotationZ;
@@ -39,21 +47,21 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
 
         onJump += () => transform.eulerAngles = new Vector3(0, 0, unsafeRotationZ);
-        onLand += () => safe = true;
     }
 
     private void Update() {
-        // bool oldSafe = safe;
-        safe = Input.GetKey(KeyCode.Return) || onGround;
+        safe = Input.GetKey(KeyCode.Return) || state != State.Midair;
         animator.SetBool("safe", safe);
-        // if (!onGround && oldSafe != safe) {
-        //     transform.eulerAngles = new Vector3(0, 0, safe ? 0 : unsafeRotationZ);
-        // }
+
+        if (state == State.OnRail) {
+            rb.velocity = new Vector2(railSpeed, rb.velocity.y);
+            balance -= Time.unscaledDeltaTime;
+        }
     }
 
     public void Push(float multiplier = 1.0f)
     {
-        if (rb.velocity.x < maxVelocity && onGround)
+        if (rb.velocity.x < maxVelocity && state == State.OnGround)
         {
             rb.AddForce(new Vector2(pushForce * multiplier, 0));
         }
@@ -61,22 +69,35 @@ public class Player : MonoBehaviour
 
     public void Jump()
     {
-        if (!onGround) return;
+        if (state != State.OnGround) return;
 
-        float t = rb.velocity.x / maxVelocity;
-        rb.AddForce(new Vector2(0, Mathf.Lerp(minJumpForce, maxJumpForce, t)));
-        onGround = false;
-        Time.timeScale = slowTimeScale;
+        rb.AddForce(new Vector2(0, Mathf.Lerp(minJumpForce, maxJumpForce, rb.velocity.x / maxVelocity)));
+        state = State.Midair;
+        Time.timeScale = midairTimeScale;
         onJump?.Invoke();
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (!onGround && (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Rail")))
-        {
-            onGround = true;
+        if (other.gameObject.CompareTag("Ground") && state != State.OnGround) {
+            state = State.OnGround;
             Time.timeScale = 1.0f;
             onLand?.Invoke();
+        }
+        
+        if (other.gameObject.CompareTag("Rail")) {
+            if (state != State.OnRail) {
+                if (safe) {
+                    state = State.OnRail;
+                    Time.timeScale = railTimeScale;
+                }
+                else {
+                    other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                    StartCoroutine(CameraShake.Instance.Shake());
+                    state = State.Midair;
+                    Time.timeScale = midairTimeScale;
+                }
+            }
         }
     }
 }

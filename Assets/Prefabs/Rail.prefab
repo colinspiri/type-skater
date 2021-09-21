@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 290747637316639706}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.099999666, y: 0.3238001, z: 0}
+  m_LocalPosition: {x: -0.099999666, y: 1.21, z: 0}
   m_LocalScale: {x: 4.526, y: 0.2498, z: 1}
   m_Children: []
   m_Father: {fileID: 1195623056272240416}
@@ -189,8 +189,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1475209656959148527}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.2474997, y: 0.07999992, z: 0}
-  m_LocalScale: {x: 0.23082599, y: 0.73743457, z: 1}
+  m_LocalPosition: {x: -2.2474997, y: 0.4605, z: 0}
+  m_LocalScale: {x: 0.23082599, y: 1.4984453, z: 1}
   m_Children: []
   m_Father: {fileID: 1195623056272240416}
   m_RootOrder: 1
@@ -256,6 +256,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1195623056272240416}
   - component: {fileID: 7445852183693257668}
+  - component: {fileID: 5307835633869205469}
   m_Layer: 0
   m_Name: Rail
   m_TagString: Rail
@@ -308,6 +309,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.1003814, y: 0.9011493}
   m_EdgeRadius: 0
+--- !u!114 &5307835633869205469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759728035082517889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35dc0052f45844ae0b289e0d83f16f8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1934253251486673935
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,8 +428,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7725344399720871584}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.05, y: 0.08, z: 0}
-  m_LocalScale: {x: 0.23082599, y: 0.73743457, z: 1}
+  m_LocalPosition: {x: 2.05, y: 0.4764, z: 0}
+  m_LocalScale: {x: 0.23082599, y: 1.5301225, z: 1}
   m_Children: []
   m_Father: {fileID: 1195623056272240416}
   m_RootOrder: 3
