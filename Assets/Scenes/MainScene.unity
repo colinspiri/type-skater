@@ -581,9 +581,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a5b1c7fe05e14e98a796a9a0ec48700, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  typingText: {fileID: 1655410450}
   words:
   - text: push
     trickScore: 0
+    availableInStates: 01000000
     onTyped:
       m_PersistentCalls:
         m_Calls:
@@ -601,6 +603,7 @@ MonoBehaviour:
           m_CallState: 2
   - text: ollie
     trickScore: 0
+    availableInStates: 0100000002000000
     onTyped:
       m_PersistentCalls:
         m_Calls:
@@ -616,52 +619,66 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - text: grind
+    trickScore: 2
+    availableInStates: 02000000
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
   - text: fakie
     trickScore: 1
+    availableInStates: 00000000
     onTyped:
       m_PersistentCalls:
         m_Calls: []
   - text: switch
     trickScore: 1
+    availableInStates: 00000000
     onTyped:
       m_PersistentCalls:
         m_Calls: []
   - text: kickflip
     trickScore: 2
+    availableInStates: 00000000
     onTyped:
       m_PersistentCalls:
         m_Calls: []
   - text: heelflip
     trickScore: 2
+    availableInStates: 00000000
     onTyped:
       m_PersistentCalls:
         m_Calls: []
   - text: 180
     trickScore: 3
+    availableInStates: 00000000
     onTyped:
       m_PersistentCalls:
         m_Calls: []
   - text: 360
     trickScore: 3
+    availableInStates: 00000000
     onTyped:
       m_PersistentCalls:
         m_Calls: []
   - text: varial flip
     trickScore: 4
+    availableInStates: 00000000
     onTyped:
       m_PersistentCalls:
         m_Calls: []
   - text: backside 180
     trickScore: 5
+    availableInStates: 00000000
     onTyped:
       m_PersistentCalls:
         m_Calls: []
   - text: pop shove-it
     trickScore: 8
+    availableInStates: 00000000
     onTyped:
       m_PersistentCalls:
         m_Calls: []
-  typingText: {fileID: 1655410450}
   currentTricks: []
   playerAnimator: {fileID: 2008911373}
   unsecuredScorePrefab: {fileID: 6941402312752193843, guid: 1480cb9595c844fd899db7ac79448859, type: 3}
@@ -1133,22 +1150,6 @@ PrefabInstance:
     - target: {fileID: 1759728035082517889, guid: 1f32940baa5514821bdc2cd51a8df5d8, type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7445852183693257668, guid: 1f32940baa5514821bdc2cd51a8df5d8, type: 3}
-      propertyPath: m_Size.x
-      value: 4.6112604
-      objectReference: {fileID: 0}
-    - target: {fileID: 7445852183693257668, guid: 1f32940baa5514821bdc2cd51a8df5d8, type: 3}
-      propertyPath: m_Size.y
-      value: 0.37793493
-      objectReference: {fileID: 0}
-    - target: {fileID: 7445852183693257668, guid: 1f32940baa5514821bdc2cd51a8df5d8, type: 3}
-      propertyPath: m_Offset.x
-      value: -0.10735655
-      objectReference: {fileID: 0}
-    - target: {fileID: 7445852183693257668, guid: 1f32940baa5514821bdc2cd51a8df5d8, type: 3}
-      propertyPath: m_Offset.y
-      value: 1.2129064
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f32940baa5514821bdc2cd51a8df5d8, type: 3}

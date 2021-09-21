@@ -1,6 +1,6 @@
 TODO
 
--construct rails
+-do rails
 -show when you bail out and lose points
 -construct level of jumps and obstacles
 -music and SFX
@@ -8,7 +8,13 @@ TODO
 ideas
 -maybe fakie and switch make things harder but they give u more points
 -maybe a trick gives you a mini double jump
--rail where you have to keep tying "grind" to maintain balance but if you're quick enough you can do tricks in between
--holding ENTER to secure the landing 
 
-when you fall off the rail, disable rail's collider
+RAIL
+-have to hold ENTER to stay on rail
+    too hard, doesnt feel like you can type
+
+-like the ground, but you can type "grind" over and over to get points
+    
+
+-keep type "grind" to maintain balance but between typing "grind" you can do tricks
+-have to mash ENTER to balance on rail

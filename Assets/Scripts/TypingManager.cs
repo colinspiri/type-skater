@@ -7,8 +7,9 @@ using UnityEngine.Events;
 
 public class TypingManager : MonoBehaviour
 {
-    public List<Word> words;
     public TextMeshProUGUI typingText;
+
+    public List<Word> words;
 
     public List<Word> currentTricks = new List<Word>();
     public Animator playerAnimator;
@@ -72,9 +73,11 @@ public class TypingManager : MonoBehaviour
         char c = input[0];
         Word currentWord = null;
         foreach (Word w in words) {
-            // skip tricks that you've already done
-            if (currentTricks.Contains(w)) continue;
-            
+            // skip tricks that you've already done, but not grind
+            if (currentTricks.Contains(w) && w.text != "grind") continue;
+            // skip trick if not in correct state
+            if (!w.availableInStates.Contains(Player.Instance.state)) continue;
+
             // if the current input matches a word
             if (w.ContinueText(c)) {
                 if (currentWord == null) {
@@ -126,6 +129,7 @@ public class Word
 {
     public string text;
     public int trickScore;
+    public List<Player.State> availableInStates;
     public UnityEvent onTyped;
 
     private string hasTyped;

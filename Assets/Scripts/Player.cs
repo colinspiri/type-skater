@@ -23,8 +23,7 @@ public class Player : MonoBehaviour
     public float midairTimeScale;
     public float railTimeScale;
     public float railSpeed;
-    public float railBalance = 1.0f;
-    private float balance;
+    // private GameObject currentRail;
 
     public bool safe;
     public float unsafeRotationZ;
@@ -51,11 +50,10 @@ public class Player : MonoBehaviour
 
     private void Update() {
         safe = Input.GetKey(KeyCode.Return) || state != State.Midair;
-        animator.SetBool("safe", safe);
+        animator.SetBool("safe", state == State.Midair ? safe : true);
 
         if (state == State.OnRail) {
             rb.velocity = new Vector2(railSpeed, rb.velocity.y);
-            balance -= Time.unscaledDeltaTime;
         }
     }
 
@@ -76,7 +74,7 @@ public class Player : MonoBehaviour
         Time.timeScale = midairTimeScale;
         onJump?.Invoke();
     }
-
+    
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Ground") && state != State.OnGround) {
@@ -86,18 +84,16 @@ public class Player : MonoBehaviour
         }
         
         if (other.gameObject.CompareTag("Rail")) {
-            if (state != State.OnRail) {
-                if (safe) {
-                    state = State.OnRail;
-                    Time.timeScale = railTimeScale;
-                }
-                else {
-                    other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-                    StartCoroutine(CameraShake.Instance.Shake());
-                    state = State.Midair;
-                    Time.timeScale = midairTimeScale;
-                }
-            }
+            // if (safe) {
+                state = State.OnRail;
+                Time.timeScale = railTimeScale;
+            // }
+            // else {
+            //     other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            //     StartCoroutine(CameraShake.Instance.Shake());
+            //     state = State.Midair;
+            //     Time.timeScale = midairTimeScale;
+            // }
         }
     }
 }

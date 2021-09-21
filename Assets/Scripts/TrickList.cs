@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,13 +9,11 @@ public class TrickList : MonoBehaviour
     // Start is called before the first frame update
     public TypingManager typingManager;
     public TextMeshProUGUI trickDisplay;
-    
-    
-    void Start()
-    {
+
+    private void Update() {
         trickDisplay.text = "Tricks\n";
         foreach (Word w in typingManager.words) {
-            if (w.trickScore == 0) continue;
+            if (!w.availableInStates.Contains(Player.Instance.state)) continue;
             trickDisplay.text += w.trickScore + " " + '\t' + w.text + '\n';
         }
     }
