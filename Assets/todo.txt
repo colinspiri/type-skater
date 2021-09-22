@@ -1,8 +1,7 @@
 TODO
 
--spawn rails
+
 -show when you bail out and lose points
--construct level of jumps and obstacles
 -music and SFX
 
 ideas

@@ -13,7 +13,7 @@ public class TypingManager : MonoBehaviour
 
     public List<Word> currentTricks = new List<Word>();
     public Animator playerAnimator;
-    
+    public GameObject sound;
     public GameObject unsecuredScorePrefab;
     private TextMeshProUGUI unsecuredScoreText;
     private Animator unsecuredScoreAnimator;
@@ -37,6 +37,7 @@ public class TypingManager : MonoBehaviour
             // if safe landing
             if (Player.Instance.safe) {
                 // add score
+                sound.GetComponent<SFX>().playVoice();
                 Score.Instance.AddScore(scoreAdded);
                 // push
                 float multiplier = Mathf.Lerp(0.7f, 2.0f, scoreAdded/10.0f);
@@ -47,9 +48,11 @@ public class TypingManager : MonoBehaviour
                     unsecuredScoreText = null;
                     unsecuredScoreAnimator = null;
                 }
+                
             }
             // if crash landing
             else {
+                sound.GetComponent<SFX>().playScratch();
                 // screen shake
                 StartCoroutine(CameraShake.Instance.Shake(0.2f + scoreAdded*0.1f));
                 if (unsecuredScoreAnimator != null) {

@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
         if (state == State.OnRail) {
             rb.velocity = new Vector2(railSpeed, rb.velocity.y);
         }
+        Debug.Log(safe);
     }
 
     public void Push(float multiplier = 1.0f)

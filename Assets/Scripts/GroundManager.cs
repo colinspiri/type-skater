@@ -5,12 +5,24 @@ using UnityEngine;
 
 public class GroundManager : MonoBehaviour {
     public GameObject groundPrefab;
+    public GameObject rail;
+    public GameObject slantedRail;
+    public int randRange;
     
     public GameObject mostRecentGround;
+    public GameObject mostRecentRail;
     private List<GameObject> grounds;
+    private List<GameObject> rails;
+    private int randNum;
+    private System.Random rand;
+    private int count;
+    
     
     private void Start() {
         grounds = new List<GameObject> {mostRecentGround};
+        rails = new List<GameObject> {mostRecentRail};
+         rand = new System.Random();
+        count=0;
     }
 
     // Update is called once per frame
@@ -19,11 +31,30 @@ public class GroundManager : MonoBehaviour {
         if (Player.Instance.transform.position.x > mostRecentGround.transform.position.x - mostRecentGround.transform.localScale.x / 2) {
             mostRecentGround = Instantiate(groundPrefab, new Vector3(mostRecentGround.transform.position.x + mostRecentGround.transform.localScale.x / 2, mostRecentGround.transform.position.y, 0), Quaternion.identity);
             grounds.Add(mostRecentGround);
+
+            count++;
+            if(count==randRange){
+                if (rand.Next()%2==0)
+                {
+                    mostRecentRail = Instantiate(rail, new Vector3(mostRecentGround.transform.position.x + mostRecentGround.transform.localScale.x / 2, mostRecentGround.transform.position.y+(mostRecentGround.transform.localScale.y / 2)+(mostRecentRail.transform.localScale.y/2)-.2f,0), Quaternion.identity);
+                }
+                else{
+                    mostRecentRail = Instantiate(slantedRail, new Vector3(mostRecentGround.transform.position.x + mostRecentGround.transform.localScale.x / 2, mostRecentGround.transform.position.y+(mostRecentGround.transform.localScale.y / 2)+(slantedRail.transform.localScale.y/2)-.2f,0), Quaternion.identity);
+                }
+                rails.Add(mostRecentRail);
+                if (rails.Count >= 5) {
+                    //Destroy(rails[0]);
+                    rails.RemoveAt(0);
+                }
+                count=0;
+                randRange= (rand.Next()%3)+1;
+            }
             // remove off-screen grounds
             if (grounds.Count >= 5) {
                 Destroy(grounds[0]);
                 grounds.RemoveAt(0);
             }
+            
         }
     }
 }
