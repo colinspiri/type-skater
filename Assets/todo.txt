@@ -1,7 +1,5 @@
 TODO
 
--set rails
--music and SFX
 -rail: faster you're going, the less often u have to type "grind" (the slower your balance declines)
 
 ideas

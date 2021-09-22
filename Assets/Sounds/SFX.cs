@@ -6,7 +6,6 @@ public class SFX : MonoBehaviour
 {
     public AudioSource scratch;
     public AudioSource voice;
-    public GameObject player;
 
     public void playScratch(){
         scratch.Play();

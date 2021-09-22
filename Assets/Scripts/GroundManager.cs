@@ -6,7 +6,6 @@ using UnityEngine;
 public class GroundManager : MonoBehaviour {
     public GameObject groundPrefab;
     public GameObject rail;
-    public GameObject slantedRail;
     public int randRange;
     
     public GameObject mostRecentGround;
@@ -21,7 +20,7 @@ public class GroundManager : MonoBehaviour {
     private void Start() {
         grounds = new List<GameObject> {mostRecentGround};
         rails = new List<GameObject> {mostRecentRail};
-         rand = new System.Random();
+        rand = new System.Random();
         count=0;
     }
 
@@ -33,14 +32,8 @@ public class GroundManager : MonoBehaviour {
             grounds.Add(mostRecentGround);
 
             count++;
-            if(count==randRange){
-                if (rand.Next()%2==0)
-                {
-                    mostRecentRail = Instantiate(rail, new Vector3(mostRecentGround.transform.position.x + mostRecentGround.transform.localScale.x / 2, mostRecentGround.transform.position.y+(mostRecentGround.transform.localScale.y / 2)+(mostRecentRail.transform.localScale.y/2)-.2f,0), Quaternion.identity);
-                }
-                else{
-                    mostRecentRail = Instantiate(slantedRail, new Vector3(mostRecentGround.transform.position.x + mostRecentGround.transform.localScale.x / 2, mostRecentGround.transform.position.y+(mostRecentGround.transform.localScale.y / 2)+(slantedRail.transform.localScale.y/2)-.2f,0), Quaternion.identity);
-                }
+            if(count==randRange) {
+                mostRecentRail = Instantiate(rail, new Vector3(mostRecentGround.transform.position.x + mostRecentGround.transform.localScale.x / 2, mostRecentGround.transform.position.y+(mostRecentGround.transform.localScale.y / 2)+(mostRecentRail.transform.localScale.y/2)-.2f,0), Quaternion.identity);
                 rails.Add(mostRecentRail);
                 if (rails.Count >= 5) {
                     //Destroy(rails[0]);
