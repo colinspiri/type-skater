@@ -80,7 +80,7 @@ public class Player : MonoBehaviour
         state = State.Midair;
         Time.timeScale = midairTimeScale;
         
-        if(!wasOnGround) onJump?.Invoke();
+        if(wasOnGround) onJump?.Invoke();
     }
 
     public void Slow() {
