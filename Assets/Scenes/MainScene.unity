@@ -707,14 +707,14 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 2008911372}
-          m_TargetAssemblyTypeName: Movement, Assembly-CSharp
+          m_TargetAssemblyTypeName: Player, Assembly-CSharp
           m_MethodName: Jump
-          m_Mode: 1
+          m_Mode: 4
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
-            m_FloatArgument: 0
+            m_FloatArgument: 1
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
@@ -2095,14 +2095,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pushForce: 100
-  minVelocity: 1
-  maxVelocity: 5
+  minVelocity: 1.5
+  maxVelocity: 6
   minJumpForce: 100
   maxJumpForce: 260
   state: 0
   midairTimeScale: 0.4
-  railTimeScale: 0.8
-  railMinSpeed: 6
+  railTimeScale: 0.6
+  railMinSpeed: 5
   safe: 1
   unsafeRotationZ: 27
 --- !u!95 &2008911373

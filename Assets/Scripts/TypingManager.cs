@@ -19,6 +19,8 @@ public class TypingManager : MonoBehaviour
     private Animator unsecuredScoreAnimator;
 
     public GameObject completedTextPrefab;
+
+    private int grindCount;
     
     private void Start() {
         typingText.text = "";
@@ -95,6 +97,8 @@ public class TypingManager : MonoBehaviour
                 // if user typed the whole word
                 if (w.GetTyped().Equals(w.text))
                 {
+                    // if word is "grind"
+                    if (w.text.Equals("grind")) Player.Instance.grindCount++;
                     // add to current tricks
                     if (Player.Instance.state != Player.State.OnGround)
                     {

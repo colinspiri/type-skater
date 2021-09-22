@@ -1,6 +1,5 @@
 TODO
 
--rail: faster you're going, the less often u have to type "grind" (the slower your balance declines)
 
 ideas
 -maybe fakie and switch make things harder but they give u more points
@@ -12,7 +11,9 @@ RAIL
     too hard, doesnt feel like you can type
 
 -like the ground, but you can type "grind" over and over to get points
-    eh, can be fun
+    actually fun when time is slow enough
 
 -keep type "grind" to maintain balance but between typing "grind" you can do tricks
+    too hard, doesn't feel like you can type
+
 -have to mash ENTER to balance on rail

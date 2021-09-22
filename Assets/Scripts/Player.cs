@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     public float railMinSpeed;
     private float railSpeed;
     // private GameObject currentRail;
+    [NonSerialized] public int grindCount;
 
     public bool safe;
     public float unsafeRotationZ;
@@ -71,12 +72,12 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Jump()
+    public void Jump(float multiplier = 1.0f)
     {
-        if (state == State.Midair) return;
+        // if (state == State.Midair) return;
         bool wasOnRail = state == State.OnRail;
 
-        rb.AddForce(new Vector2(0, Mathf.Lerp(minJumpForce, maxJumpForce, rb.velocity.x / maxVelocity)));
+        rb.AddForce(new Vector2(0, multiplier * Mathf.Lerp(minJumpForce, maxJumpForce, rb.velocity.x / maxVelocity)));
         state = State.Midair;
         Time.timeScale = midairTimeScale;
         
@@ -95,24 +96,27 @@ public class Player : MonoBehaviour
             onLand?.Invoke();
         }
         
-        if (other.gameObject.CompareTag("Rail")) {
-            // if (safe) {
-            state = State.OnRail;
-            Time.timeScale = railTimeScale;
-            railSpeed = rb.velocity.x > railMinSpeed ? rb.velocity.x : railMinSpeed;
-            // }
-            // else {
-            //     other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            //     StartCoroutine(CameraShake.Instance.Shake());
-            //     state = State.Midair;
-            //     Time.timeScale = midairTimeScale;
-            // }
+        if (other.gameObject.CompareTag("Rail") && state != State.OnRail) {
+            if (safe) {
+                state = State.OnRail;
+                Time.timeScale = railTimeScale;
+                railSpeed = rb.velocity.x > railMinSpeed ? rb.velocity.x : railMinSpeed;
+                grindCount = 0;
+            }
+            else {
+                other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                StartCoroutine(CameraShake.Instance.Shake());
+                state = State.Midair;
+                Time.timeScale = midairTimeScale;
+            }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Ramp")) {
-            Jump();
+            float multiplier = 0.1f + 0.2f * grindCount;
+            Jump(multiplier);
+            Debug.Log("jumped with multiplier " + multiplier);
         }
     }
 }
