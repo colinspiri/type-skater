@@ -719,7 +719,7 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - text: grind
-    trickScore: 2
+    trickScore: 1
     availableInStates: 02000000
     onTyped:
       m_PersistentCalls:
@@ -773,7 +773,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   - text: pop shove-it
-    trickScore: 8
+    trickScore: 7
     availableInStates: 00000000
     onTyped:
       m_PersistentCalls:

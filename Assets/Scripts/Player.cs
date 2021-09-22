@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
 
     public void Push(float multiplier = 1.0f)
     {
-        if (rb.velocity.x < maxVelocity && state == State.OnGround)
+        if (rb.velocity.x < maxVelocity)
         {
             rb.AddForce(new Vector2(pushForce * multiplier, 0));
         }
@@ -74,14 +74,13 @@ public class Player : MonoBehaviour
 
     public void Jump(float multiplier = 1.0f)
     {
-        // if (state == State.Midair) return;
-        bool wasOnRail = state == State.OnRail;
+        bool wasOnGround = state == State.OnGround;
 
         rb.AddForce(new Vector2(0, multiplier * Mathf.Lerp(minJumpForce, maxJumpForce, rb.velocity.x / maxVelocity)));
         state = State.Midair;
         Time.timeScale = midairTimeScale;
         
-        if(!wasOnRail) onJump?.Invoke();
+        if(!wasOnGround) onJump?.Invoke();
     }
 
     public void Slow() {

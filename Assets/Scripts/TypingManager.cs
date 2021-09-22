@@ -100,7 +100,7 @@ public class TypingManager : MonoBehaviour
                     // if word is "grind"
                     if (w.text.Equals("grind")) Player.Instance.grindCount++;
                     // add to current tricks
-                    if (Player.Instance.state != Player.State.OnGround)
+                    if (w.trickScore > 0 && Player.Instance.state != Player.State.OnGround)
                     {
                         currentTricks.Add(w);
                         // update unsecured score text
@@ -110,7 +110,7 @@ public class TypingManager : MonoBehaviour
                         }
                         unsecuredScoreText.text = score.ToString();
                         // do player animation
-                        if(w.trickScore > 0) playerAnimator.SetTrigger("trick");
+                        playerAnimator.SetTrigger("trick");
                     }
                     // animate completed text
                     TextMeshProUGUI completedText = Instantiate(completedTextPrefab, typingText.transform.parent, false).GetComponent<TextMeshProUGUI>();
