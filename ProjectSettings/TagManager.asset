@@ -44,8 +44,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 1014370701
+    locked: 0
+  - name: Ground
+    uniqueID: 1427014933
+    locked: 0
   - name: Trail
     uniqueID: 1325223003
+    locked: 0
+  - name: Rails
+    uniqueID: 4133206173
     locked: 0
   - name: Player
     uniqueID: 1372317787
