@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     public State state;
     public float midairTimeScale;
     public float railTimeScale;
+    public float railMinSpeed;
     private float railSpeed;
     // private GameObject currentRail;
 
@@ -98,14 +99,14 @@ public class Player : MonoBehaviour
             // if (safe) {
             state = State.OnRail;
             Time.timeScale = railTimeScale;
-            railSpeed = rb.velocity.x;
-                // }
-                // else {
-                //     other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-                //     StartCoroutine(CameraShake.Instance.Shake());
-                //     state = State.Midair;
-                //     Time.timeScale = midairTimeScale;
-                // }
+            railSpeed = rb.velocity.x > railMinSpeed ? rb.velocity.x : railMinSpeed;
+            // }
+            // else {
+            //     other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            //     StartCoroutine(CameraShake.Instance.Shake());
+            //     state = State.Midair;
+            //     Time.timeScale = midairTimeScale;
+            // }
         }
     }
 

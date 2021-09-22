@@ -2102,6 +2102,7 @@ MonoBehaviour:
   state: 0
   midairTimeScale: 0.4
   railTimeScale: 0.8
+  railMinSpeed: 6
   safe: 1
   unsafeRotationZ: 27
 --- !u!95 &2008911373
