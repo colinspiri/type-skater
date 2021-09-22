@@ -1555,7 +1555,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1289248626559500276, guid: 1f32940baa5514821bdc2cd51a8df5d8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1f32940baa5514821bdc2cd51a8df5d8, type: 3}
 --- !u!1 &1655410448
 GameObject:
@@ -2095,14 +2096,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dafa1cec193f4f95afe6afdc2037ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 200
+  pushForce: 100
+  minVelocity: 1
   maxVelocity: 5
   minJumpForce: 100
   maxJumpForce: 260
   state: 0
   midairTimeScale: 0.4
   railTimeScale: 0.8
-  railSpeed: 5
   safe: 1
   unsafeRotationZ: 27
 --- !u!95 &2008911373

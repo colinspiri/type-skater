@@ -1,19 +1,20 @@
 TODO
 
-
--show when you bail out and lose points
+-set rails
 -music and SFX
+-rail: faster you're going, the less often u have to type "grind" (the slower your balance declines)
 
 ideas
 -maybe fakie and switch make things harder but they give u more points
 -maybe a trick gives you a mini double jump
+    fakie and switch? the low-points ones?
 
 RAIL
 -have to hold ENTER to stay on rail
     too hard, doesnt feel like you can type
 
 -like the ground, but you can type "grind" over and over to get points
-    
+    eh, can be fun
 
 -keep type "grind" to maintain balance but between typing "grind" you can do tricks
 -have to mash ENTER to balance on rail

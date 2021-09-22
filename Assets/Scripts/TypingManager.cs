@@ -55,6 +55,8 @@ public class TypingManager : MonoBehaviour
                 sound.GetComponent<SFX>().playScratch();
                 // screen shake
                 StartCoroutine(CameraShake.Instance.Shake(0.2f + scoreAdded*0.1f));
+                // slow to min speed
+                Player.Instance.Slow();
                 if (unsecuredScoreAnimator != null) {
                     Destroy(unsecuredScoreAnimator.gameObject);
                     unsecuredScoreAnimator = null;
