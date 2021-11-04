@@ -98,7 +98,6 @@ public class Player : MonoBehaviour
             }
             else {
                 SoundManager.Instance.WipeOut();
-                // slow to min speed
                 Slow();
             }
             
@@ -122,7 +121,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Ramp")) {
-            float multiplier = 0.1f + 0.2f * grindCount;
+            float multiplier = Mathf.Lerp(0.1f, 1.5f, grindCount / 4.0f);
             Jump(multiplier);
             Debug.Log("jumped with multiplier " + multiplier);
         }

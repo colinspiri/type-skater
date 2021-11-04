@@ -35,6 +35,7 @@ public class Score : MonoBehaviour {
             if (Player.Instance.safe) {
                 // add score
                 score += unsecuredScore;
+                unsecuredScore = 0;
                 scoreText.text = score.ToString();
                 // push
                 float multiplier = Mathf.Lerp(0.7f, 2.0f, unsecuredScore / 10.0f);
