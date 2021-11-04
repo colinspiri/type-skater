@@ -98,7 +98,6 @@ public class Word
     public string text;
     public int trickScore;
     public List<Player.State> availableInStates;
-    // public UnityEvent onTyped;
 
     private string hasTyped;
     private int curChar;
@@ -121,7 +120,6 @@ public class Word
             // if we typed the whole word
             if (curChar >= text.Length)
             {
-                // onTyped?.Invoke();
                 curChar = 0;
             }
             return true;

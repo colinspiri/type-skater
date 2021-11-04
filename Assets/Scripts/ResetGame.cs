@@ -7,12 +7,6 @@ public class ResetGame : MonoBehaviour {
     public KeyCode resetKey;
     public KeyCode quitKey;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {

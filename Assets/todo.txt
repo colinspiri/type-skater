@@ -1,32 +1,27 @@
 TODO.txt
 
 CLEAN-UP
--separate TypingManager from Player physics more
 -sound mixer
 
 TODO NEXT WEEK
 -volume slider
+-pause menu
 -menu screen to select level
 
-IDEAS
+MENU NAVIGATION
+arrow keys
+SPACE - down
+J - down
+F - up
+ENTER - to select
+in sliders: F for left, J for right
+
+RANDOM IDEAS
+-what to do with trick list? 
 -maybe fakie and switch make things harder but they give u more points
--maybe a trick gives you a mini double jump
+-maybe some tricks give you a mini double jump
     fakie and switch? the low-points ones?
--duck? to duck under obstacles? 
--"tuck" to touch your board (trick in the air but can tuck under obstacles on the ground)
-
-RAIL
--have to hold ENTER to stay on rail
-    too hard, doesnt feel like you can type
-
--like the ground, but you can type "grind" over and over to get points
-    actually fun when time is slow enough
-
--keep type "grind" to maintain balance but between typing "grind" you can do tricks
-    too hard, doesn't feel like you can type
-
--have to mash ENTER to balance on rail
-
+-"tuck" to bend down & touch your board (trick in the air but can tuck under obstacles on the ground)
 
 COLORS
 dark purple: 330076
