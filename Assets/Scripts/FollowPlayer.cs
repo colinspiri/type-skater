@@ -1,15 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour {
-    public GameObject objectToFollow;
-    public float speed;
+    private GameObject objectToFollow;
+    private float speed = 5f;
 
     private Vector3 offset;
 
     // Start is called before the first frame update
     void Start() {
+        objectToFollow = Player.Instance.gameObject;
         offset = transform.position - objectToFollow.transform.position;
     }
 

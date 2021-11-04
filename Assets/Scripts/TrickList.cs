@@ -4,20 +4,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+[RequireComponent(typeof(TextMeshProUGUI))]
 public class TrickList : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public TypingManager typingManager;
-    public TextMeshProUGUI trickDisplay;
+    private TextMeshProUGUI trickListText;
 
+    private void Awake() {
+        trickListText = GetComponent<TextMeshProUGUI>();
+    }
+    
     private void Update() {
-        trickDisplay.text = "Available Tricks\n";
-        foreach (Word w in typingManager.words) {
+        trickListText.text = "Available Tricks\n";
+        foreach (Word w in TypingManager.Instance.words) {
             // skip tricks that you've already done, but not grind
-            if (typingManager.currentTricks.Contains(w) && w.text != "grind") continue;
+            if (TypingManager.Instance.GetCurrentTricks().Contains(w) && w.text != "grind") continue;
             // skip if not in state
             if (!w.availableInStates.Contains(Player.Instance.state)) continue;
-            trickDisplay.text += w.trickScore + " " + '\t' + w.text + '\n';
+            trickListText.text += w.trickScore + " " + '\t' + w.text + '\n';
         }
     }
 }

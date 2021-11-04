@@ -1,0 +1,148 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &190654776045194320
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 190654776045194326}
+  - component: {fileID: 190654776045194327}
+  m_Layer: 0
+  m_Name: Typing Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &190654776045194326
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190654776045194320}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &190654776045194327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190654776045194320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a5b1c7fe05e14e98a796a9a0ec48700, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  typingText: {fileID: 0}
+  words:
+  - text: push
+    trickScore: 0
+    availableInStates: 01000000
+    onTyped:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: Player, Assembly-CSharp
+          m_MethodName: Push
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 1
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - text: ollie
+    trickScore: 0
+    availableInStates: 0100000002000000
+    onTyped:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: Player, Assembly-CSharp
+          m_MethodName: Jump
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 1
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - text: grind
+    trickScore: 1
+    availableInStates: 02000000
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
+  - text: fakie
+    trickScore: 1
+    availableInStates: 00000000
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
+  - text: switch
+    trickScore: 1
+    availableInStates: 00000000
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
+  - text: kickflip
+    trickScore: 2
+    availableInStates: 00000000
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
+  - text: heelflip
+    trickScore: 2
+    availableInStates: 00000000
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
+  - text: 180
+    trickScore: 3
+    availableInStates: 00000000
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
+  - text: 360
+    trickScore: 3
+    availableInStates: 00000000
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
+  - text: varial flip
+    trickScore: 4
+    availableInStates: 00000000
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
+  - text: backside 180
+    trickScore: 5
+    availableInStates: 00000000
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
+  - text: pop shove-it
+    trickScore: 7
+    availableInStates: 00000000
+    onTyped:
+      m_PersistentCalls:
+        m_Calls: []
+  currentTricks: []
+  playerAnimator: {fileID: 0}
+  sound: {fileID: 0}
+  unsecuredScorePrefab: {fileID: 6941402312752193843, guid: 1480cb9595c844fd899db7ac79448859, type: 3}
+  completedTextPrefab: {fileID: 2434471693609180520, guid: 82fc9180d8d6246ba888b3936a999fe5, type: 3}

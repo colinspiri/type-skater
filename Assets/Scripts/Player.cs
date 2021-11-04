@@ -83,7 +83,7 @@ public class Player : MonoBehaviour
         if(wasOnGround) onJump?.Invoke();
     }
 
-    public void Slow() {
+    private void Slow() {
         rb.velocity = new Vector2(minVelocity, rb.velocity.y);
     }
     
@@ -93,6 +93,15 @@ public class Player : MonoBehaviour
             state = State.OnGround;
             Time.timeScale = 1.0f;
             onLand?.Invoke();
+            if (safe) {
+                SoundManager.Instance.SafeLanding();
+            }
+            else {
+                SoundManager.Instance.WipeOut();
+                // slow to min speed
+                Slow();
+            }
+            
         }
         
         if (other.gameObject.CompareTag("Rail") && state != State.OnRail) {

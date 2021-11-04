@@ -1,10 +1,20 @@
-TODO
+TODO.txt
+
+CLEAN-UP
+-separate TypingManager from Player physics more
+-sound mixer
+
+TODO NEXT WEEK
+-volume slider
+-menu screen to select level
 
 
-ideas
+IDEAS
 -maybe fakie and switch make things harder but they give u more points
 -maybe a trick gives you a mini double jump
     fakie and switch? the low-points ones?
+-duck? to duck under obstacles? 
+-"tuck" to touch your board (trick in the air but can tuck under obstacles on the ground)
 
 RAIL
 -have to hold ENTER to stay on rail
@@ -17,3 +27,13 @@ RAIL
     too hard, doesn't feel like you can type
 
 -have to mash ENTER to balance on rail
+
+
+COLORS
+dark purple: 330076
+light purple: 9655FF
+yellow: E3C41C
+light pink: E49AB0
+hot pink: EF476F
+light blue: 9CFFFA
+aquamarine: 3DDC97

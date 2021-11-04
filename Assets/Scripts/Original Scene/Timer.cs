@@ -32,7 +32,7 @@ public class Timer : MonoBehaviour
                 TextMeshProUGUI gameOverText = Instantiate(gameOverPrefab, transform.parent, false).GetComponent<TextMeshProUGUI>();
                 gameOverText.text = "your score: " + Score.Instance.score;
                 // disable other objects
-                cameraFollow.speed = 0f;
+                cameraFollow.enabled = false;
                 Time.timeScale = 1.0f;
                 timeDisplay.enabled = false;
                 // Player.Instance.enabled = false;
