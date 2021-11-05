@@ -7,7 +7,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public static Player Instance;
-
+    
+    // public constants
     public float pushForce;
     public float minVelocity;
     public float maxVelocity;
@@ -15,21 +16,23 @@ public class Player : MonoBehaviour
     public float minJumpForce;
     public float maxJumpForce;
     
+    public float midairTimeScale;
+    public float railTimeScale;
+    public float railMinSpeed;
+    
+    public float unsafeRotationZ;
+
+    // private state
     public enum State {
         Midair,
         OnGround,
         OnRail,
     }
-    public State state;
-    public float midairTimeScale;
-    public float railTimeScale;
-    public float railMinSpeed;
+    [HideInInspector] public State state;
     private float railSpeed;
-    // private GameObject currentRail;
     [NonSerialized] public int grindCount;
 
     public bool safe;
-    public float unsafeRotationZ;
 
     public delegate void OnJump();
     public OnJump onJump;
@@ -37,7 +40,7 @@ public class Player : MonoBehaviour
     public delegate void OnLand();
     public OnLand onLand;
 
-    
+    // component stuff
     private Rigidbody2D rb;
     private Animator animator;
 
