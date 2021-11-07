@@ -4,6 +4,11 @@ CLEAN-UP
 -sound mixer
 
 TODO NEXT WEEK
+-Fix rails so u can jump from below them
+-Traffic cones as orange triangles
+-Move unsecured score closer to player when in mid-jump
+-More chill lo-fi royalty-free music
+
 -volume slider
 -pause menu
 -menu screen to select level
