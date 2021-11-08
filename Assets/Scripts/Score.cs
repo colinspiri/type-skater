@@ -26,36 +26,29 @@ public class Score : MonoBehaviour {
         scoreText.text = score.ToString();
 
         Player.Instance.onJump += () => {
+            // instantiate unsecured score
             GameObject unsecuredScoreObject = Instantiate(unsecuredScorePrefab, transform, false);
             unsecuredScoreText = unsecuredScoreObject.GetComponent<TextMeshProUGUI>();
             unsecuredScoreAnimator = unsecuredScoreObject.GetComponent<Animator>();
         };
-        Player.Instance.onLand += () => {
-            // if safe landing
-            if (Player.Instance.safe) {
-                // add score
-                score += unsecuredScore;
-                unsecuredScore = 0;
-                scoreText.text = score.ToString();
-                // push
-                float multiplier = Mathf.Lerp(0.7f, 2.0f, unsecuredScore / 10.0f);
-                Player.Instance.Push(multiplier);
-                // animate unsecured score
-                if (unsecuredScoreAnimator != null) {
-                    unsecuredScoreAnimator.SetBool("secured", true);
-                    unsecuredScoreText = null;
-                    unsecuredScoreAnimator = null;
-                }
+        Player.Instance.onSafeLanding += () => {
+            // add score
+            score += unsecuredScore;
+            unsecuredScore = 0;
+            scoreText.text = score.ToString();
+            // animate unsecured score
+            if (unsecuredScoreAnimator != null) {
+                unsecuredScoreAnimator.SetBool("secured", true);
+                unsecuredScoreText = null;
+                unsecuredScoreAnimator = null;
             }
-            // if crash landing
-            else {
-                // screen shake
-                StartCoroutine(CameraShake.Instance.Shake(0.2f + unsecuredScore * 0.1f));
-                if (unsecuredScoreAnimator != null) {
-                    Destroy(unsecuredScoreAnimator.gameObject);
-                    unsecuredScoreAnimator = null;
-                    unsecuredScoreText = null;
-                }
+        };
+        Player.Instance.onUnsafeLanding += () => {
+            // destroy unsecured animator
+            if (unsecuredScoreAnimator != null) {
+                Destroy(unsecuredScoreAnimator.gameObject);
+                unsecuredScoreAnimator = null;
+                unsecuredScoreText = null;
             }
         };
     }
@@ -71,5 +64,9 @@ public class Score : MonoBehaviour {
             unsecuredScore += addition;
             unsecuredScoreText.text = unsecuredScore.ToString();
         }
+    }
+
+    public int GetUnsecuredScore() {
+        return unsecuredScore;
     }
 }

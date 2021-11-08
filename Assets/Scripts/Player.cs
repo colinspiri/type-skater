@@ -40,6 +40,12 @@ public class Player : MonoBehaviour
     public delegate void OnLand();
     public OnLand onLand;
 
+    public delegate void OnUnsafeLanding();
+    public OnUnsafeLanding onUnsafeLanding;
+
+    public delegate void OnSafeLanding();
+    public OnSafeLanding onSafeLanding;
+
     // component stuff
     private Rigidbody2D rb;
     private Animator animator;
@@ -63,7 +69,7 @@ public class Player : MonoBehaviour
         }
 
         if (rb.velocity.x < minVelocity) {
-            Slow();
+            SlowToMinSpeed();
         }
     }
 
@@ -77,8 +83,12 @@ public class Player : MonoBehaviour
 
     public void Jump(float multiplier = 1.0f)
     {
+        // if player jumped from the rail, jump proportional to grind count
+        if (state == State.OnRail) {
+            multiplier = Mathf.Lerp(0.1f, 1.5f, grindCount / 4.0f);
+        }
+        
         bool wasOnGround = state == State.OnGround;
-
         rb.AddForce(new Vector2(0, multiplier * Mathf.Lerp(minJumpForce, maxJumpForce, rb.velocity.x / maxVelocity)));
         state = State.Midair;
         Time.timeScale = midairTimeScale;
@@ -86,26 +96,42 @@ public class Player : MonoBehaviour
         if(wasOnGround) onJump?.Invoke();
     }
 
-    private void Slow() {
+    public void WipeOut() {
+        // slow
+        SlowToMinSpeed();
+        
+        // if player landed with unsecured score, screen shake magnitude is proportional to the score
+        float magnitude = (Score.Instance.GetUnsecuredScore() > 0) ? (0.2f + Score.Instance.GetUnsecuredScore() * 0.1f) : 1f;
+        StartCoroutine(CameraShake.Instance.Shake(magnitude));
+        
+        // particles?
+    }
+
+    private void SlowToMinSpeed() {
         rb.velocity = new Vector2(minVelocity, rb.velocity.y);
     }
     
     private void OnCollisionEnter2D(Collision2D other)
     {
+        // land on ground
         if (other.gameObject.CompareTag("Ground") && state != State.OnGround) {
             state = State.OnGround;
             Time.timeScale = 1.0f;
             onLand?.Invoke();
             if (safe) {
-                SoundManager.Instance.SafeLanding();
+                float multiplier = Mathf.Lerp(0.7f, 2.0f, Score.Instance.GetUnsecuredScore() / 10.0f);
+                Push(multiplier);
+                // callback
+                onSafeLanding?.Invoke();
             }
             else {
-                SoundManager.Instance.WipeOut();
-                Slow();
+                WipeOut();
+                // callback
+                onUnsafeLanding?.Invoke();
             }
-            
         }
         
+        // land on rail
         if (other.gameObject.CompareTag("Rail") && state != State.OnRail) {
             if (safe) {
                 state = State.OnRail;
@@ -115,7 +141,7 @@ public class Player : MonoBehaviour
             }
             else {
                 other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-                StartCoroutine(CameraShake.Instance.Shake());
+                WipeOut();
                 state = State.Midair;
                 Time.timeScale = midairTimeScale;
             }
@@ -123,10 +149,11 @@ public class Player : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag("Ramp")) {
-            float multiplier = Mathf.Lerp(0.1f, 1.5f, grindCount / 4.0f);
-            Jump(multiplier);
-            Debug.Log("jumped with multiplier " + multiplier);
+        // end of rail
+        if (other.CompareTag("RailEnd")) {
+            // set to midair
+            state = State.Midair;
+            Jump(0.1f);
         }
     }
 }

@@ -6,7 +6,7 @@ TagManager:
   tags:
   - Ground
   - Rail
-  - Ramp
+  - RailEnd
   layers:
   - Default
   - TransparentFX

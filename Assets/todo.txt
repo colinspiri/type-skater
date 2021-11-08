@@ -1,17 +1,27 @@
-TODO.txt
-
-CLEAN-UP
--sound mixer
 
 TODO NEXT WEEK
--Fix rails so u can jump from below them
--Traffic cones as orange triangles
--Move unsecured score closer to player when in mid-jump
--More chill lo-fi royalty-free music
+Fix rails so u can jump from below them
 
--volume slider
--pause menu
--menu screen to select level
+Traffic cones as orange triangles - DONE
+
+remove invisible "ramp" that jumps the player at the end of a rail - DONE
+
+Ramps that automatically jump the player
+    but if you ollie at the very end, you get a larger jump
+    
+Move unsecured score closer to player when in mid-jump
+
+Trick list
+    remove score
+    remove title
+
+More chill lo-fi royalty-free music
+
+pause menu
+    volume slider
+
+menu screen to select level
+
 
 MENU NAVIGATION
 arrow keys
@@ -32,6 +42,8 @@ COLORS
 dark purple: 330076
 light purple: 9655FF
 yellow: E3C41C
+
+orange: EC7357
 light pink: E49AB0
 hot pink: EF476F
 light blue: 9CFFFA

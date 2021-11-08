@@ -402,8 +402,8 @@ GameObject:
   - component: {fileID: 4939580233396624085}
   - component: {fileID: 4220488407169892651}
   m_Layer: 0
-  m_Name: Ramp
-  m_TagString: Ramp
+  m_Name: RailEnd
+  m_TagString: RailEnd
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

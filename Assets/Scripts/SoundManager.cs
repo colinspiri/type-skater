@@ -17,11 +17,16 @@ public class SoundManager : MonoBehaviour {
         Instance = this;
     }
 
-    public void WipeOut() {
+    private void Start() {
+        Player.Instance.onSafeLanding += SafeLanding;
+        Player.Instance.onUnsafeLanding += WipeOut;
+    }
+
+    private void WipeOut() {
         recordScratch.Play();
     }
 
-    public void SafeLanding() {
+    private void SafeLanding() {
         digThis.Play();
     }
 }
