@@ -15,7 +15,6 @@ public class ResetGame : MonoBehaviour {
         }
 
         if (Input.GetKey(quitKey)) {
-            Debug.Log("quit game");
             Application.Quit();
         }
     }
