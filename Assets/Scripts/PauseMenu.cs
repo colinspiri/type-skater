@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour {
     public KeyCode pauseButton;
     public GameObject pauseMenu;
+    public GameObject optionsMenu;
     public List<GameObject> objectsToDisable;
     
     private bool paused;
@@ -40,8 +43,24 @@ public class PauseMenu : MonoBehaviour {
             o.SetActive(true);
         }
         pauseMenu.SetActive(false);
+        optionsMenu.SetActive(false);
         Time.timeScale = previousTimeScale;
         
         paused = false;
+    }
+
+    public void Options() {
+        pauseMenu.SetActive(false);
+        optionsMenu.SetActive(true);
+    }
+    public void BackToPauseMenu() {
+        optionsMenu.SetActive(false);
+        pauseMenu.SetActive(true);
+    }
+
+    public void BackToMainMenu() {
+        Resume();
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Menu");
     }
 }

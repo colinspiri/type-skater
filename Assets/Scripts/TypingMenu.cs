@@ -17,7 +17,7 @@ public class TypingMenu : MonoBehaviour {
     private KeyCode downKey = KeyCode.DownArrow;
     private KeyCode rightKey = KeyCode.RightArrow;
     private KeyCode leftKey = KeyCode.LeftArrow;
-    private readonly List<KeyCode> selectKeys = new List<KeyCode> {KeyCode.Return, KeyCode.RightArrow, KeyCode.Space};
+    private readonly List<KeyCode> selectKeys = new List<KeyCode> {KeyCode.Return, KeyCode.RightArrow};
 
     private float sliderAdjustment = 0.2f;
 
