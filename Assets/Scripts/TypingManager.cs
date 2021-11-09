@@ -41,7 +41,7 @@ public class TypingManager : MonoBehaviour {
         Word currentWord = null;
         foreach (Word w in words) {
             // skip tricks that you've already done, but not grind
-            if (currentTricks.Contains(w) && w.text != "grind") continue;
+            if (currentTricks.Contains(w) && w.text != "grind" && w.text != "drop") continue;
             // skip trick if not in correct state
             if (!w.availableInStates.Contains(Player.Instance.state)) continue;
 
@@ -61,9 +61,11 @@ public class TypingManager : MonoBehaviour {
                     if (w.text.Equals("push")) Player.Instance.Push();
                     // ollie
                     else if (w.text.Equals("ollie")) Player.Instance.Jump();
+                    // drop
+                    else if (w.text.Equals("drop")) Player.Instance.Drop();
                     // grind
                     else if (w.text.Equals("grind")) Player.Instance.grindCount++;
-                    
+
                     // if not OnGround, add to current tricks
                     if (w.trickScore > 0 && Player.Instance.state != Player.State.OnGround)
                     {

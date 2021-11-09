@@ -151,12 +151,13 @@ MonoBehaviour:
   maxVelocity: 6
   minJumpForce: 100
   maxJumpForce: 260
-  state: 0
   midairTimeScale: 0.4
+  dropForce: 150
   railTimeScale: 0.6
   railMinSpeed: 5
-  safe: 1
   unsafeRotationZ: 27
+  state: 0
+  safe: 1
 --- !u!95 &7760741278451484482
 Animator:
   serializedVersion: 3
@@ -246,7 +247,7 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1325223003
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Time: 1
   m_Parameters:

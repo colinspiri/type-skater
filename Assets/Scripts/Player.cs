@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     public float maxJumpForce;
     
     public float midairTimeScale;
+    public float dropForce;
+    
     public float railTimeScale;
     public float railMinSpeed;
     
@@ -94,6 +96,11 @@ public class Player : MonoBehaviour
         Time.timeScale = midairTimeScale;
         
         if(wasOnGround) onJump?.Invoke();
+    }
+
+    public void Drop() {
+        if(rb.velocity.y > 0) rb.velocity = new Vector2(rb.velocity.x, 0);
+        rb.AddForce(new Vector2(0, -1 * dropForce));
     }
 
     public void WipeOut() {

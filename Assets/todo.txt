@@ -1,26 +1,25 @@
 
-TODO NEXT WEEK
+
+TODO FOR NEXT WEEK
 Fix rails so u can jump from below them
 
-Traffic cones as orange triangles - DONE
-
-remove invisible "ramp" that jumps the player at the end of a rail - DONE
-
 Ramps that automatically jump the player
-    but if you ollie at the very end, you get a larger jump
+    but if you ollie near the very end, you get a larger jump
     
 Move unsecured score closer to player when in mid-jump
 
-Trick list - DONE
-    remove score
-    remove title
-
 More chill lo-fi royalty-free music
 
-pause menu - DONE
+TODO - DONE
+Traffic cones as orange triangles
+remove invisible "ramp" that jumps the player at the end of a rail
+Trick list
+    remove score
+    remove title
+pause menu
     volume slider
-
-menu screen to select level - DONE
+menu screen to select level
+add "drop" command to end the jump faster
 
 
 MENU NAVIGATION
@@ -36,7 +35,9 @@ training mode where time stops between tricks so you can take a break and look a
 maybe fakie and switch make things harder but they give u more points
 maybe some tricks give you a mini double jump
     fakie and switch? the low-points ones?
-"tuck" to bend down & touch your board (trick in the air but can tuck under obstacles on the ground)
+"tuck" to bend down & touch your board (trick in the air but can tuck under obstacles on the ground
+
+https://www.masterclass.com/articles/guide-to-skate-lingo#66-basic-skateboarding-terms
 
 COLORS
 dark purple: 330076

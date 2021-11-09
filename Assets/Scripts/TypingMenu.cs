@@ -79,6 +79,7 @@ public class TypingMenu : MonoBehaviour {
                     typedOption = i;
                 }
             }
+            else option.Clear();
         }
         SetCurrentOption(typedOption);
     }
@@ -88,7 +89,7 @@ public class TypingMenu : MonoBehaviour {
         // clear all other options
         for(int i = 0; i < menuOptions.Count; i++) {
             if (i == currentOption) continue;
-            menuOptions[i].Clear();
+            menuOptions[i].Unhighlight();
         }
     }
     private void HighlightCurrentOption() {
@@ -146,6 +147,9 @@ public class MenuOption {
 
     public void Highlight() {
         highlightedText.text = text;
+    }
+    public void Unhighlight() {
+        highlightedText.text = "";
     }
     
     public void Clear()

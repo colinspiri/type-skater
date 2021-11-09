@@ -48,101 +48,40 @@ MonoBehaviour:
   - text: push
     trickScore: 0
     availableInStates: 01000000
-    onTyped:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: Player, Assembly-CSharp
-          m_MethodName: Push
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 1
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - text: ollie
     trickScore: 0
     availableInStates: 0100000002000000
-    onTyped:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: Player, Assembly-CSharp
-          m_MethodName: Jump
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 1
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+  - text: drop
+    trickScore: 1
+    availableInStates: 00000000
   - text: grind
     trickScore: 1
     availableInStates: 02000000
-    onTyped:
-      m_PersistentCalls:
-        m_Calls: []
   - text: fakie
     trickScore: 1
     availableInStates: 00000000
-    onTyped:
-      m_PersistentCalls:
-        m_Calls: []
   - text: switch
     trickScore: 1
     availableInStates: 00000000
-    onTyped:
-      m_PersistentCalls:
-        m_Calls: []
   - text: kickflip
     trickScore: 2
     availableInStates: 00000000
-    onTyped:
-      m_PersistentCalls:
-        m_Calls: []
   - text: heelflip
     trickScore: 2
     availableInStates: 00000000
-    onTyped:
-      m_PersistentCalls:
-        m_Calls: []
   - text: 180
     trickScore: 3
     availableInStates: 00000000
-    onTyped:
-      m_PersistentCalls:
-        m_Calls: []
   - text: 360
     trickScore: 3
     availableInStates: 00000000
-    onTyped:
-      m_PersistentCalls:
-        m_Calls: []
   - text: varial flip
     trickScore: 4
     availableInStates: 00000000
-    onTyped:
-      m_PersistentCalls:
-        m_Calls: []
   - text: backside 180
     trickScore: 5
     availableInStates: 00000000
-    onTyped:
-      m_PersistentCalls:
-        m_Calls: []
   - text: pop shove-it
     trickScore: 7
     availableInStates: 00000000
-    onTyped:
-      m_PersistentCalls:
-        m_Calls: []
-  currentTricks: []
-  playerAnimator: {fileID: 0}
-  sound: {fileID: 0}
-  unsecuredScorePrefab: {fileID: 6941402312752193843, guid: 1480cb9595c844fd899db7ac79448859, type: 3}
   completedTextPrefab: {fileID: 2434471693609180520, guid: 82fc9180d8d6246ba888b3936a999fe5, type: 3}
