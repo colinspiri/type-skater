@@ -20,7 +20,7 @@ More chill lo-fi royalty-free music
 pause menu
     volume slider
 
-menu screen to select level
+menu screen to select level - DONE
 
 
 MENU NAVIGATION
