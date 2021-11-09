@@ -140,4 +140,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a662e891c8994758810ea86971f4238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraShakeTestKey: 275
+  cameraShakeTestKey: 0
