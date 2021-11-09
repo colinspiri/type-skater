@@ -18,8 +18,14 @@ public class SoundManager : MonoBehaviour {
     }
 
     private void Start() {
-        Player.Instance.onSafeLanding += SafeLanding;
-        Player.Instance.onUnsafeLanding += WipeOut;
+        if (Player.Instance != null) {
+            Player.Instance.onSafeLanding += SafeLanding;
+            Player.Instance.onUnsafeLanding += WipeOut;
+        }
+    }
+
+    public void PlayTestSFX() {
+        recordScratch.Play();
     }
 
     private void WipeOut() {

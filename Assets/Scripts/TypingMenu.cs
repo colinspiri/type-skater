@@ -38,6 +38,11 @@ public class TypingMenu : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        // escape to go back to main menu
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            BackToMainMenu();
+        }
+        
         string input = Input.inputString;
         if (input.Equals("")) return;
         
