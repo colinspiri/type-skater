@@ -15,9 +15,11 @@ public class TypingMenu : MonoBehaviour {
 
     private KeyCode upKey = KeyCode.UpArrow;
     private KeyCode downKey = KeyCode.DownArrow;
-    // private KeyCode rightKey = KeyCode.RightArrow;
-    // private KeyCode leftKey = KeyCode.LeftArrow;
+    private KeyCode rightKey = KeyCode.RightArrow;
+    private KeyCode leftKey = KeyCode.LeftArrow;
     private readonly List<KeyCode> selectKeys = new List<KeyCode> {KeyCode.Return, KeyCode.RightArrow, KeyCode.Space};
+
+    private float sliderAdjustment = 0.2f;
 
     // Start is called before the first frame update
     void Start() {
@@ -44,18 +46,21 @@ public class TypingMenu : MonoBehaviour {
             HighlightCurrentOption();
             return;
         }
-        // if (menuOptions[currentOption].slider != null) {
-        //     if (Input.GetKeyDown(rightKey)) {
-        //         // increase slider value
-        //         return;
-        //     }
-        //     if (Input.GetKeyDown(leftKey)) {
-        //         // decrease slider value
-        //         return;
-        //     }
-        // }
-        // select current option
         if (currentOption != -1) {
+            // adjust slider with right and left
+            if (menuOptions[currentOption].slider != null) {
+                if (Input.GetKeyDown(rightKey)) {
+                    // increase slider value
+                    menuOptions[currentOption].slider.value += sliderAdjustment;
+                    return;
+                }
+                if (Input.GetKeyDown(leftKey)) {
+                    // decrease slider value
+                    menuOptions[currentOption].slider.value -= sliderAdjustment;
+                    return;
+                }
+            }
+            // select current option
             foreach (KeyCode selectKey in selectKeys) {
                 if (Input.GetKeyDown(selectKey)) {
                     menuOptions[currentOption].onSelect?.Invoke();
@@ -71,20 +76,18 @@ public class TypingMenu : MonoBehaviour {
         int typedOption = -1;
         for (int i = 0; i < menuOptions.Count; i++) {
             MenuOption option = menuOptions[i];
+            // if (option.slider != null) continue; // skip sliders
             // if the current input matches a word
             if (option.ContinueText(c)) {
                 if (typedOption == -1) {
-                    Debug.Log(option.text + " chosen as typedOption");
                     typedOption = i;
                 }
                 else if(option.GetTyped().Length > menuOptions[typedOption].GetTyped().Length) {
-                    Debug.Log(option.text + " has gettyped " + option.GetTyped() + " vs " + menuOptions[typedOption] + " has gettyped " + menuOptions[typedOption].GetTyped());
                     menuOptions[typedOption].Clear();
                     typedOption = i;
                 }
             }
         }
-        Debug.Log(typedOption);
         SetCurrentOption(typedOption);
     }
 
