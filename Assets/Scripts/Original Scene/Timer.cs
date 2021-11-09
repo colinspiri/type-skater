@@ -24,7 +24,7 @@ public class Timer : MonoBehaviour
     void Update()
     {
         if (timeRemaining > 0) {
-            timeRemaining -= Time.unscaledDeltaTime;
+            if(Time.timeScale != 0) timeRemaining -= Time.unscaledDeltaTime;
             DisplayTime(timeRemaining);
             if (timeRemaining <= 0) {
                 timeRemaining = 0;

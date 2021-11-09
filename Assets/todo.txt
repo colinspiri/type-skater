@@ -11,13 +11,13 @@ Ramps that automatically jump the player
     
 Move unsecured score closer to player when in mid-jump
 
-Trick list
+Trick list - DONE
     remove score
     remove title
 
 More chill lo-fi royalty-free music
 
-pause menu
+pause menu - DONE
     volume slider
 
 menu screen to select level - DONE
@@ -33,12 +33,10 @@ in sliders: F for left, J for right
 
 RANDOM IDEAS
 training mode where time stops between tricks so you can take a break and look at the tricklist and see which one you should do next
-
--what to do with trick list? 
--maybe fakie and switch make things harder but they give u more points
--maybe some tricks give you a mini double jump
+maybe fakie and switch make things harder but they give u more points
+maybe some tricks give you a mini double jump
     fakie and switch? the low-points ones?
--"tuck" to bend down & touch your board (trick in the air but can tuck under obstacles on the ground)
+"tuck" to bend down & touch your board (trick in the air but can tuck under obstacles on the ground)
 
 COLORS
 dark purple: 330076

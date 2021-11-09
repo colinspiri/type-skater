@@ -603,7 +603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3166f1b619b044bff9966fb7a7979faa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeRemaining: 10
+  timeRemaining: 60
   gameOverPrefab: {fileID: 142869858993317319, guid: dbd7e0bf9abca4aca8805151b180530f, type: 3}
   objectsToDisable:
   - {fileID: 554326971}

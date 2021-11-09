@@ -12,14 +12,8 @@ public class TypingMenu : MonoBehaviour {
     public List<MenuOption> menuOptions;
 
     private int currentOption = -1;
-
-    private KeyCode upKey = KeyCode.UpArrow;
-    private KeyCode downKey = KeyCode.DownArrow;
-    private KeyCode rightKey = KeyCode.RightArrow;
-    private KeyCode leftKey = KeyCode.LeftArrow;
-    private readonly List<KeyCode> selectKeys = new List<KeyCode> {KeyCode.Return, KeyCode.RightArrow};
-
-    private float sliderAdjustment = 0.2f;
+    
+    private const float SliderAdjustment = 0.2f;
 
     // Start is called before the first frame update
     void Start() {
@@ -32,14 +26,14 @@ public class TypingMenu : MonoBehaviour {
     void Update()
     {
         // arrow keys to navigate between options
-        if (Input.GetKeyDown(downKey)) {
+        if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.Space)) {
             int newCurrentOption = currentOption + 1;
             newCurrentOption %= menuOptions.Count;
             SetCurrentOption(newCurrentOption);
             HighlightCurrentOption();
             return;
         }
-        if (Input.GetKeyDown(upKey)) {
+        if (Input.GetKeyDown(KeyCode.UpArrow)) {
             int newCurrentOption = currentOption - 1;
             if (newCurrentOption < 0) newCurrentOption = menuOptions.Count - 1;
             SetCurrentOption(newCurrentOption);
@@ -49,23 +43,21 @@ public class TypingMenu : MonoBehaviour {
         if (currentOption != -1) {
             // adjust slider with right and left
             if (menuOptions[currentOption].slider != null) {
-                if (Input.GetKeyDown(rightKey)) {
+                if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.J)) {
                     // increase slider value
-                    menuOptions[currentOption].slider.value += sliderAdjustment;
+                    menuOptions[currentOption].slider.value += SliderAdjustment;
                     return;
                 }
-                if (Input.GetKeyDown(leftKey)) {
+                if (Input.GetKeyDown(KeyCode.LeftArrow) | Input.GetKeyDown(KeyCode.F)) {
                     // decrease slider value
-                    menuOptions[currentOption].slider.value -= sliderAdjustment;
+                    menuOptions[currentOption].slider.value -= SliderAdjustment;
                     return;
                 }
             }
             // select current option
-            foreach (KeyCode selectKey in selectKeys) {
-                if (Input.GetKeyDown(selectKey)) {
-                    menuOptions[currentOption].onSelect?.Invoke();
-                    return;
-                }
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.RightArrow)) {
+                menuOptions[currentOption].onSelect?.Invoke();
+                return;
             }
         }
         // type to select

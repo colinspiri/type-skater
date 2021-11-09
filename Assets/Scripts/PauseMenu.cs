@@ -32,6 +32,7 @@ public class PauseMenu : MonoBehaviour {
             o.SetActive(false);
         }
         pauseMenu.SetActive(true);
+        optionsMenu.SetActive(false);
         previousTimeScale = Time.timeScale;
         Time.timeScale = 0f;
         
