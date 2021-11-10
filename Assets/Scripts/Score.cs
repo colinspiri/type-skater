@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class Score : MonoBehaviour {
@@ -21,7 +22,7 @@ public class Score : MonoBehaviour {
     public GameObject gameOverPrefab;
     public List<GameObject> objectsToDisable;
     public FollowPlayer cameraFollow;
-
+    
     private void Awake() {
         if (Instance == null) Instance = this;
         scoreText = GetComponent<TextMeshProUGUI>();
@@ -36,18 +37,7 @@ public class Score : MonoBehaviour {
             unsecuredScoreText = unsecuredScoreObject.GetComponent<TextMeshProUGUI>();
             unsecuredScoreAnimator = unsecuredScoreObject.GetComponent<Animator>();
         };
-        Player.Instance.onSafeLanding += () => {
-            // add score
-            score += unsecuredScore;
-            unsecuredScore = 0;
-            scoreText.text = score.ToString();
-            // animate unsecured score
-            if (unsecuredScoreAnimator != null) {
-                unsecuredScoreAnimator.SetBool("secured", true);
-                unsecuredScoreText = null;
-                unsecuredScoreAnimator = null;
-            }
-        };
+        Player.Instance.onSafeLanding += SecureScore;
         Player.Instance.onUnsafeLanding += () => {
             // destroy unsecured animator
             if (unsecuredScoreAnimator != null) {
@@ -56,6 +46,19 @@ public class Score : MonoBehaviour {
                 unsecuredScoreText = null;
             }
         };
+    }
+
+    private void SecureScore() {
+        // add score
+        score += unsecuredScore;
+        unsecuredScore = 0;
+        scoreText.text = score.ToString();
+        // animate unsecured score
+        if (unsecuredScoreAnimator != null) {
+            unsecuredScoreAnimator.SetBool("secured", true);
+            unsecuredScoreText = null;
+            unsecuredScoreAnimator = null;
+        }
     }
 
     public void AddScore(int addition) {
@@ -71,11 +74,18 @@ public class Score : MonoBehaviour {
         }
     }
 
+    public void Penalty(int penalty) {
+        score -= penalty;
+        if (score < 0) score = 0;
+        scoreText.text = score.ToString();
+    }
+
     public int GetUnsecuredScore() {
         return unsecuredScore;
     }
 
     public void GameOver() {
+        SecureScore();
         // display game over
         TextMeshProUGUI gameOverText = Instantiate(gameOverPrefab, transform.parent, false).GetComponent<TextMeshProUGUI>();
         gameOverText.text = "your score: " + score;
@@ -85,6 +95,6 @@ public class Score : MonoBehaviour {
         foreach (GameObject o in objectsToDisable) {
             o.SetActive(false);
         }
-        gameObject.SetActive(false);
+        scoreText.enabled = false;
     }
 }

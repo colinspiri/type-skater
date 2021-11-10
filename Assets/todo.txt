@@ -23,15 +23,10 @@ pause menu
     volume slider
 menu screen to select level
 add "drop" command to end the jump faster
+turn game over into typing menu
+    restart
+    menu
 
-
-MENU NAVIGATION
-arrow keys
-SPACE - down
-J - down
-F - up
-ENTER - to select
-in sliders: F for left, J for right
 
 RANDOM IDEAS
 training mode where time stops between tricks so you can take a break and look at the tricklist and see which one you should do next

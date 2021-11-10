@@ -17,7 +17,7 @@ public class TypingMenu : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        foreach (MenuOption menuOption in menuOptions) {
+        foreach (var menuOption in menuOptions) {
             menuOption.Initialize();
         }
     }
