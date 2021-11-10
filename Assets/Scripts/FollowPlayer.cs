@@ -15,8 +15,7 @@ public class FollowPlayer : MonoBehaviour {
         offset = transform.position - objectToFollow.transform.position;
     }
 
-    // Update is called once per frame
-    void Update() {
+    void FixedUpdate() {
         float x = Mathf.Lerp(transform.position.x, objectToFollow.transform.position.x + offset.x, speed * Time.deltaTime);
         
         transform.position = new Vector3(x, transform.position.y, transform.position.z);
