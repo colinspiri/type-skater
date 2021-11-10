@@ -7,6 +7,8 @@ TagManager:
   - Ground
   - Rail
   - RailEnd
+  - front pole
+  - back pole
   layers:
   - Default
   - TransparentFX
