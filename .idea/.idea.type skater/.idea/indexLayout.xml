@@ -31,6 +31,7 @@
       <Path>Temp</Path>
       <Path>UserSettings</Path>
       <Path>obj</Path>
+      <Path>pres build.app</Path>
     </explicitExcludes>
   </component>
 </project>

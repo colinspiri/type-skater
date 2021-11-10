@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
         OnGround,
         OnRail,
     }
-    [HideInInspector] public State state;
+    public State state;
     private float railSpeed;
     [NonSerialized] public int grindCount;
 
@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
     }
 
     private void Update() {
+        // Debug.Log("Player.Update() " + Time.deltaTime + " " + Time.unscaledDeltaTime + " ");
         safe = Input.GetKey(KeyCode.Return) || state != State.Midair;
         animator.SetBool("safe", state == State.Midair ? safe : true);
 

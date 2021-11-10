@@ -14,13 +14,14 @@ public class PauseMenu : MonoBehaviour {
     private float previousTimeScale;
     
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
+        previousTimeScale = 1.0f;
         Resume();
     }
 
     // Update is called once per frame
     void Update() {
+        // Debug.Log("paused = " + paused);
         if (Input.GetKeyDown(pauseButton)) {
             if (!paused) Pause();
             else Resume();

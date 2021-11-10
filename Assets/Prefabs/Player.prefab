@@ -156,7 +156,7 @@ MonoBehaviour:
   railTimeScale: 0.6
   railMinSpeed: 5
   unsafeRotationZ: 27
-  state: 0
+  state: 1
   safe: 1
 --- !u!95 &7760741278451484482
 Animator:
