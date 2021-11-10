@@ -2,18 +2,58 @@
 
 TODO FOR NEXT WEEK
 
-Fix rails so u can jump from below them
+Fix Time.deltaTime to make it look smoother
 
-Ramps that automatically jump the player
+Tutorial/level 0 to teach the player without obstacles
+   pause time and prompt to hold ENTER to land safely
+
+deactivate mouse cursor
+
+zoom out camera so u can see more obstacles coming
+
+try to change min speed & jump force so that 1 ollie is enough to hop over
+    without push?
+    or with 1 push?
+
+ollie off the rail without grinding causes a bug
+    player stays on the rail and doesn't properly jump off it
+    
+randomize which tricks show up for each jump
+    dependent on jump height
+    
+show in red text when the player messes up typing a trick
+    animate it downwards when player messes up?
+    or keep it there and let the player press backspace (-1 point each backspace)
+        if the player backspaces a correct letter, then clear current text
+
+game feel for unsafe/safe state
+    wobble animation
+    add SFX for when the player presses enter
+    add sparks or something when ready to land
+
+SFX for typing letters
+    like a typewriter or skateboard slap sound?
+    
+each level adds more tricks u have access to
+
+style "drop" differently in the trick list 
+    different color or spaced differently to show that it does something special
+
+issue with "drop"
+    player types drop when an obstacle is coming up but if u land properly then u get a speed boost
+    maybe reduce the speed boost?
+
+word per minute counter to show at the end of each level?
+
+LEVEL 2: ramps that automatically jump the player
     but if you ollie near the very end, you get a larger jump
     
 Move unsecured score closer to player when in mid-jump
 
-wobble animation when unsafe in the air
-
 More chill lo-fi royalty-free music
 
 TODO - DONE
+Fix rails so u can jump from below them
 Traffic cones as orange triangles
 remove invisible "ramp" that jumps the player at the end of a rail
 Trick list
