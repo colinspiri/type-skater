@@ -16,6 +16,11 @@ public class Score : MonoBehaviour {
     private Animator unsecuredScoreAnimator;
     
     private TextMeshProUGUI scoreText;
+    
+    // game over
+    public GameObject gameOverPrefab;
+    public List<GameObject> objectsToDisable;
+    public FollowPlayer cameraFollow;
 
     private void Awake() {
         if (Instance == null) Instance = this;
@@ -68,5 +73,18 @@ public class Score : MonoBehaviour {
 
     public int GetUnsecuredScore() {
         return unsecuredScore;
+    }
+
+    public void GameOver() {
+        // display game over
+        TextMeshProUGUI gameOverText = Instantiate(gameOverPrefab, transform.parent, false).GetComponent<TextMeshProUGUI>();
+        gameOverText.text = "your score: " + score;
+        // disable other objects
+        cameraFollow.enabled = false;
+        Time.timeScale = 1.0f;
+        foreach (GameObject o in objectsToDisable) {
+            o.SetActive(false);
+        }
+        gameObject.SetActive(false);
     }
 }

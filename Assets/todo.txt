@@ -2,7 +2,6 @@
 
 TODO FOR NEXT WEEK
 
-
 Fix rails so u can jump from below them
 
 Ramps that automatically jump the player

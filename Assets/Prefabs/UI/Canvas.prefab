@@ -1438,6 +1438,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: 0
   unsecuredScorePrefab: {fileID: 6941402312752193843, guid: 1480cb9595c844fd899db7ac79448859, type: 3}
+  gameOverPrefab: {fileID: 142869858993317319, guid: dbd7e0bf9abca4aca8805151b180530f, type: 3}
+  objectsToDisable:
+  - {fileID: 1110688572206153380}
+  - {fileID: 9185238080452091855}
+  - {fileID: 0}
+  cameraFollow: {fileID: 0}
 --- !u!1 &6096960407831325064
 GameObject:
   m_ObjectHideFlags: 0

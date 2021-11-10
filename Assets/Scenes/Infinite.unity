@@ -216,6 +216,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 308843183818454226, guid: de0d4f345ffa840be961759f454e2622, type: 3}
+      propertyPath: cameraFollow
+      value: 
+      objectReference: {fileID: 1367640661}
+    - target: {fileID: 308843183818454226, guid: de0d4f345ffa840be961759f454e2622, type: 3}
+      propertyPath: objectsToDisable.Array.data[2]
+      value: 
+      objectReference: {fileID: 561132899}
     - target: {fileID: 1030747546913076958, guid: de0d4f345ffa840be961759f454e2622, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -306,21 +314,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de0d4f345ffa840be961759f454e2622, type: 3}
---- !u!1 &554326969 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9185238080452091855, guid: de0d4f345ffa840be961759f454e2622, type: 3}
-  m_PrefabInstance: {fileID: 554326968}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &554326970 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1110688572206153380, guid: de0d4f345ffa840be961759f454e2622, type: 3}
-  m_PrefabInstance: {fileID: 554326968}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &554326971 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6088278267917446627, guid: de0d4f345ffa840be961759f454e2622, type: 3}
-  m_PrefabInstance: {fileID: 554326968}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &561132899 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 190654776045194320, guid: 40fdb9c8aa7ee4b158226da54fe3aa49, type: 3}
@@ -607,14 +600,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3166f1b619b044bff9966fb7a7979faa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeRemaining: 60
-  gameOverPrefab: {fileID: 142869858993317319, guid: dbd7e0bf9abca4aca8805151b180530f, type: 3}
-  objectsToDisable:
-  - {fileID: 554326971}
-  - {fileID: 561132899}
-  - {fileID: 554326970}
-  - {fileID: 554326969}
-  cameraFollow: {fileID: 1367640661}
+  timeRemaining: 10
 --- !u!114 &1689680767
 MonoBehaviour:
   m_ObjectHideFlags: 0
