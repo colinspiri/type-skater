@@ -8,6 +8,8 @@ Ramps that automatically jump the player
     
 Move unsecured score closer to player when in mid-jump
 
+wobble animation when unsafe in the air
+
 More chill lo-fi royalty-free music
 
 TODO - DONE
