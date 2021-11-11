@@ -182,6 +182,10 @@ PrefabInstance:
       propertyPath: typingText
       value: 
       objectReference: {fileID: 6663930722031257766}
+    - target: {fileID: 190654776045194327, guid: 40fdb9c8aa7ee4b158226da54fe3aa49, type: 3}
+      propertyPath: completedTrickParent
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40fdb9c8aa7ee4b158226da54fe3aa49, type: 3}
 --- !u!1001 &329913327

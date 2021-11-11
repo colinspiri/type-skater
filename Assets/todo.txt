@@ -16,8 +16,7 @@ Tutorial/level 0 to teach the player without obstacles
 LEVEL 2: ramps that automatically jump the player
     but if you ollie near the very end, you get a larger jump
     
-completed words appear where the player was so u can see how many tricks you did in the path u made?
-    after a level, zoom out and show all the tricks u did?
+after a level, zoom out and show all the tricks u did
 word per minute counter to show at the end of each level?
 deactivate mouse cursor
 ollie off the rail without grinding causes a bug
@@ -56,8 +55,9 @@ COLORS
 dark purple: 330076
 light purple: 9655FF
 yellow: E3C41C
-
 orange: EC7357
+light grey: C8BFC7
+
 light pink: E49AB0
 hot pink: EF476F
 light blue: 9CFFFA

@@ -87,3 +87,5 @@ MonoBehaviour:
   - text: pop shove-it
     trickScore: 7
     availableInStates: 00000000
+  completedTrickParent: {fileID: 0}
+  completedTrickTextPrefab: {fileID: 3783369161292865245, guid: dd696d0494d1c429c82bc27fe1b69a54, type: 3}
