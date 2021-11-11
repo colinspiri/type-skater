@@ -186,6 +186,18 @@ PrefabInstance:
       propertyPath: completedTrickParent
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 190654776045194327, guid: 40fdb9c8aa7ee4b158226da54fe3aa49, type: 3}
+      propertyPath: completedTrickTextColor.b
+      value: 0.72156864
+      objectReference: {fileID: 0}
+    - target: {fileID: 190654776045194327, guid: 40fdb9c8aa7ee4b158226da54fe3aa49, type: 3}
+      propertyPath: completedTrickTextColor.g
+      value: 0.5058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 190654776045194327, guid: 40fdb9c8aa7ee4b158226da54fe3aa49, type: 3}
+      propertyPath: completedTrickTextColor.r
+      value: 0.20784314
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40fdb9c8aa7ee4b158226da54fe3aa49, type: 3}
 --- !u!1001 &329913327
@@ -338,7 +350,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.2, g: 0, b: 0.4627451, a: 1}
+  m_Color: {r: 0.11372549, g: 0.18431373, b: 0.43529412, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -993,6 +1005,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1204236301}
     m_Modifications:
+    - target: {fileID: 7981045465561468168, guid: a28a59915d9ae4d2b9bbe5d1890158c8, type: 3}
+      propertyPath: m_Color.b
+      value: 0.72156864
+      objectReference: {fileID: 0}
+    - target: {fileID: 7981045465561468168, guid: a28a59915d9ae4d2b9bbe5d1890158c8, type: 3}
+      propertyPath: m_Color.g
+      value: 0.5058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 7981045465561468168, guid: a28a59915d9ae4d2b9bbe5d1890158c8, type: 3}
+      propertyPath: m_Color.r
+      value: 0.20784314
+      objectReference: {fileID: 0}
     - target: {fileID: 7981045465561468169, guid: a28a59915d9ae4d2b9bbe5d1890158c8, type: 3}
       propertyPath: m_Name
       value: Ground Piece
@@ -1232,6 +1256,10 @@ PrefabInstance:
     - target: {fileID: 6088278267917446627, guid: de0d4f345ffa840be961759f454e2622, type: 3}
       propertyPath: m_Name
       value: Score
+      objectReference: {fileID: 0}
+    - target: {fileID: 6314349627910658733, guid: de0d4f345ffa840be961759f454e2622, type: 3}
+      propertyPath: m_text
+      value: level1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de0d4f345ffa840be961759f454e2622, type: 3}

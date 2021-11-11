@@ -1,9 +1,6 @@
 
 
 TODO FOR NEXT WEEK
-min speed
-    when collide with an obstacle, come to a complete stop until u push again
-    when you push, slow down to a min speed cause you're rolling
 
 randomize which tricks show up for each jump
     dependent on jump height
@@ -11,10 +8,13 @@ issue with "drop"
     player types drop when an obstacle is coming up but if u land properly then u get a speed boost
     maybe reduce the speed boost?
 
-Tutorial/level 0 to teach the player without obstacles
-   pause time and prompt to hold ENTER to land safely
+level 0 tutorial
+    prompt to hold ENTER to land safely
+    
 LEVEL 2: ramps that automatically jump the player
     but if you ollie near the very end, you get a larger jump
+LEVEL 1: rails that u can land on
+    can do tricks, can ollie off, can also "grind"
     
 after a level, zoom out and show all the tricks u did
 word per minute counter to show at the end of each level?
@@ -52,13 +52,15 @@ maybe some tricks give you a mini double jump
 https://www.masterclass.com/articles/guide-to-skate-lingo#66-basic-skateboarding-terms
 
 COLORS
-dark purple: 330076
-light purple: 9655FF
 yellow: E3C41C
 orange: EC7357
 light grey: C8BFC7
 
-light pink: E49AB0
-hot pink: EF476F
-light blue: 9CFFFA
-aquamarine: 3DDC97
+dark purple: 330076
+light purple: 9655FF
+
+dark green: 2C5530
+light green: 739E82
+
+dark blue: 1D2F6F
+light blue: 3581B8

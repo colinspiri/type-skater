@@ -19,6 +19,7 @@ public class TypingManager : MonoBehaviour {
     public List<Word> level1Words;
     public List<Word> level2Words;
     public GameObject completedTrickTextPrefab;
+    public Color completedTrickTextColor;
 
     // state
     private List<Word> words = new List<Word>();
@@ -110,7 +111,9 @@ public class TypingManager : MonoBehaviour {
                     // spawn completed trick text
                     GameObject completedTrickText = Instantiate(completedTrickTextPrefab, Player.Instance.transform.position, Quaternion.identity);
                     completedTrickText.transform.SetParent(transform);
-                    completedTrickText.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = w.text;
+                    TextMeshProUGUI text = completedTrickText.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+                    text.text = w.text;
+                    text.color = completedTrickTextColor;
                     // call callback
                     onCompleteWord?.Invoke(w.text);
                     break;
