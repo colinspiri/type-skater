@@ -7,9 +7,6 @@ randomize which tricks show up for each jump
 issue with "drop"
     player types drop when an obstacle is coming up but if u land properly then u get a speed boost
     maybe reduce the speed boost?
-
-level 0 tutorial
-    prompt to hold ENTER to land safely
     
 LEVEL 2: ramps that automatically jump the player
     but if you ollie near the very end, you get a larger jump
@@ -39,7 +36,6 @@ More chill lo-fi royalty-free music
 
 TODO - LATER
 Fix Time.deltaTime to make it look smoother
-
 
 
 RANDOM IDEAS
