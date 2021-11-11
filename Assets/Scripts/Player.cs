@@ -52,13 +52,15 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
 
+    private Skateboard skateboard;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
         
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-
+        skateboard = FindObjectOfType<Skateboard>();
         onJump += () => transform.eulerAngles = new Vector3(0, 0, unsafeRotationZ);
     }
 
@@ -97,6 +99,7 @@ public class Player : MonoBehaviour
         state = State.Midair;
         Time.timeScale = midairTimeScale;
         // Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        skateboard.SetTrick("ollie");
         
         if(wasOnGround) onJump?.Invoke();
     }

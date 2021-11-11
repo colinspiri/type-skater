@@ -1629,6 +1629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b9b0f9e5726344fb937f9f24e6e9e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpDelay: 1
+  trickTutorialDelay: 0
   trickList: {fileID: 811555937}
   trickCanvas: {fileID: 7915776127728874000, guid: f04c2216c379d480e8a76e9adb2dd883, type: 3}
+  safeTutorialDelay: 0
