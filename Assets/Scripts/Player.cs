@@ -95,6 +95,7 @@ public class Player : MonoBehaviour
         rb.AddForce(new Vector2(0, multiplier * Mathf.Lerp(minJumpForce, maxJumpForce, rb.velocity.x / maxVelocity)));
         state = State.Midair;
         Time.timeScale = midairTimeScale;
+        // Time.fixedDeltaTime = 0.02f * Time.timeScale;
         
         if(wasOnGround) onJump?.Invoke();
     }
@@ -125,6 +126,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Ground") && state != State.OnGround) {
             state = State.OnGround;
             Time.timeScale = 1.0f;
+            // Time.fixedDeltaTime = 0.02f * Time.timeScale;
             onLand?.Invoke();
             if (safe) {
                 float multiplier = Mathf.Lerp(0.7f, 2.0f, Score.Instance.GetUnsecuredScore() / 10.0f);
@@ -144,6 +146,7 @@ public class Player : MonoBehaviour
             if (safe) {
                 state = State.OnRail;
                 Time.timeScale = railTimeScale;
+                // Time.fixedDeltaTime = 0.02f * Time.timeScale;
                 railSpeed = rb.velocity.x > railMinSpeed ? rb.velocity.x : railMinSpeed;
                 grindCount = 0;
             }
@@ -152,6 +155,7 @@ public class Player : MonoBehaviour
                 WipeOut();
                 state = State.Midair;
                 Time.timeScale = midairTimeScale;
+                // Time.fixedDeltaTime = 0.02f * Time.timeScale;
             }
         }
     }

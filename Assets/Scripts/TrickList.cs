@@ -15,11 +15,7 @@ public class TrickList : MonoBehaviour
     
     private void Update() {
         trickListText.text = "";
-        foreach (Word w in TypingManager.Instance.words) {
-            // skip tricks that you've already done, but not grind
-            if (TypingManager.Instance.GetCurrentTricks().Contains(w) && w.text != "grind") continue;
-            // skip if not in state
-            if (!w.availableInStates.Contains(Player.Instance.state)) continue;
+        foreach (Word w in TypingManager.Instance.GetAvailableWords()) {
             trickListText.text += w.text + '\n';
         }
     }

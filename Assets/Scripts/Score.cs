@@ -92,6 +92,7 @@ public class Score : MonoBehaviour {
         // disable other objects
         cameraFollow.enabled = false;
         Time.timeScale = 1.0f;
+        // Time.fixedDeltaTime = 0.02f * Time.timeScale;
         foreach (GameObject o in objectsToDisable) {
             o.SetActive(false);
         }

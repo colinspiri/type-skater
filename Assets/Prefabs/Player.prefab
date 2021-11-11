@@ -147,10 +147,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pushForce: 100
-  minVelocity: 1.5
-  maxVelocity: 6
-  minJumpForce: 100
-  maxJumpForce: 260
+  minVelocity: 3
+  maxVelocity: 7
+  minJumpForce: 150
+  maxJumpForce: 300
   midairTimeScale: 0.4
   dropForce: 150
   railTimeScale: 0.6

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class TypingManager : MonoBehaviour {
     public static TypingManager Instance;
@@ -13,11 +14,14 @@ public class TypingManager : MonoBehaviour {
     
     // public data
     public TextMeshProUGUI typingText;
-    public List<Word> words;
     public GameObject completedTextPrefab;
+    public List<Word> basicWords;
+    public List<Word> level1Words;
+    public List<Word> level2Words;
 
     // state
-    private List<Word> currentTricks = new List<Word>();
+    private List<Word> words = new List<Word>();
+    private List<Word> doneTricks = new List<Word>();
 
     private void Awake() {
         Instance = this;
@@ -26,9 +30,25 @@ public class TypingManager : MonoBehaviour {
     private void Start() {
         playerAnimator = Player.Instance.GetComponent<Animator>();
 
-        Player.Instance.onLand += () => currentTricks.Clear();
+        Player.Instance.onLand += () => doneTricks.Clear();
 
         typingText.text = "";
+
+        words.AddRange(basicWords);
+        string sceneName = SceneManager.GetActiveScene().name;
+        if (sceneName.Equals("Level1")) {
+            // Debug.Log("scene is " + sceneName + ", adding level 1");
+            words.AddRange(level1Words);
+        }
+        else if (sceneName.Equals("Level2")) {
+            // Debug.Log("scene is " + sceneName + ", adding level 2");
+            words.AddRange(level1Words);
+            words.AddRange(level2Words);
+        }
+        else if (sceneName.Equals("Infinite")) {
+            words.AddRange(level1Words);
+            words.AddRange(level2Words);
+        }
     }
 
     // Update is called once per frame
@@ -39,12 +59,7 @@ public class TypingManager : MonoBehaviour {
         
         char c = input[0];
         Word currentWord = null;
-        foreach (Word w in words) {
-            // skip tricks that you've already done, but not grind
-            if (currentTricks.Contains(w) && w.text != "grind" && w.text != "drop") continue;
-            // skip trick if not in correct state
-            if (!w.availableInStates.Contains(Player.Instance.state)) continue;
-
+        foreach (Word w in GetAvailableWords()) {
             // if the current input matches a word
             if (w.ContinueText(c)) {
                 if (currentWord == null) {
@@ -69,7 +84,7 @@ public class TypingManager : MonoBehaviour {
                     // if not OnGround, add to current tricks
                     if (w.trickScore > 0 && Player.Instance.state != Player.State.OnGround)
                     {
-                        currentTricks.Add(w);
+                        doneTricks.Add(w);
                         // add to score
                         Score.Instance.AddScore(w.trickScore);
                         // do player animation
@@ -89,8 +104,17 @@ public class TypingManager : MonoBehaviour {
         typingText.text = currentWord == null ? "" : currentWord.GetTyped();
     }
 
-    public List<Word> GetCurrentTricks() {
-        return currentTricks;
+    public List<Word> GetAvailableWords() {
+        List<Word> availableWords = new List<Word>();
+        foreach (var w in words) {
+            // skip tricks that you've already done, but not grind
+            if (doneTricks.Contains(w) && w.text != "grind" && w.text != "drop") continue;
+            // skip if not in state
+            if (!w.availableInStates.Contains(Player.Instance.state)) continue;
+            // add to available words
+            availableWords.Add(w);
+        }
+        return availableWords;
     }
 }
 

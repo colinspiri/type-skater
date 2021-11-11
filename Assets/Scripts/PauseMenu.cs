@@ -36,6 +36,7 @@ public class PauseMenu : MonoBehaviour {
         optionsMenu.SetActive(false);
         previousTimeScale = Time.timeScale;
         Time.timeScale = 0f;
+        // Time.fixedDeltaTime = 0.02f * Time.timeScale;
         
         paused = true;
     }
@@ -47,6 +48,7 @@ public class PauseMenu : MonoBehaviour {
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
         Time.timeScale = previousTimeScale;
+        // Time.fixedDeltaTime = 0.02f * Time.timeScale;
         
         paused = false;
     }
@@ -68,6 +70,7 @@ public class PauseMenu : MonoBehaviour {
     public void BackToMainMenu() {
         Resume();
         Time.timeScale = 1f;
+        // Time.fixedDeltaTime = 0.02f * Time.timeScale;
         SceneManager.LoadScene("Menu");
     }
 }

@@ -67,17 +67,16 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public void City() {
-        // Debug.Log("city");
-        // load city scene
+    public void Level0() {
+        SceneManager.LoadScene("Level0");
+    }
+    public void Level1() {
         SceneManager.LoadScene("Level1");
     }
-    public void Park() {
-        Debug.Log("park");
-        // load park scene
+    public void Level2() {
+        SceneManager.LoadScene("Level2");
     }
     public void Infinite() {
-        // Debug.Log("infinite");
         // load infinite mode
         SceneManager.LoadScene("Infinite");
     }
