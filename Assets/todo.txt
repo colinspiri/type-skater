@@ -1,6 +1,10 @@
 
 
 TODO FOR NEXT WEEK
+min speed
+    when collide with an obstacle, come to a complete stop until u push again
+    when you push, slow down to a min speed cause you're rolling
+
 randomize which tricks show up for each jump
     dependent on jump height
 issue with "drop"
@@ -12,10 +16,8 @@ Tutorial/level 0 to teach the player without obstacles
 LEVEL 2: ramps that automatically jump the player
     but if you ollie near the very end, you get a larger jump
     
-try to change min speed & jump force so that 1 ollie is enough to hop over
-    without push?
-    or with 1 push?
-    
+completed words appear where the player was so u can see how many tricks you did in the path u made?
+    after a level, zoom out and show all the tricks u did?
 word per minute counter to show at the end of each level?
 deactivate mouse cursor
 ollie off the rail without grinding causes a bug

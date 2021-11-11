@@ -15,13 +15,17 @@ public class TypingManager : MonoBehaviour {
     // public data
     public TextMeshProUGUI typingText;
     public GameObject completedTextPrefab;
-    public List<Word> basicWords;
+    public List<Word> level0Words;
     public List<Word> level1Words;
     public List<Word> level2Words;
 
     // state
     private List<Word> words = new List<Word>();
     private List<Word> doneTricks = new List<Word>();
+    
+    // callbacks
+    public delegate void OnCompleteWord(string word);
+    public OnCompleteWord onCompleteWord;
 
     private void Awake() {
         Instance = this;
@@ -34,18 +38,24 @@ public class TypingManager : MonoBehaviour {
 
         typingText.text = "";
 
-        words.AddRange(basicWords);
+        // words.AddRange(basicWords);
         string sceneName = SceneManager.GetActiveScene().name;
+        if (sceneName.Equals("Level0")) {
+            words.AddRange(level0Words);
+        }
         if (sceneName.Equals("Level1")) {
             // Debug.Log("scene is " + sceneName + ", adding level 1");
+            words.AddRange(level0Words);
             words.AddRange(level1Words);
         }
         else if (sceneName.Equals("Level2")) {
             // Debug.Log("scene is " + sceneName + ", adding level 2");
+            words.AddRange(level0Words);
             words.AddRange(level1Words);
             words.AddRange(level2Words);
         }
         else if (sceneName.Equals("Infinite")) {
+            words.AddRange(level0Words);
             words.AddRange(level1Words);
             words.AddRange(level2Words);
         }
@@ -96,6 +106,8 @@ public class TypingManager : MonoBehaviour {
                     // clear current typing
                     typingText.text = "";
                     currentWord = null;
+                    // call callback
+                    onCompleteWord?.Invoke(w.text);
                     break;
                 }
             }

@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     public State state;
     private float railSpeed;
     [NonSerialized] public int grindCount;
-
+    private bool rolling;
     public bool safe;
 
     public delegate void OnJump();
@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector2(railSpeed, rb.velocity.y);
         }
 
-        if (rb.velocity.x < minVelocity) {
+        if (rolling && rb.velocity.x < minVelocity) {
             SlowToMinSpeed();
         }
     }
@@ -82,6 +82,7 @@ public class Player : MonoBehaviour
         {
             rb.AddForce(new Vector2(pushForce * multiplier, 0));
         }
+        rolling = true;
     }
 
     public void Jump(float multiplier = 1.0f)
@@ -108,6 +109,7 @@ public class Player : MonoBehaviour
     public void WipeOut() {
         // slow
         SlowToMinSpeed();
+        rolling = false;
         
         // if player landed with unsecured score, screen shake magnitude is proportional to the score
         float magnitude = (Score.Instance.GetUnsecuredScore() > 0) ? (0.2f + Score.Instance.GetUnsecuredScore() * 0.1f) : 1f;

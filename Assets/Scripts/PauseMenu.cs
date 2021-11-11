@@ -9,12 +9,16 @@ public class PauseMenu : MonoBehaviour {
     public GameObject pauseMenu;
     public GameObject optionsMenu;
     public List<GameObject> objectsToDisable;
-    
+
     private bool paused;
     private float previousTimeScale;
+    private List<bool> wereObjectsActive = new List<bool>();
     
     // Start is called before the first frame update
     void Start() {
+        for (int i = 0; i < objectsToDisable.Count; i++) {
+            wereObjectsActive.Add(objectsToDisable[i].activeSelf);
+        }
         previousTimeScale = 1.0f;
         Resume();
     }
@@ -29,26 +33,25 @@ public class PauseMenu : MonoBehaviour {
     }
 
     private void Pause() {
-        foreach (var o in objectsToDisable) {
-            o.SetActive(false);
+        for (int i = 0; i < objectsToDisable.Count; i++) {
+            wereObjectsActive[i] = objectsToDisable[i].activeSelf;
+            objectsToDisable[i].SetActive(false);
         }
         pauseMenu.SetActive(true);
         optionsMenu.SetActive(false);
         previousTimeScale = Time.timeScale;
         Time.timeScale = 0f;
-        // Time.fixedDeltaTime = 0.02f * Time.timeScale;
         
         paused = true;
     }
 
     public void Resume() {
-        foreach (var o in objectsToDisable) {
-            o.SetActive(true);
+        for (int i = 0; i < objectsToDisable.Count; i++) {
+            objectsToDisable[i].SetActive(wereObjectsActive[i]);
         }
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
         Time.timeScale = previousTimeScale;
-        // Time.fixedDeltaTime = 0.02f * Time.timeScale;
         
         paused = false;
     }
@@ -68,9 +71,8 @@ public class PauseMenu : MonoBehaviour {
     }
 
     public void BackToMainMenu() {
+        previousTimeScale = 1f;
         Resume();
-        Time.timeScale = 1f;
-        // Time.fixedDeltaTime = 0.02f * Time.timeScale;
         SceneManager.LoadScene("Menu");
     }
 }
