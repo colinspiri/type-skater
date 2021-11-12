@@ -110,7 +110,6 @@ public class TypingManager : MonoBehaviour {
                     currentWord = null;
                     // spawn completed trick text
                     GameObject completedTrickText = Instantiate(completedTrickTextPrefab, Player.Instance.transform.position, Quaternion.identity);
-                    completedTrickText.transform.SetParent(transform);
                     TextMeshProUGUI text = completedTrickText.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
                     text.text = w.text;
                     text.color = completedTrickTextColor;

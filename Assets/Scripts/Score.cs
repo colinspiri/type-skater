@@ -21,8 +21,11 @@ public class Score : MonoBehaviour {
     // game over
     public GameObject gameOverPrefab;
     public List<GameObject> objectsToDisable;
-    public FollowPlayer cameraFollow;
+    public CameraMove cameraMove;
     
+    public delegate void OnGameOver();
+    public OnGameOver onGameOver;
+
     private void Awake() {
         if (Instance == null) Instance = this;
         scoreText = GetComponent<TextMeshProUGUI>();
@@ -90,12 +93,12 @@ public class Score : MonoBehaviour {
         TextMeshProUGUI gameOverText = Instantiate(gameOverPrefab, transform.parent, false).GetComponent<TextMeshProUGUI>();
         gameOverText.text = "your score: " + score;
         // disable other objects
-        cameraFollow.enabled = false;
         Time.timeScale = 1.0f;
         // Time.fixedDeltaTime = 0.02f * Time.timeScale;
         foreach (GameObject o in objectsToDisable) {
             o.SetActive(false);
         }
         scoreText.enabled = false;
+        onGameOver?.Invoke();
     }
 }

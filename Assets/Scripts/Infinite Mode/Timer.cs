@@ -12,6 +12,8 @@ public class Timer : MonoBehaviour
 
     private TextMeshProUGUI timeDisplay;
 
+    public GameObject levelEnd;
+
     private void Awake() {
         timeDisplay = GetComponent<TextMeshProUGUI>();
     }
@@ -22,10 +24,11 @@ public class Timer : MonoBehaviour
         if (timeRemaining > 0) {
             if(Time.timeScale != 0) timeRemaining -= Time.unscaledDeltaTime;
             DisplayTime(timeRemaining);
+            // move level end so player never hits it
+            levelEnd.transform.position = Player.Instance.transform.position + new Vector3(5, 0, 0);
             if (timeRemaining <= 0) {
                 timeRemaining = 0;
                 timeDisplay.enabled = false;
-                Score.Instance.GameOver();
             }
         }
     }

@@ -25,6 +25,8 @@ public class MainMenu : MonoBehaviour
         options.SetActive(false);
         credits.SetActive(false);
         ChangeMenu(MenuState.MainMenu);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update() {

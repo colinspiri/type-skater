@@ -559,6 +559,10 @@ PrefabInstance:
       propertyPath: objectToFollow
       value: 
       objectReference: {fileID: 1078977165}
+    - target: {fileID: 8784241558764661592, guid: a03407549f4af4d1f8d0f48d3f56be46, type: 3}
+      propertyPath: levelEndTransform
+      value: 
+      objectReference: {fileID: 1517407864}
     - target: {fileID: 8784241558764661593, guid: a03407549f4af4d1f8d0f48d3f56be46, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1027,11 +1031,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7981045465561468171, guid: a28a59915d9ae4d2b9bbe5d1890158c8, type: 3}
       propertyPath: m_LocalScale.x
-      value: 267.6502
+      value: 292.4346
       objectReference: {fileID: 0}
     - target: {fileID: 7981045465561468171, guid: a28a59915d9ae4d2b9bbe5d1890158c8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 123.262
+      value: 110.8713
       objectReference: {fileID: 0}
     - target: {fileID: 7981045465561468171, guid: a28a59915d9ae4d2b9bbe5d1890158c8, type: 3}
       propertyPath: m_LocalPosition.y

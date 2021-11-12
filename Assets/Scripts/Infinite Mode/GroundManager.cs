@@ -16,7 +16,6 @@ public class GroundManager : MonoBehaviour {
     private System.Random rand;
     private int count;
     
-    
     private void Start() {
         grounds = new List<GameObject> {mostRecentGround};
         rails = new List<GameObject> {mostRecentRail};
@@ -42,12 +41,6 @@ public class GroundManager : MonoBehaviour {
                 count=0;
                 randRange= (rand.Next()%3)+1;
             }
-            // remove off-screen grounds
-            if (grounds.Count >= 5) {
-                Destroy(grounds[0]);
-                grounds.RemoveAt(0);
-            }
-            
         }
     }
 }

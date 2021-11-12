@@ -15,7 +15,6 @@ LEVEL 1: rails that u can land on
     
 after a level, zoom out and show all the tricks u did
 word per minute counter to show at the end of each level?
-deactivate mouse cursor
 ollie off the rail without grinding causes a bug
     player stays on the rail and doesn't properly jump off it
 
