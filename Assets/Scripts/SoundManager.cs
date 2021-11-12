@@ -19,7 +19,9 @@ public class SoundManager : MonoBehaviour {
 
     private void Start() {
         if (Player.Instance != null) {
-            Player.Instance.onSafeLanding += SafeLanding;
+            Player.Instance.onSafeLanding += (float score) => {
+                SafeLanding();
+            };
             Player.Instance.onUnsafeLanding += WipeOut;
         }
     }

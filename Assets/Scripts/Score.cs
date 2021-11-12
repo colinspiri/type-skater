@@ -41,7 +41,9 @@ public class Score : MonoBehaviour {
             unsecuredScoreText = unsecuredScoreObject.GetComponent<TextMeshProUGUI>();
             unsecuredScoreAnimator = unsecuredScoreObject.GetComponent<Animator>();
         };
-        Player.Instance.onSafeLanding += SecureScore;
+        Player.Instance.onSafeLanding += (float s) => {
+            SecureScore();
+        };
         Player.Instance.onUnsafeLanding += () => {
             // destroy unsecured animator
             if (unsecuredScoreAnimator != null) {

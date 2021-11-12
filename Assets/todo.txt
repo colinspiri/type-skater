@@ -5,14 +5,9 @@ TODO FOR NEXT WEEK
 randomize which tricks show up for each jump
     dependent on jump height
     
-TUNE LEVEL 0 TUTORIAL
-   push
-   cone 1: ollie & ENTER
-   cone 2: fakie
-    
-LEVEL 2: ramps that automatically jump the player
+LEVEL 1: ramps that automatically jump the player
     but if you ollie near the very end, you get a larger jump
-LEVEL 1: rails that u can land on
+LEVEL 2: rails that u can land on
     can do tricks, can ollie off, can also "grind"
     
 word per minute counter to show at the end of each level?

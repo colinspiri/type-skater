@@ -35,17 +35,38 @@ public class TutorialManager : MonoBehaviour {
     public TrickList trickList;
     public GameObject fakieCanvasPrefab;
     private TextMeshProUGUI fakieText;
+    
+    // higher ollie text
+    private TutorialStatus higherOllieTutorialStatus = TutorialStatus.Incomplete;
+    public GameObject higherOllieCanvas;
+    private TextMeshProUGUI higherOlliePushText;
+    private TextMeshProUGUI higherOllieOllieText;
+    
+    // landing tricks text
+    public GameObject landingTricksCanvas;
 
     // Start is called before the first frame update
     void Start() {
         ollieCanvas.SetActive(false);
+        higherOllieCanvas.SetActive(false);
+        landingTricksCanvas.SetActive(false);
         
         Player.Instance.onJump += () => {
             if(safeTutorialStatus == TutorialStatus.Incomplete) StartSafeTutorial();
             else if(fakieTutorialStatus == TutorialStatus.Incomplete) StartFakieTutorial();
         };
-        Player.Instance.onSafeLanding += () => {
+        Player.Instance.onSafeLanding += (float score) => {
             safeTutorialStatus = TutorialStatus.Done;
+            // higher ollie
+            if (higherOllieTutorialStatus == TutorialStatus.Incomplete) {
+                higherOllieCanvas.SetActive(true);
+                higherOlliePushText = higherOllieCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+                higherOllieOllieText = higherOllieCanvas.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+                higherOllieTutorialStatus = TutorialStatus.Triggered;
+            }
+            if (score > 0) {
+                landingTricksCanvas.SetActive(true);
+            }
         };
         Player.Instance.onUnsafeLanding += () => {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -54,9 +75,15 @@ public class TutorialManager : MonoBehaviour {
             if (word.Equals("push")) {
                 pushText.color = greyedOutColor;
                 ollieCanvas.SetActive(true);
+                if (higherOllieTutorialStatus == TutorialStatus.Triggered) {
+                    higherOlliePushText.color = greyedOutColor;
+                }
             }
             else if (word.Equals("ollie")) {
                 ollieText.color = greyedOutColor;
+                if (higherOllieTutorialStatus == TutorialStatus.Triggered) {
+                    higherOllieOllieText.color = greyedOutColor;
+                }
             }
             else if (word.Equals("fakie") && fakieTutorialStatus == TutorialStatus.WaitingForInput) {
                 Time.timeScale = previousTimeScale;

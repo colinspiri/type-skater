@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
     public delegate void OnUnsafeLanding();
     public OnUnsafeLanding onUnsafeLanding;
 
-    public delegate void OnSafeLanding();
+    public delegate void OnSafeLanding(float score);
     public OnSafeLanding onSafeLanding;
 
     // component stuff
@@ -131,10 +131,15 @@ public class Player : MonoBehaviour
             // Time.fixedDeltaTime = 0.02f * Time.timeScale;
             onLand?.Invoke();
             if (safe) {
-                float multiplier = Mathf.Lerp(0.7f, 2.0f, Score.Instance.GetUnsecuredScore() / 10.0f);
-                Push(multiplier);
+                if (Score.Instance.GetUnsecuredScore() == 0) {
+                    Push(0.5f);
+                }
+                else {
+                    float multiplier = Mathf.Lerp(1f, 2.5f, Score.Instance.GetUnsecuredScore() / 10.0f);
+                    Push(multiplier);
+                }
                 // callback
-                onSafeLanding?.Invoke();
+                onSafeLanding?.Invoke(Score.Instance.GetUnsecuredScore());
             }
             else {
                 WipeOut();

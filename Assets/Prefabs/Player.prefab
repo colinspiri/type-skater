@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pushForce: 150
-  minVelocity: 2
+  minVelocity: 1.5
   maxVelocity: 7
   minJumpForce: 150
   maxJumpForce: 300
