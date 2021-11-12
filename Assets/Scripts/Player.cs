@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
         state = State.Midair;
         Time.timeScale = midairTimeScale;
         // Time.fixedDeltaTime = 0.02f * Time.timeScale;
-        skateboard.SetTrick("ollie");
+        skateboard.SetAnimation(Skateboard.Animation.Ollie);
         
         if(wasOnGround) onJump?.Invoke();
     }
