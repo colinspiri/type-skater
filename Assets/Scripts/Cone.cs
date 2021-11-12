@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Cone : MonoBehaviour {
     public int scorePenalty;
+    public bool resetGameOnCollide = false;
 
     private void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.CompareTag("Player")) {
@@ -16,8 +17,8 @@ public class Cone : MonoBehaviour {
             // destroy cone
             Destroy(gameObject);
             
-            // if on level0, reset the player
-            if (SceneManager.GetActiveScene().name.Equals("Level0")) {
+            // reset the player
+            if (resetGameOnCollide && !Score.Instance.gameOver) {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }

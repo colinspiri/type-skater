@@ -4,16 +4,17 @@ TODO FOR NEXT WEEK
 
 randomize which tricks show up for each jump
     dependent on jump height
-issue with "drop"
-    player types drop when an obstacle is coming up but if u land properly then u get a speed boost
-    maybe reduce the speed boost?
+    
+TUNE LEVEL 0 TUTORIAL
+   push
+   cone 1: ollie & ENTER
+   cone 2: fakie
     
 LEVEL 2: ramps that automatically jump the player
     but if you ollie near the very end, you get a larger jump
 LEVEL 1: rails that u can land on
     can do tricks, can ollie off, can also "grind"
     
-after a level, zoom out and show all the tricks u did
 word per minute counter to show at the end of each level?
 ollie off the rail without grinding causes a bug
     player stays on the rail and doesn't properly jump off it

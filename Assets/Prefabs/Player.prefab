@@ -146,8 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dafa1cec193f4f95afe6afdc2037ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 100
-  minVelocity: 3
+  pushForce: 150
+  minVelocity: 2
   maxVelocity: 7
   minJumpForce: 150
   maxJumpForce: 300

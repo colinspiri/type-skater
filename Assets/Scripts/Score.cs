@@ -19,6 +19,7 @@ public class Score : MonoBehaviour {
     private TextMeshProUGUI scoreText;
     
     // game over
+    public bool gameOver;
     public GameObject gameOverPrefab;
     public List<GameObject> objectsToDisable;
     public CameraMove cameraMove;
@@ -88,6 +89,7 @@ public class Score : MonoBehaviour {
     }
 
     public void GameOver() {
+        gameOver = true;
         SecureScore();
         // display game over
         TextMeshProUGUI gameOverText = Instantiate(gameOverPrefab, transform.parent, false).GetComponent<TextMeshProUGUI>();
