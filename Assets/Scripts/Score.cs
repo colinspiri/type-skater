@@ -22,7 +22,7 @@ public class Score : MonoBehaviour {
     public bool gameOver;
     public GameObject gameOverPrefab;
     public List<GameObject> objectsToDisable;
-    public CameraMove cameraMove;
+    public PauseMenu pauseMenu;
     
     public delegate void OnGameOver();
     public OnGameOver onGameOver;
@@ -102,6 +102,7 @@ public class Score : MonoBehaviour {
         foreach (GameObject o in objectsToDisable) {
             o.SetActive(false);
         }
+        pauseMenu.enabled = false;
         scoreText.enabled = false;
         onGameOver?.Invoke();
     }

@@ -9,6 +9,8 @@ TagManager:
   - RailEnd
   - front pole
   - back pole
+  - Ramp
+  - RampEnd
   layers:
   - Default
   - TransparentFX
@@ -48,6 +50,9 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 1014370701
+    locked: 0
+  - name: BehindGround
+    uniqueID: 1668580963
     locked: 0
   - name: Ground
     uniqueID: 1427014933

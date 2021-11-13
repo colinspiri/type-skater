@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     
     public float railTimeScale;
     public float railMinSpeed;
+
+    public float rampMinSpeed;
     
     public float unsafeRotationZ;
 
@@ -29,12 +31,15 @@ public class Player : MonoBehaviour
         Midair,
         OnGround,
         OnRail,
+        OnRamp,
     }
     public State state;
     private float railSpeed;
     [NonSerialized] public int grindCount;
     private bool rolling;
     public bool safe;
+
+    private float rampSpeed;
 
     public delegate void OnJump();
     public OnJump onJump;
@@ -68,7 +73,10 @@ public class Player : MonoBehaviour
         animator.SetBool("safe", state == State.Midair ? safe : true);
 
         if (state == State.OnRail) {
-            rb.velocity = new Vector2(railSpeed, rb.velocity.y);
+            if(rb.velocity.x < railSpeed) rb.velocity = new Vector2(railSpeed, rb.velocity.y);
+        }
+        else if (state == State.OnRamp) {
+            if(rb.velocity.x < rampSpeed) rb.velocity = new Vector2(rampSpeed, rb.velocity.y);
         }
 
         if (rolling && rb.velocity.x < minVelocity) {
@@ -92,60 +100,64 @@ public class Player : MonoBehaviour
             multiplier = Mathf.Lerp(0.1f, 1.5f, grindCount / 4.0f);
         }
         
-        bool wasOnGround = state == State.OnGround;
+        bool newJump = state == State.OnGround || state == State.OnRamp;
         rb.AddForce(new Vector2(0, multiplier * Mathf.Lerp(minJumpForce, maxJumpForce, rb.velocity.x / maxVelocity)));
         state = State.Midair;
         Time.timeScale = midairTimeScale;
-        // Time.fixedDeltaTime = 0.02f * Time.timeScale;
         
-        if(wasOnGround) onJump?.Invoke();
+        if(newJump) onJump?.Invoke();
     }
 
     public void Drop() {
         if(rb.velocity.y > 0) rb.velocity = new Vector2(rb.velocity.x, 0);
         rb.AddForce(new Vector2(0, -1 * dropForce));
     }
+    
+    private void SlowToMinSpeed() {
+        rb.velocity = new Vector2(minVelocity, rb.velocity.y);
+    }
+
+    private void SafeLanding() {
+        Time.timeScale = 1;
+        // speed boost
+        float score = Score.Instance.GetUnsecuredScore();
+        if (score == 0) {
+            Push(0.5f);
+        }
+        else {
+            float multiplier = Mathf.Lerp(1f, 2.5f, score / 10.0f);
+            Push(multiplier);
+        }
+        onLand?.Invoke();
+        onSafeLanding?.Invoke(score);
+    }
+    private void UnsafeLanding() {
+        Time.timeScale = 1;
+        // wipe out
+        WipeOut();
+        onLand?.Invoke();
+        onUnsafeLanding?.Invoke();
+    }
 
     public void WipeOut() {
         // slow
         SlowToMinSpeed();
         rolling = false;
-        
+
         // if player landed with unsecured score, screen shake magnitude is proportional to the score
         float magnitude = (Score.Instance.GetUnsecuredScore() > 0) ? (0.2f + Score.Instance.GetUnsecuredScore() * 0.1f) : 1f;
         StartCoroutine(CameraShake.Instance.Shake(magnitude));
-        
+
         // particles?
     }
 
-    private void SlowToMinSpeed() {
-        rb.velocity = new Vector2(minVelocity, rb.velocity.y);
-    }
-    
     private void OnCollisionEnter2D(Collision2D other)
     {
         // land on ground
         if (other.gameObject.CompareTag("Ground") && state != State.OnGround) {
             state = State.OnGround;
-            Time.timeScale = 1.0f;
-            // Time.fixedDeltaTime = 0.02f * Time.timeScale;
-            onLand?.Invoke();
-            if (safe) {
-                if (Score.Instance.GetUnsecuredScore() == 0) {
-                    Push(0.5f);
-                }
-                else {
-                    float multiplier = Mathf.Lerp(1f, 2.5f, Score.Instance.GetUnsecuredScore() / 10.0f);
-                    Push(multiplier);
-                }
-                // callback
-                onSafeLanding?.Invoke(Score.Instance.GetUnsecuredScore());
-            }
-            else {
-                WipeOut();
-                // callback
-                onUnsafeLanding?.Invoke();
-            }
+            if(safe) SafeLanding();
+            else UnsafeLanding();
         }
         
         // land on rail
@@ -153,16 +165,37 @@ public class Player : MonoBehaviour
             if (safe) {
                 state = State.OnRail;
                 Time.timeScale = railTimeScale;
-                // Time.fixedDeltaTime = 0.02f * Time.timeScale;
                 railSpeed = rb.velocity.x > railMinSpeed ? rb.velocity.x : railMinSpeed;
                 grindCount = 0;
             }
             else {
-                other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
-                WipeOut();
                 state = State.Midair;
                 Time.timeScale = midairTimeScale;
-                // Time.fixedDeltaTime = 0.02f * Time.timeScale;
+                other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                WipeOut();
+                Jump(0.2f);
+            }
+        }
+        
+        // land on ramp
+        if (other.gameObject.CompareTag("Ramp") && state != State.OnRamp) {
+            // if on ground
+            if (state == State.OnGround) {
+                state = State.OnRamp;
+                rampSpeed = rb.velocity.x > rampMinSpeed ? rb.velocity.x : rampMinSpeed;
+            }
+            // safe landing from midair
+            else if (state == State.Midair && safe) {
+                state = State.OnRamp;
+                rampSpeed = rb.velocity.x > rampMinSpeed ? rb.velocity.x : rampMinSpeed;
+                SafeLanding();
+            }
+            // unsafe landing from midair, bounce off
+            else if (state == State.Midair && !safe) {
+                Time.timeScale = midairTimeScale;
+                other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
+                WipeOut();
+                Jump(0.2f);
             }
         }
     }
@@ -173,6 +206,10 @@ public class Player : MonoBehaviour
             // set to midair
             state = State.Midair;
             Jump(0.1f);
+        }
+        // end of ramp
+        if (other.CompareTag("RampEnd") && state == State.OnRamp) {
+            Jump(0.8f);
         }
     }
 }

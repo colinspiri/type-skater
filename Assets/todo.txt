@@ -1,4 +1,37 @@
 
+LANDING
+
+SafeLanding() {
+    Timescale = 1
+    speed boost
+    safe landing callback
+}
+
+UnsafeLanding() {
+    Timescale = 1
+    WipeOut()
+    unsafe landing callback
+}
+
+ground - unsafe
+    UnsafeLanding()
+ground - safe
+    SafeLanding()
+
+ramp - unsafe
+    WipeOut()
+    disable ramp, stay in midair
+ramp - safe
+    SafeLanding()
+
+rail - unsafe
+    WipeOut()
+    disable rail, stay in midair
+rail - safe
+    Timescale = rail
+    onRail
+
+
 
 TODO FOR NEXT WEEK
 
@@ -14,6 +47,9 @@ word per minute counter to show at the end of each level?
 ollie off the rail without grinding causes a bug
     player stays on the rail and doesn't properly jump off it
 
+Move unsecured score closer to player when in mid-jump
+animate score penalty 
+
 show in red text when the player messes up typing a trick
     animate it downwards when player messes up?
     or keep it there and let the player press backspace (-1 point each backspace)
@@ -26,7 +62,6 @@ SFX for typing letters
     like a typewriter or skateboard slap sound?
 style "drop" differently in the trick list 
     different color or spaced differently to show that it does something special
-Move unsecured score closer to player when in mid-jump
 More chill lo-fi royalty-free music
 
 TODO - LATER

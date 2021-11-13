@@ -51,7 +51,7 @@ MonoBehaviour:
     availableInStates: 01000000
   - text: ollie
     trickScore: 0
-    availableInStates: 0100000002000000
+    availableInStates: 010000000200000003000000
   - text: fakie
     trickScore: 1
     availableInStates: 00000000

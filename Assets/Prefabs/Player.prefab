@@ -155,6 +155,7 @@ MonoBehaviour:
   dropForce: 150
   railTimeScale: 0.7
   railMinSpeed: 5
+  rampMinSpeed: 6
   unsafeRotationZ: 27
   state: 1
   safe: 1
