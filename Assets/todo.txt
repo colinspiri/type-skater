@@ -15,9 +15,6 @@ LEVEL 2: rails that u can land on
     ollie off the rail without grinding causes a bug
         player stays on the rail and doesn't properly jump off it
     
-word per minute counter to show at the end of each level?
-
-
 Move unsecured score closer to player when in mid-jump
 animate score penalty 
 

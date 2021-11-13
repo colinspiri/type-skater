@@ -96,6 +96,8 @@ public class Score : MonoBehaviour {
         // display game over
         TextMeshProUGUI gameOverText = Instantiate(gameOverPrefab, transform.parent, false).GetComponent<TextMeshProUGUI>();
         gameOverText.text = "your score: " + score;
+        gameOverText.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
+            Mathf.RoundToInt(TypingManager.Instance.GetWordsPerMinute()) + " words/min";
         // disable other objects
         Time.timeScale = 1.0f;
         // Time.fixedDeltaTime = 0.02f * Time.timeScale;

@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.Timeline;
 
 public class TypingManager : MonoBehaviour {
     public static TypingManager Instance;
@@ -24,6 +25,8 @@ public class TypingManager : MonoBehaviour {
     // state
     private List<Word> words = new List<Word>();
     private List<Word> doneTricks = new List<Word>();
+    private float timeTyping;
+    private int wordsTyped;
     
     // callbacks
     public delegate void OnCompleteWord(string word);
@@ -66,6 +69,10 @@ public class TypingManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if (GetAvailableWords().Count > 0 && (Player.Instance.state == Player.State.Midair || Player.Instance.state == Player.State.OnRail)) {
+            timeTyping += Time.unscaledDeltaTime;
+        }
+        
         string input = Input.inputString;
         if (input.Equals("")) return;
         
@@ -113,6 +120,8 @@ public class TypingManager : MonoBehaviour {
                     TextMeshProUGUI text = completedTrickText.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
                     text.text = w.text;
                     text.color = completedTrickTextColor;
+                    // count words
+                    wordsTyped++;
                     // call callback
                     onCompleteWord?.Invoke(w.text);
                     break;
@@ -134,6 +143,10 @@ public class TypingManager : MonoBehaviour {
             availableWords.Add(w);
         }
         return availableWords;
+    }
+
+    public float GetWordsPerMinute() {
+        return 60f * wordsTyped / timeTyping;
     }
 }
 
