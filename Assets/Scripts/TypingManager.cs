@@ -43,18 +43,15 @@ public class TypingManager : MonoBehaviour {
 
         typingText.text = "";
 
-        // words.AddRange(basicWords);
         string sceneName = SceneManager.GetActiveScene().name;
         if (sceneName.Equals("Level0")) {
             words.AddRange(level0Words);
         }
         if (sceneName.Equals("Level1")) {
-            // Debug.Log("scene is " + sceneName + ", adding level 1");
             words.AddRange(level0Words);
             words.AddRange(level1Words);
         }
         else if (sceneName.Equals("Level2")) {
-            // Debug.Log("scene is " + sceneName + ", adding level 2");
             words.AddRange(level0Words);
             words.AddRange(level1Words);
             words.AddRange(level2Words);
