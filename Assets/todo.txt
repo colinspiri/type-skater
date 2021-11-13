@@ -46,9 +46,10 @@ maybe some tricks give you a mini double jump
 https://www.masterclass.com/articles/guide-to-skate-lingo#66-basic-skateboarding-terms
 
 COLORS
-yellow: E3C41C
-orange: EC7357
-light grey: C8BFC7
+yellow (player): E3C41C
+orange (cone): EC7357
+light grey (rail): C8BFC7
+teal (ramp): 74D3AE
 
 dark purple: 330076
 light purple: 9655FF

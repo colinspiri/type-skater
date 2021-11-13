@@ -161,20 +161,24 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 210548452}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33e03eac4c84b47378c5880f3a922618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  railPrefab: {fileID: 0}
-  rampPrefab: {fileID: 0}
-  conePrefab: {fileID: 0}
-  railChance: 0
-  rampChance: 0
-  coneChance: 0
-  firstSpawnLocation: 0
-  minBlankSpace: 0
-  maxBlankSpace: 0
+  railPrefab: {fileID: 1759728035082517889, guid: 1f32940baa5514821bdc2cd51a8df5d8, type: 3}
+  railY: -2.31
+  rampPrefab: {fileID: 9031964598960383134, guid: f2ccbea4bd34242eaac6ce1e2fc51c97, type: 3}
+  rampY: -2.95
+  conePrefab: {fileID: 840608341245557347, guid: 62ce6822cc7424ed1a893cd94d8e7735, type: 3}
+  coneY: -1.91
+  emptySpaceWeight: 1
+  railWeight: 1
+  rampWeight: 2
+  coneWeight: 3
+  firstSpawnLocation: 20
+  minBlankSpace: 10
+  maxBlankSpace: 20
 --- !u!1001 &400642022
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -339,7 +343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1110688572206153380, guid: de0d4f345ffa840be961759f454e2622, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1475067489247883454, guid: de0d4f345ffa840be961759f454e2622, type: 3}
       propertyPath: m_Pivot.x

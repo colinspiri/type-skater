@@ -8,10 +8,10 @@ public class Cone : MonoBehaviour {
     public int scorePenalty;
     public bool resetGameOnCollide = false;
 
-    private void OnCollisionEnter2D(Collision2D other) {
+    private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.CompareTag("Player")) {
             // wipe out
-            Player.Instance.WipeOut();
+            Player.Instance.WipeOut(0.4f);
             // score penalty
             Score.Instance.Penalty(scorePenalty);
             // destroy cone

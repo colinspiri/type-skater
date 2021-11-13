@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -161761123
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0f6d3de501d8d42c595e4f9666852a53, type: 3}
   m_Color: {r: 0.9254902, g: 0.4509804, b: 0.34117648, a: 1}
@@ -96,7 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b189d3410b5a4e908dae333d014bbd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scorePenalty: 10
+  scorePenalty: 5
+  resetGameOnCollide: 0
 --- !u!60 &1188915660840709391
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -107,7 +108,7 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

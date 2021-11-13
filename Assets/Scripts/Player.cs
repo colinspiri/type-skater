@@ -139,10 +139,10 @@ public class Player : MonoBehaviour
         onUnsafeLanding?.Invoke();
     }
 
-    public void WipeOut() {
+    public void WipeOut(float slowFactor = 0f) {
         // slow
-        SlowToMinSpeed();
-        rolling = false;
+        if(slowFactor == 0) SlowToMinSpeed();
+        else rb.velocity = new Vector2(Mathf.Lerp(minVelocity, rb.velocity.x, slowFactor), rb.velocity.y);
 
         // if player landed with unsecured score, screen shake magnitude is proportional to the score
         float magnitude = (Score.Instance.GetUnsecuredScore() > 0) ? (0.2f + Score.Instance.GetUnsecuredScore() * 0.1f) : 1f;
@@ -209,7 +209,7 @@ public class Player : MonoBehaviour
         }
         // end of ramp
         if (other.CompareTag("RampEnd") && state == State.OnRamp) {
-            Jump(0.8f);
+            Jump(0.5f);
         }
     }
 }
