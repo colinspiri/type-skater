@@ -1,51 +1,22 @@
 
-LANDING
-
-SafeLanding() {
-    Timescale = 1
-    speed boost
-    safe landing callback
-}
-
-UnsafeLanding() {
-    Timescale = 1
-    WipeOut()
-    unsafe landing callback
-}
-
-ground - unsafe
-    UnsafeLanding()
-ground - safe
-    SafeLanding()
-
-ramp - unsafe
-    WipeOut()
-    disable ramp, stay in midair
-ramp - safe
-    SafeLanding()
-
-rail - unsafe
-    WipeOut()
-    disable rail, stay in midair
-rail - safe
-    Timescale = rail
-    onRail
-
-
-
 TODO FOR NEXT WEEK
 
 randomize which tricks show up for each jump
-    dependent on jump height
+    dependent on jump height?
+    3 show up and keep getting replaced as u do tricks
     
-LEVEL 1: ramps that automatically jump the player
-    but if you ollie near the very end, you get a larger jump
+ramp improvements
+    area near the end wher eu can ollie for a larger jump
+    if u ollie before that, you wipe out
+    
 LEVEL 2: rails that u can land on
-    can do tricks, can ollie off, can also "grind"
+    can do tricks (special rail tricks), can ollie off, can also "grind"
+    rail blockers that make u wipe out
+    ollie off the rail without grinding causes a bug
+        player stays on the rail and doesn't properly jump off it
     
 word per minute counter to show at the end of each level?
-ollie off the rail without grinding causes a bug
-    player stays on the rail and doesn't properly jump off it
+
 
 Move unsecured score closer to player when in mid-jump
 animate score penalty 
