@@ -23,33 +23,36 @@ public class TutorialManager : MonoBehaviour {
         Done,
     }
 
-    // safe tutorial
+    // safe
     private TutorialStatus safeTutorialStatus = TutorialStatus.Incomplete;
     public float safeTutorialDelay;
     public GameObject safeCanvasPrefab;
     private TextMeshProUGUI safeText;
 
-    // fakie tutorial
+    // higher ollie
+    private TutorialStatus higherOllieTutorialStatus = TutorialStatus.Incomplete;
+    public GameObject higherOllieCanvas;
+    private TextMeshProUGUI higherOlliePushText;
+    private TextMeshProUGUI higherOllieOllieText;
+    
+    // fakie
     private TutorialStatus fakieTutorialStatus = TutorialStatus.Incomplete;
     public float fakieTutorialDelay;
     public TrickList trickList;
     public GameObject fakieCanvasPrefab;
     private TextMeshProUGUI fakieText;
     
-    // higher ollie text
-    private TutorialStatus higherOllieTutorialStatus = TutorialStatus.Incomplete;
-    public GameObject higherOllieCanvas;
-    private TextMeshProUGUI higherOlliePushText;
-    private TextMeshProUGUI higherOllieOllieText;
+    // safe reminder
+    public GameObject safeReminderPrefab;
     
-    // landing tricks text
+    // speed boost
     public GameObject landingTricksCanvas;
 
     // Start is called before the first frame update
     void Start() {
         ollieCanvas.SetActive(false);
         higherOllieCanvas.SetActive(false);
-        landingTricksCanvas.SetActive(false);
+        // landingTricksCanvas.SetActive(false);
         
         Player.Instance.onJump += () => {
             if(safeTutorialStatus == TutorialStatus.Incomplete) StartSafeTutorial();
@@ -89,6 +92,8 @@ public class TutorialManager : MonoBehaviour {
                 Time.timeScale = previousTimeScale;
                 fakieText.color = greyedOutColor;
                 fakieTutorialStatus = TutorialStatus.Done;
+                // spawn safe reminder
+                Instantiate(safeReminderPrefab, Player.Instance.transform.position, Quaternion.identity);
             }
         };
         originalColor = pushText.color;

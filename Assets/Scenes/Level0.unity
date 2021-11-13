@@ -2041,10 +2041,11 @@ MonoBehaviour:
   ollieText: {fileID: 684503300}
   safeTutorialDelay: 2
   safeCanvasPrefab: {fileID: 2640094840865205619, guid: 94c26cbb702b04d57a6c3a259de1bbaa, type: 3}
+  higherOllieCanvas: {fileID: 2086039189683659012}
   fakieTutorialDelay: 1
   trickList: {fileID: 811555937}
   fakieCanvasPrefab: {fileID: 7915776127728874000, guid: f04c2216c379d480e8a76e9adb2dd883, type: 3}
-  higherOllieCanvas: {fileID: 2086039189683659012}
+  safeReminderPrefab: {fileID: 2579102859547581716, guid: 35f44b1a57c144daebda984872998b13, type: 3}
   landingTricksCanvas: {fileID: 7649925692028730265}
 --- !u!222 &2086039188959424260
 CanvasRenderer:
@@ -2468,7 +2469,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 51.46, y: -0.4}
+  m_AnchoredPosition: {x: 59.2, y: 0.46}
   m_SizeDelta: {x: 401.2145, y: 212.4962}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7649925692028730264
