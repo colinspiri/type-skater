@@ -9,18 +9,17 @@ public class Skateboard : MonoBehaviour
     private Player player;
     public GameObject playerFeet;
 
-
+    //private int animationStick = 0; //Like the talking stick but for animations!
     public float standingOffsetX;
     public float ollieOffsetY;
     public bool grounded = false; //Set by SkateboardGroudCheck object
 
     private Animation currentAnimation = Animation.None;
 
-    private IEnumerator currentRoutine;
     private RotationInstruction[] ollieInstructions = {
                     new RotationInstruction() { angle=20f,axis=Axis.OllieAxis,inTime=0.25f,startAt=0f },
-                    new RotationInstruction() { angle=360f,axis=Axis.KickflipAxis,inTime=0.25f, startAt=0.25f }};
-    RotationInstruction[] wobbleInstructions = {
+                    new RotationInstruction() { angle=360f,axis=Axis.KickflipAxis,inTime=0.25f, startAt=0.2f }};
+    private RotationInstruction[] wobbleInstructions = {
                     new RotationInstruction() { angle=40f,axis=Axis.KickflipAxis,inTime=0.1f,startAt=0f },
                     new RotationInstruction() { angle=-80f,axis=Axis.KickflipAxis,inTime=0.1f,startAt=0.1f },
                     new RotationInstruction() { angle=40f,axis=Axis.KickflipAxis,inTime=0.1f,startAt=0.2f },
@@ -35,39 +34,30 @@ public class Skateboard : MonoBehaviour
     void Update()
     {
         //Update position based on animation state
-
-        if (currentAnimation == Animation.None)
+        if (currentAnimation == Animation.Ollie)
         {
-            transform.rotation = Quaternion.identity;
-            transform.position = RightUnderFeet(0, 0f);
-        }
-        else if (currentAnimation == Animation.Ollie)
-        {
-            //transform.position = RightUnderPlayer(0, 0);
             transform.position = RightUnderFeet(0, -0.01f);
         }
-        transform.position = RightUnderFeet(0, 0f);
+        else
+        {
+            transform.position = RightUnderFeet(0, 0f);
+        }
 
-
+        //Have to do level check
+        if (Input.GetKey(KeyCode.Return) && player.state == Player.State.Midair && currentAnimation != Animation.LevelOut)
+        {
+            SetAnimation(Animation.LevelOut);
+            Debug.Log("SA");
+        }
 
     }
 
     public void SetAnimation(Animation animation)
     {
-        if (this.currentAnimation != animation && currentRoutine != null)
-        {
-          //StopCoroutine(currentRoutine);
-            StopAllCoroutines();
-        }
+
+        StopAllCoroutines();
+
         this.currentAnimation = animation;
-
-
-        //If NOT on ground do trick, ground check happens in FixedUpdate
-        //Board will move differently based on tricks!
-        //However, as soon as we hit ground (in FixedUpdate), board needs to very quickly return to starting state
-
-
-
         switch (currentAnimation)
         {
             case Animation.None:
@@ -75,8 +65,10 @@ public class Skateboard : MonoBehaviour
                 break;
             case Animation.Ollie:
                 grounded = false; //Needed to stop board from sticking to ground after ollie, a bit ugly tbh
-                currentRoutine = Ollie();
-                StartCoroutine(currentRoutine);
+                StartCoroutine(Ollie());
+                break;
+            case Animation.LevelOut:
+                StartCoroutine(LevelOut());
                 break;
             default:
                 break;
@@ -97,26 +89,103 @@ public class Skateboard : MonoBehaviour
         return new Vector3(player.transform.position.x + xOffset, newY, transform.position.z);
     }
 
+    IEnumerator LevelOut()
+    {
+        RotationInstruction[] inst = {
+            new RotationInstruction() { angle=0, axis=Axis.KickflipAxis, inTime=0.2f, startAt=0f},
+            new RotationInstruction() { angle=0, axis=Axis.GrindAxis, inTime=0.2f, startAt=0f},
+            new RotationInstruction() { angle=0, axis=Axis.OllieAxis, inTime=0.2f, startAt=0f},};
+        yield return StartCoroutine(SetRotation(inst, false));
+    }
+
 
 
     IEnumerator Ollie()
     {
-        yield return StartCoroutine(RotateSB(ollieInstructions, false));
+        yield return StartCoroutine(SetRotation(ollieInstructions, false));
         currentAnimation = Animation.AirWobble;
-        currentRoutine = AirWobble();
-        yield return StartCoroutine(currentRoutine);
+        yield return StartCoroutine(AirWobble());
 
     }
 
     IEnumerator AirWobble()
     {
-        yield return StartCoroutine(RotateSB(wobbleInstructions, true));
+        yield return StartCoroutine(SetRotation(wobbleInstructions, true));
     }
 
-    IEnumerator ZeroRotation()
+    //SET Skateboard Rotation to X degrees, not Rotate. Give instructions for how much, how long rotation will take. Prob more useful
+    IEnumerator SetRotation(RotationInstruction[] instructions, bool loop)
     {
-        yield return null;
+        float elapsedTime = 0f;
+        Quaternion startRotation = transform.rotation;
+        Quaternion result = Quaternion.identity;
+        float endTime = -1f;
+        foreach(RotationInstruction i in instructions)
+        {
+            if (i.axis == Axis.GrindAxis)
+            {
+                result *= Quaternion.Euler(0, i.angle, 0);
+            }
+            else if (i.axis == Axis.KickflipAxis)
+            {
+                result*= Quaternion.Euler(i.angle, 0, 0);
+            }
+            else
+            {
+                result *= Quaternion.Euler(0, 0, i.angle);
+            }
+
+            if (i.startAt + i.inTime > endTime)
+            {
+                endTime = i.startAt + i.inTime;
+            }
+        }
+
+        while (elapsedTime<endTime)
+        {
+            Quaternion totalRotation = Quaternion.identity;
+            for (int i = 0; i < instructions.Length; i++)
+            {
+                if (elapsedTime >= instructions[i].startAt)
+                {
+                    Quaternion quat;
+                    float rotationAmount = instructions[i].angle*((elapsedTime-instructions[i].startAt )/(instructions[i].inTime));
+                    if (elapsedTime - instructions[i].startAt > instructions[i].inTime)
+                    {
+                        rotationAmount = instructions[i].angle;
+                    }
+                    if (instructions[i].axis == Axis.GrindAxis)
+                    {
+                        quat = Quaternion.Euler(0, rotationAmount, 0);
+                    }
+                    else if (instructions[i].axis == Axis.KickflipAxis)
+                    {
+                        quat = Quaternion.Euler(rotationAmount, 0, 0);
+                    }
+                    else
+                    {
+                        quat = Quaternion.Euler(0, 0, rotationAmount);
+                    }
+                    totalRotation *= quat;
+                }
+            }
+            Quaternion finalRotation = Quaternion.Lerp(startRotation, totalRotation, (1 / endTime) * elapsedTime);
+            transform.rotation = finalRotation;
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime>endTime&& loop)
+            {
+                elapsedTime = 0;
+                startRotation = transform.rotation;
+            }
+            yield return null;
+        }
+        transform.rotation = result;
+
+        yield return new WaitForSeconds(0);
     }
+
+
+
 
     //SET Skateboard Rotation to X degrees, not Rotate. Give instructions for how much, how long rotation will take,
     //and when specifically in the sequence it will occur (e.g. kickflip rotation starts 0.1seconds in after the ollie)
@@ -149,7 +218,7 @@ public class Skateboard : MonoBehaviour
     //    {
     //        if (instructions[i].axis == Axis.GrindAxis)
     //        {
-                
+
     //            newInstructions[instructions.Length] = new RotationInstruction()
     //            {
     //                angle = -transform.rotation.eulerAngles.y,
@@ -256,9 +325,9 @@ public class Skateboard : MonoBehaviour
             }
             transform.rotation = startRotation * totalRotation;
             elapsedTime += Time.deltaTime;
-            if (  completeCount==instructions.Length&& loop)
+            if (completeCount == instructions.Length && loop)
             {
-                
+
                 Debug.Log("Reset");
                 completeCount = 0;
                 elapsedTime = 0;
@@ -267,14 +336,12 @@ public class Skateboard : MonoBehaviour
                 {
                     deltaAngles[i] = 0;
                 }
-                
-                transform.rotation = startRotation;
+
+                //transform.rotation = startRotation; ??
                 //yield return StartCoroutine(RotateSB(instructions, loop));
             }
 
             yield return null;
-
-
         }
         yield return new WaitForSeconds(0);
         // delay here
@@ -293,6 +360,7 @@ public class Skateboard : MonoBehaviour
     public enum Animation
     {
         None,
+        LevelOut,
         Ollie,
         AirWobble
     }
