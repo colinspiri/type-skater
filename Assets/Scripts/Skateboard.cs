@@ -16,19 +16,79 @@ public class Skateboard : MonoBehaviour
 
     private Animation currentAnimation = Animation.None;
 
-    private RotationInstruction[] ollieInstructions = {
+    private float lastAngleKickflip = 0f;
+    private float lastAngleOllie = 0f;
+    private float lastAngleGrind = 0f;
+
+
+
+    private RotationInstruction[] ollieInstructions =  {
                     new RotationInstruction() { angle=20f,axis=Axis.OllieAxis,inTime=0.25f,startAt=0f },
-                    new RotationInstruction() { angle=360f,axis=Axis.KickflipAxis,inTime=0.25f, startAt=0.2f }};
+                    new RotationInstruction() { angle=0f,axis=Axis.KickflipAxis,inTime=0.2f, startAt=0f } };
+    
     private RotationInstruction[] wobbleInstructions = {
-                    new RotationInstruction() { angle=40f,axis=Axis.KickflipAxis,inTime=0.1f,startAt=0f },
-                    new RotationInstruction() { angle=-80f,axis=Axis.KickflipAxis,inTime=0.1f,startAt=0.1f },
-                    new RotationInstruction() { angle=40f,axis=Axis.KickflipAxis,inTime=0.1f,startAt=0.2f },
-                };
+                    new RotationInstruction() { angle=40f, axis=Axis.KickflipAxis,inTime=0.1f,startAt=0f },
+                    new RotationInstruction() { angle=-80f, axis=Axis.KickflipAxis,inTime=0.1f,startAt=0.1f },
+                    new RotationInstruction() { angle=40f, axis=Axis.KickflipAxis,inTime=0.1f,startAt=0.2f },
+                    new RotationInstruction() { angle=20f, axis=Axis.OllieAxis,inTime=0.1f,startAt=0f }
+    };
+
+    private RotationInstruction[] kickFlipInstructions = {
+                    new RotationInstruction() { angle=360f,axis=Axis.KickflipAxis,inTime=0.25f,startAt=0f }
+    };
+
+
 
     // Start is called before the first frame update
     void Start()
     {
         player = Player.Instance;
+    }
+
+
+    private bool axisExists(RotationInstruction[] instructions, Axis axis)
+    {
+        foreach (RotationInstruction r in instructions)
+        {
+            if (r.axis == axis)
+            {
+                return true;
+            }
+
+        }
+        return false;
+    }
+    private RotationInstruction[] CreateRotationInstructions(RotationInstruction[] instructions)
+    {
+        int count = 0;
+        if (!axisExists(instructions, Axis.GrindAxis)) count++;
+        if (!axisExists(instructions, Axis.KickflipAxis)) count++;
+        if (!axisExists(instructions, Axis.OllieAxis)) count++;
+
+        RotationInstruction[] newInstructions = new RotationInstruction[instructions.Length + count];
+        for (int i = 0; i < instructions.Length; i++)
+        {
+            newInstructions[i] = instructions[i];
+        }
+        int track = 0;
+        if (!axisExists(instructions, Axis.GrindAxis))
+        {
+            newInstructions[instructions.Length] =
+                new RotationInstruction() { angle = lastAngleGrind, axis = Axis.GrindAxis, inTime = 0.2f, startAt = 0f };
+            track++;
+        }
+        if (!axisExists(instructions, Axis.KickflipAxis))
+        {
+            newInstructions[instructions.Length + track] =
+    new RotationInstruction() { angle = lastAngleKickflip, axis = Axis.KickflipAxis, inTime = 0.2f, startAt = 0f };
+            track++;
+        }
+        if (!axisExists(instructions, Axis.OllieAxis))
+        {
+            newInstructions[instructions.Length + track] =
+    new RotationInstruction() { angle = lastAngleOllie, axis = Axis.OllieAxis, inTime = 0.2f, startAt = 0f };
+        }
+        return newInstructions;
     }
 
     void Update()
@@ -56,11 +116,11 @@ public class Skateboard : MonoBehaviour
     {
 
         StopAllCoroutines();
-
         this.currentAnimation = animation;
         switch (currentAnimation)
         {
             case Animation.None:
+                Debug.Log("None!");
                 transform.rotation = Quaternion.identity;
                 break;
             case Animation.Ollie:
@@ -68,7 +128,11 @@ public class Skateboard : MonoBehaviour
                 StartCoroutine(Ollie());
                 break;
             case Animation.LevelOut:
+                Debug.Log("LEveling Out!");
                 StartCoroutine(LevelOut());
+                break;
+            case Animation.Kickflip:
+                StartCoroutine(Kickflip());
                 break;
             default:
                 break;
@@ -99,23 +163,52 @@ public class Skateboard : MonoBehaviour
     }
 
 
+    IEnumerator Kickflip()
+    {
+        yield return StartCoroutine(SetRotation(CreateRotationInstructions(kickFlipInstructions), false));
+        SetAnimation(Animation.AirWobble);
+    }
 
     IEnumerator Ollie()
     {
-        yield return StartCoroutine(SetRotation(ollieInstructions, false));
-        currentAnimation = Animation.AirWobble;
-        yield return StartCoroutine(AirWobble());
+        yield return StartCoroutine(SetRotation(CreateRotationInstructions( ollieInstructions), false));
+        SetAnimation(Animation.AirWobble);
 
     }
 
     IEnumerator AirWobble()
     {
-        yield return StartCoroutine(SetRotation(wobbleInstructions, true));
+        yield return StartCoroutine(SetRotation(CreateRotationInstructions( wobbleInstructions), true));
     }
 
     //SET Skateboard Rotation to X degrees, not Rotate. Give instructions for how much, how long rotation will take. Prob more useful
     IEnumerator SetRotation(RotationInstruction[] instructions, bool loop)
     {
+        (float,float) lastAngleKickflip = (0,-1);
+        (float, float) lastAngleOllie= (0, -1);
+        (float, float) lastAngleGrind= (0, -1);
+        for (int i =0; i< instructions.Length; i++)
+        {
+            float time = instructions[i].inTime + instructions[i].startAt;
+            if (instructions[i].axis == Axis.GrindAxis && lastAngleGrind.Item2 < time)
+            {
+                lastAngleGrind = (instructions[i].angle, time);
+            }
+            else if(instructions[i].axis == Axis.OllieAxis && lastAngleOllie.Item2 < time)
+            {
+                lastAngleOllie= (instructions[i].angle, time);
+
+            }
+            else if(instructions[i].axis == Axis.KickflipAxis&& lastAngleKickflip.Item2 < time)
+            {
+                lastAngleKickflip= (instructions[i].angle, time);
+            }
+        }
+        this.lastAngleGrind = lastAngleGrind.Item1;
+        this.lastAngleOllie= lastAngleOllie.Item1;
+        this.lastAngleKickflip= lastAngleKickflip.Item1;
+
+
         float elapsedTime = 0f;
         Quaternion startRotation = transform.rotation;
         Quaternion result = Quaternion.identity;
@@ -126,11 +219,11 @@ public class Skateboard : MonoBehaviour
             {
                 result *= Quaternion.Euler(0, i.angle, 0);
             }
-            else if (i.axis == Axis.KickflipAxis)
+            else if (i.axis == Axis.KickflipAxis )
             {
                 result*= Quaternion.Euler(i.angle, 0, 0);
             }
-            else
+            else 
             {
                 result *= Quaternion.Euler(0, 0, i.angle);
             }
@@ -148,7 +241,7 @@ public class Skateboard : MonoBehaviour
             {
                 if (elapsedTime >= instructions[i].startAt)
                 {
-                    Quaternion quat;
+                    Quaternion quat = Quaternion.identity;
                     float rotationAmount = instructions[i].angle*((elapsedTime-instructions[i].startAt )/(instructions[i].inTime));
                     if (elapsedTime - instructions[i].startAt > instructions[i].inTime)
                     {
@@ -162,7 +255,7 @@ public class Skateboard : MonoBehaviour
                     {
                         quat = Quaternion.Euler(rotationAmount, 0, 0);
                     }
-                    else
+                    else if(rotationAmount != 0)
                     {
                         quat = Quaternion.Euler(0, 0, rotationAmount);
                     }
@@ -362,7 +455,8 @@ public class Skateboard : MonoBehaviour
         None,
         LevelOut,
         Ollie,
-        AirWobble
+        AirWobble,
+        Kickflip
     }
     private enum Axis
     {

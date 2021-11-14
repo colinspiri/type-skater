@@ -82,6 +82,12 @@ public class TypingManager : MonoBehaviour {
                 // if user typed the whole word
                 if (w.GetTyped().Equals(w.text))
                 {
+
+                    if (w.text.Equals("kickflip")) {
+                        Debug.Log("KF!");
+                        FindObjectOfType<Skateboard>().SetAnimation(Skateboard.Animation.Kickflip);
+                    }
+
                     // push
                     if (w.text.Equals("push")) Player.Instance.Push();
                     // ollie
