@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skateboard : MonoBehaviour
-{
+public class Skateboard : MonoBehaviour {
+    public static Skateboard Instance;
 
     private Player player;
     public GameObject playerFeet;
@@ -41,8 +41,10 @@ public class Skateboard : MonoBehaviour
                     new RotationInstruction(){angle=180, axis=Axis.GrindAxis,inTime=0.25f,startAt=0f}
     };
 
-
-
+    private void Awake() {
+        Instance = this;
+    }
+    
     // Start is called before the first frame update
     void Start()
     {

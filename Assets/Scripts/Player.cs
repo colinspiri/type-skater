@@ -56,16 +56,13 @@ public class Player : MonoBehaviour
     // component stuff
     private Rigidbody2D rb;
     private Animator animator;
-
-    private Skateboard skateboard;
-
+    
     private void Awake()
     {
         if (Instance == null) Instance = this;
         
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        skateboard = FindObjectOfType<Skateboard>();
         onJump += () => transform.eulerAngles = new Vector3(0, 0, unsafeRotationZ);
     }
 
@@ -106,7 +103,7 @@ public class Player : MonoBehaviour
         rb.AddForce(new Vector2(0, multiplier * Mathf.Lerp(minJumpForce, maxJumpForce, rb.velocity.x / maxVelocity)));
         state = State.Midair;
         Time.timeScale = midairTimeScale;
-        skateboard.SetAnimation(Skateboard.Animation.Ollie);
+        Skateboard.Instance.SetAnimation(Skateboard.Animation.Ollie);
 
         if(newJump) onJump?.Invoke();
     }
@@ -159,7 +156,7 @@ public class Player : MonoBehaviour
         // land on ground
         if (other.gameObject.CompareTag("Ground") && state != State.OnGround) {
             state = State.OnGround;
-            skateboard.SetAnimation(Skateboard.Animation.None);
+            Skateboard.Instance.SetAnimation(Skateboard.Animation.None);
 
             if(safe) SafeLanding();
             else UnsafeLanding();
