@@ -27,14 +27,18 @@ public class Skateboard : MonoBehaviour
                     new RotationInstruction() { angle=0f,axis=Axis.KickflipAxis,inTime=0.2f, startAt=0f } };
     
     private RotationInstruction[] wobbleInstructions = {
-                    new RotationInstruction() { angle=40f, axis=Axis.KickflipAxis,inTime=0.1f,startAt=0f },
-                    new RotationInstruction() { angle=-80f, axis=Axis.KickflipAxis,inTime=0.1f,startAt=0.1f },
-                    new RotationInstruction() { angle=40f, axis=Axis.KickflipAxis,inTime=0.1f,startAt=0.2f },
+                    new RotationInstruction() { angle=50f, axis=Axis.KickflipAxis,inTime=0.1f,startAt=0f },
+                    new RotationInstruction() { angle=-100f, axis=Axis.KickflipAxis,inTime=0.1f,startAt=0.1f },
+                    new RotationInstruction() { angle=50f, axis=Axis.KickflipAxis,inTime=0.1f,startAt=0.2f },
                     new RotationInstruction() { angle=20f, axis=Axis.OllieAxis,inTime=0.1f,startAt=0f }
     };
 
     private RotationInstruction[] kickFlipInstructions = {
-                    new RotationInstruction() { angle=360f,axis=Axis.KickflipAxis,inTime=0.25f,startAt=0f }
+                    new RotationInstruction() { angle=360f,axis=Axis.KickflipAxis,inTime=0.32f,startAt=0f }
+    };
+
+    private RotationInstruction[] oneEightyInstructions = {
+                    new RotationInstruction(){angle=180, axis=Axis.GrindAxis,inTime=0.25f,startAt=0f}
     };
 
 
@@ -109,6 +113,10 @@ public class Skateboard : MonoBehaviour
             SetAnimation(Animation.LevelOut);
             Debug.Log("SA");
         }
+        else if(!Input.GetKey(KeyCode.Return) && currentAnimation == Animation.LevelOut)
+        {
+            SetAnimation(Animation.AirWobble);
+        }
 
     }
 
@@ -133,6 +141,9 @@ public class Skateboard : MonoBehaviour
                 break;
             case Animation.Kickflip:
                 StartCoroutine(Kickflip());
+                break;
+            case Animation.AirWobble:
+                StartCoroutine(AirWobble());
                 break;
             default:
                 break;

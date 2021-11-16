@@ -130,6 +130,7 @@ public class Player : MonoBehaviour
         // land on ground
         if (other.gameObject.CompareTag("Ground") && state != State.OnGround) {
             state = State.OnGround;
+            skateboard.SetAnimation(Skateboard.Animation.None);
             Time.timeScale = 1.0f;
             // Time.fixedDeltaTime = 0.02f * Time.timeScale;
             onLand?.Invoke();
