@@ -50,20 +50,21 @@ public class SoundManager : MonoBehaviour {
 
     private void Update() {
         var player = Player.Instance;
-
-        // play rolling sound
-        if (player.GetSpeed() > 0 && (player.state == Player.State.OnGround || player.state == Player.State.OnRamp)) {
-            if(!rolling.isPlaying) rolling.Play();
-        }
-        else if(rolling.isPlaying) rolling.Stop();
-        // adjust volume based on player speed
-        rolling.volume = Mathf.Lerp(0.01f, 0.5f, (player.GetSpeed() - player.minRollingSpeed) / 2*player.maxRollingSpeed);
+        if (player != null) {
+            // play rolling sound
+            if (player.GetSpeed() > 0 && (player.state == Player.State.OnGround || player.state == Player.State.OnRamp)) {
+                if(!rolling.isPlaying) rolling.Play();
+            }
+            else if(rolling.isPlaying) rolling.Stop();
+            // adjust volume based on player speed
+            rolling.volume = Mathf.Lerp(0.01f, 0.5f, (player.GetSpeed() - player.minRollingSpeed) / 2*player.maxRollingSpeed);
         
-        // grinding sound
-        if (player.state == Player.State.OnRail) {
-            if(!grind.isPlaying) grind.Play();
+            // grinding sound
+            if (player.state == Player.State.OnRail) {
+                if(!grind.isPlaying) grind.Play();
+            }
+            else if(grind.isPlaying) grind.Stop();
         }
-        else if(grind.isPlaying) grind.Stop();
     }
 
     public void PlayTypingSound() {

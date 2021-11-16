@@ -1,7 +1,8 @@
 SFX 
 trick
 bail out (unsafe landing)
-rail grind
+press ENTER
+release ENTER
 typing
     complete word
     mess up word
