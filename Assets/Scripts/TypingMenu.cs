@@ -71,6 +71,7 @@ public class TypingMenu : MonoBehaviour {
             // if (option.slider != null) continue; // skip sliders
             // if the current input matches a word
             if (option.ContinueText(c)) {
+                SoundManager.Instance.PlayTypingSound();
                 if (typedOption == -1) {
                     typedOption = i;
                 }

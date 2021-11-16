@@ -78,6 +78,9 @@ public class TypingManager : MonoBehaviour {
         foreach (Word w in GetAvailableWords()) {
             // if the current input matches a word
             if (w.ContinueText(c)) {
+                // play typing sound
+                SoundManager.Instance.PlayTypingSound();
+                // check if this is the current word the player is typing
                 if (currentWord == null) {
                     currentWord = w;
                 }

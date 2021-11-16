@@ -1,12 +1,37 @@
+SFX 
+trick
+bail out (unsafe landing)
+rail grind
+typing
+    complete word
+    mess up word
+
 
 TODO FOR NEXT WEEK
+
+fix volume slider
+    make default volume quieter
+    make slider lowest point = 0.0001 DB
+    load PlayerPrefs on main menu
+
+MENU
+"infinite" --> "timed"
+maybe "infinite" is literally just infinite until you wipe out or mess up
+options
+    enable mouse on menu
+    accessibility options
+make title visually different
+make credits typeable with animations or something cute
+SFX on switching options
+type numbers to start the level
+    
 
 randomize which tricks show up for each jump
     dependent on jump height?
     3 show up and keep getting replaced as u do tricks
     
 ramp improvements
-    area near the end wher eu can ollie for a larger jump
+    area near the end where u can ollie for a larger jump
     if u ollie before that, you wipe out
     
 LEVEL 2: rails that u can land on

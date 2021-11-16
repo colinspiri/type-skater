@@ -10,8 +10,8 @@ public class Player : MonoBehaviour
     
     // public constants
     public float pushForce;
-    public float minVelocity;
-    public float maxVelocity;
+    public float minRollingSpeed;
+    public float maxRollingSpeed;
 
     public float minJumpForce;
     public float maxJumpForce;
@@ -53,6 +53,9 @@ public class Player : MonoBehaviour
     public delegate void OnSafeLanding(float score);
     public OnSafeLanding onSafeLanding;
 
+    public delegate void OnWipeOut();
+    public OnWipeOut onWipeOut;
+
     // component stuff
     private Rigidbody2D rb;
     private Animator animator;
@@ -78,14 +81,18 @@ public class Player : MonoBehaviour
             if(rb.velocity.x < rampSpeed) rb.velocity = new Vector2(rampSpeed, rb.velocity.y);
         }
 
-        if (rolling && rb.velocity.x < minVelocity) {
+        if (rb.velocity.x < minRollingSpeed && rolling && !Score.Instance.gameOver) {
             SlowToMinSpeed();
         }
     }
 
+    public float GetSpeed() {
+        return rb.velocity.x;
+    }
+
     public void Push(float multiplier = 1.0f)
     {
-        if (rb.velocity.x < maxVelocity)
+        if (rb.velocity.x < maxRollingSpeed)
         {
             rb.AddForce(new Vector2(pushForce * multiplier, 0));
         }
@@ -100,7 +107,7 @@ public class Player : MonoBehaviour
         }
         
         bool newJump = state == State.OnGround || state == State.OnRamp;
-        rb.AddForce(new Vector2(0, multiplier * Mathf.Lerp(minJumpForce, maxJumpForce, rb.velocity.x / maxVelocity)));
+        rb.AddForce(new Vector2(0, multiplier * Mathf.Lerp(minJumpForce, maxJumpForce, rb.velocity.x / maxRollingSpeed)));
         state = State.Midair;
         Time.timeScale = midairTimeScale;
         Skateboard.Instance.SetAnimation(Skateboard.Animation.Ollie);
@@ -114,7 +121,7 @@ public class Player : MonoBehaviour
     }
     
     private void SlowToMinSpeed() {
-        rb.velocity = new Vector2(minVelocity, rb.velocity.y);
+        rb.velocity = new Vector2(minRollingSpeed, rb.velocity.y);
     }
 
     private void SafeLanding() {
@@ -128,6 +135,7 @@ public class Player : MonoBehaviour
             float multiplier = Mathf.Lerp(1f, 2.5f, score / 10.0f);
             Push(multiplier);
         }
+        // callbacks
         onLand?.Invoke();
         onSafeLanding?.Invoke(score);
     }
@@ -135,20 +143,23 @@ public class Player : MonoBehaviour
         Time.timeScale = 1;
         // wipe out
         WipeOut();
+        // callbacks
         onLand?.Invoke();
         onUnsafeLanding?.Invoke();
     }
 
-    public void WipeOut(float slowFactor = 0f) {
+    public void WipeOut() {
         // slow
-        if(slowFactor == 0) SlowToMinSpeed();
-        else rb.velocity = new Vector2(Mathf.Lerp(minVelocity, rb.velocity.x, slowFactor), rb.velocity.y);
+        SlowToMinSpeed();
 
         // if player landed with unsecured score, screen shake magnitude is proportional to the score
         float magnitude = (Score.Instance.GetUnsecuredScore() > 0) ? (0.2f + Score.Instance.GetUnsecuredScore() * 0.1f) : 1f;
         StartCoroutine(CameraShake.Instance.Shake(magnitude));
 
         // particles?
+        
+        // callback
+        onWipeOut?.Invoke();
     }
 
     private void OnCollisionEnter2D(Collision2D other)

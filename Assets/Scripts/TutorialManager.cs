@@ -71,7 +71,7 @@ public class TutorialManager : MonoBehaviour {
                 landingTricksCanvas.SetActive(true);
             }
         };
-        Player.Instance.onUnsafeLanding += () => {
+        Player.Instance.onWipeOut += () => {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         };
         TypingManager.Instance.onCompleteWord += word => {
