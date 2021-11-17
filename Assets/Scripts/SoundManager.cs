@@ -50,6 +50,7 @@ public class SoundManager : MonoBehaviour {
 
         SceneManager.activeSceneChanged += (oldscene, newscene) => {
             AddCallbacks();
+            rolling.Stop();
         };
     }
 
