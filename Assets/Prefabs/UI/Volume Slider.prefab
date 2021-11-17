@@ -389,7 +389,7 @@ MonoBehaviour:
   m_FillRect: {fileID: 6790153280872057816}
   m_HandleRect: {fileID: 0}
   m_Direction: 0
-  m_MinValue: 0
+  m_MinValue: 0.001
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
@@ -408,7 +408,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62226e2e666de4dd3aed0f1eba58f770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: b89955b240ccd4d09be4248f0c795b16, type: 2}
   volumeParameter: 
 --- !u!1 &6790153280453597328
 GameObject:

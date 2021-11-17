@@ -13,7 +13,7 @@ public class TypingMenu : MonoBehaviour {
 
     private int currentOption = -1;
     
-    private const float SliderAdjustment = 0.2f;
+    private const float SliderAdjustment = 0.15f;
 
     // Start is called before the first frame update
     void Start() {

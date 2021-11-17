@@ -2,10 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.Design.Serialization;
+using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour {
     public static SoundManager Instance;
+    
+    public AudioMixer mixer;
     
     // music
     public AudioSource music;
@@ -30,10 +35,25 @@ public class SoundManager : MonoBehaviour {
     public AudioSource key;
 
     private void Awake() {
+        if (Instance != null) {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
+        DontDestroyOnLoad(this);
     }
 
     private void Start() {
+        SetVolume("MasterVolume", PlayerPrefs.GetFloat("MasterVolume", 0.4f));
+        SetVolume("MusicVolume", PlayerPrefs.GetFloat("MusicVolume", 1f));
+        SetVolume("SFXVolume", PlayerPrefs.GetFloat("SFXVolume", 1f));
+
+        SceneManager.activeSceneChanged += (oldscene, newscene) => {
+            AddCallbacks();
+        };
+    }
+
+    public void AddCallbacks() {
         if (Player.Instance != null) {
             Player.Instance.onJump += () => {
                 jump.Play();
@@ -101,5 +121,14 @@ public class SoundManager : MonoBehaviour {
 
     public void PlayTrickSound() {
         trick.Play();
+    }
+
+    public void PlaySliderSFX() {
+        jump.Play();
+    }
+
+    public void SetVolume(string mixerParameter, float value) {
+        mixer.SetFloat(mixerParameter, Mathf.Log10(value) * 20f);
+        PlayerPrefs.SetFloat(mixerParameter, value);
     }
 }

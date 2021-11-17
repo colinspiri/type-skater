@@ -7,11 +7,6 @@ menu select option
 
 TODO FOR NEXT WEEK
 
-fix volume slider
-    make default volume quieter
-    make slider lowest point = 0.0001 DB
-    load PlayerPrefs on main menu
-
 MENU
 "infinite" --> "timed"
 maybe "infinite" is literally just infinite until you wipe out or mess up

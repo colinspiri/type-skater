@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95dae028d77db40c284604e3bf0984c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: b89955b240ccd4d09be4248f0c795b16, type: 2}
   music: {fileID: 7020725794142947882}
   recordScratch: {fileID: 7020725794142947863}
   digThis: {fileID: 7020725794142947860}
