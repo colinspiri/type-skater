@@ -313,7 +313,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1195623056272240416}
   - component: {fileID: 7445852183693257668}
-  - component: {fileID: 2965282277348590944}
   - component: {fileID: 1912710873331045911}
   m_Layer: 0
   m_Name: Rail
@@ -370,25 +369,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.6112604, y: 0.14008355}
   m_EdgeRadius: 0
---- !u!251 &2965282277348590944
-PlatformEffector2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1759728035082517889}
-  m_Enabled: 0
-  m_UseColliderMask: 1
-  m_ColliderMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RotationalOffset: 0
-  m_UseOneWay: 1
-  m_UseOneWayGrouping: 0
-  m_SurfaceArc: 180
-  m_UseSideFriction: 0
-  m_UseSideBounce: 0
-  m_SideArc: 1
 --- !u!114 &1912710873331045911
 MonoBehaviour:
   m_ObjectHideFlags: 0
