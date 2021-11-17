@@ -25,6 +25,12 @@ public class TypingMenu : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        // numbers to directly select the option
+        for (int i = 0; i < menuOptions.Count; i++) {
+            if (Input.GetKeyDown("" + i)) {
+                menuOptions[i].onSelect?.Invoke();
+            }
+        }
         // arrow keys to navigate between options
         if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.Space)) {
             int newCurrentOption = currentOption + 1;

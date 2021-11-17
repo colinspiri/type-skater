@@ -58,10 +58,14 @@ public class Player : MonoBehaviour
     
     public delegate void OnStateChange(State newState);
     public OnStateChange onStateChange;
+    
+    // particle effects
+    // public GameObject pushParticles;
 
     // component stuff
     private Rigidbody2D rb;
     private Animator animator;
+    
     
     private void Awake()
     {
@@ -105,6 +109,8 @@ public class Player : MonoBehaviour
             rb.AddForce(new Vector2(pushForce * multiplier, 0));
         }
         rolling = true;
+        // var particles = Instantiate(pushParticles);
+        // particles.transform.position = transform.position;
     }
 
     public void Jump(float multiplier = 1.0f)

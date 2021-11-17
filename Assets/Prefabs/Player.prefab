@@ -357,6 +357,7 @@ MonoBehaviour:
   unsafeRotationZ: 27
   state: 1
   safe: 1
+  pushParticles: {fileID: 1023055808633794229, guid: 41d71c75283be4b899e49db40db9ed98, type: 3}
 --- !u!95 &7760741278451484482
 Animator:
   serializedVersion: 3
