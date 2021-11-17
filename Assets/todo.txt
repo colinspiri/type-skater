@@ -1,12 +1,9 @@
 SFX 
-trick
-bail out (unsafe landing)
-press ENTER
-release ENTER
 typing
     complete word
     mess up word
-
+menu switch option
+menu select option
 
 TODO FOR NEXT WEEK
 

@@ -16,9 +16,17 @@ public class SoundManager : MonoBehaviour {
     public AudioSource rolling;
     public AudioSource push;
     public AudioSource jump;
-    public AudioSource grind;
+    public AudioSource railland;
+    public AudioSource railgrind;
+    public AudioSource trick;
+    public AudioSource slide; // ramp
     public AudioSource safeLanding;
-    
+    public AudioSource skateboardFalling;
+    public AudioSource skid;
+
+    public AudioSource scratchAscending;
+    public AudioSource scratchDescending;
+
     public AudioSource key;
 
     private void Awake() {
@@ -34,9 +42,25 @@ public class SoundManager : MonoBehaviour {
                 safeLanding.Play();
                 digThis.Play();
             };
+            Player.Instance.onUnsafeLanding += () => {
+                skateboardFalling.Play();
+            };
             Player.Instance.onWipeOut += () => {
                 recordScratch.Play();
-            };;
+                skid.Play();
+            };
+            Player.Instance.onStateChange += state => {
+                if (state == Player.State.OnRail) {
+                    railland.Play();
+                    railgrind.Play();
+                }
+                else railgrind.Stop();
+
+                if (state == Player.State.OnRamp) {
+                    slide.Play();
+                }
+                else slide.Stop();
+            };
         }
 
         if (TypingManager.Instance != null) {
@@ -58,16 +82,24 @@ public class SoundManager : MonoBehaviour {
             else if(rolling.isPlaying) rolling.Stop();
             // adjust volume based on player speed
             rolling.volume = Mathf.Lerp(0.01f, 0.5f, (player.GetSpeed() - player.minRollingSpeed) / 2*player.maxRollingSpeed);
-        
-            // grinding sound
-            if (player.state == Player.State.OnRail) {
-                if(!grind.isPlaying) grind.Play();
+
+            // enter
+            if (player.state == Player.State.Midair) {
+                if (Input.GetKeyDown(KeyCode.Return)) {
+                    scratchAscending.Play();
+                }
+                if (Input.GetKeyUp(KeyCode.Return)) {
+                    scratchDescending.Play();
+                }
             }
-            else if(grind.isPlaying) grind.Stop();
         }
     }
 
     public void PlayTypingSound() {
         key.Play();
+    }
+
+    public void PlayTrickSound() {
+        trick.Play();
     }
 }

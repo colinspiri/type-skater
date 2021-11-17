@@ -55,6 +55,9 @@ public class Player : MonoBehaviour
 
     public delegate void OnWipeOut();
     public OnWipeOut onWipeOut;
+    
+    public delegate void OnStateChange(State newState);
+    public OnStateChange onStateChange;
 
     // component stuff
     private Rigidbody2D rb;
@@ -86,6 +89,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void ChangeState(State newState) {
+        state = newState;
+        onStateChange?.Invoke(state);
+    }
+
     public float GetSpeed() {
         return rb.velocity.x;
     }
@@ -108,7 +116,7 @@ public class Player : MonoBehaviour
         
         bool newJump = state == State.OnGround || state == State.OnRamp;
         rb.AddForce(new Vector2(0, multiplier * Mathf.Lerp(minJumpForce, maxJumpForce, rb.velocity.x / maxRollingSpeed)));
-        state = State.Midair;
+        ChangeState(State.Midair);
         Time.timeScale = midairTimeScale;
         Skateboard.Instance.SetAnimation(Skateboard.Animation.Ollie);
 
@@ -166,7 +174,7 @@ public class Player : MonoBehaviour
     {
         // land on ground
         if (other.gameObject.CompareTag("Ground") && state != State.OnGround) {
-            state = State.OnGround;
+            ChangeState(State.OnGround);
             Skateboard.Instance.SetAnimation(Skateboard.Animation.None);
 
             if(safe) SafeLanding();
@@ -176,13 +184,13 @@ public class Player : MonoBehaviour
         // land on rail
         if (other.gameObject.CompareTag("Rail") && state != State.OnRail) {
             if (safe) {
-                state = State.OnRail;
+                ChangeState(State.OnRail);
                 Time.timeScale = railTimeScale;
                 railSpeed = rb.velocity.x > railMinSpeed ? rb.velocity.x : railMinSpeed;
                 grindCount = 0;
             }
             else {
-                state = State.Midair;
+                ChangeState(State.Midair);
                 Time.timeScale = midairTimeScale;
                 other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
                 WipeOut();
@@ -194,12 +202,12 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Ramp") && state != State.OnRamp) {
             // if on ground
             if (state == State.OnGround) {
-                state = State.OnRamp;
+                ChangeState(State.OnRamp);
                 rampSpeed = rb.velocity.x > rampMinSpeed ? rb.velocity.x : rampMinSpeed;
             }
             // safe landing from midair
             else if (state == State.Midair && safe) {
-                state = State.OnRamp;
+                ChangeState(State.OnRamp);
                 rampSpeed = rb.velocity.x > rampMinSpeed ? rb.velocity.x : rampMinSpeed;
                 SafeLanding();
             }
@@ -217,7 +225,7 @@ public class Player : MonoBehaviour
         // end of rail
         if (other.CompareTag("RailEnd")) {
             // set to midair
-            state = State.Midair;
+            ChangeState(State.Midair);
             Jump(0.1f);
         }
         // end of ramp

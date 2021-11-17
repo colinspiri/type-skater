@@ -77,6 +77,7 @@ public class Score : MonoBehaviour {
         else {
             unsecuredScore += addition;
             unsecuredScoreText.text = unsecuredScore.ToString();
+            SoundManager.Instance.PlayTrickSound();
         }
     }
 
