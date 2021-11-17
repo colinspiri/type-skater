@@ -1572,6 +1572,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
+  wipeouts: 0
   unsecuredScorePrefab: {fileID: 6941402312752193843, guid: 1480cb9595c844fd899db7ac79448859, type: 3}
   unsecuredScoreLocation: {fileID: 1110688572206153380}
   gameOver: 0

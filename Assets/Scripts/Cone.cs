@@ -11,8 +11,6 @@ public class Cone : MonoBehaviour {
         if (other.gameObject.CompareTag("Player")) {
             // wipe out
             Player.Instance.WipeOut();
-            // score penalty
-            Score.Instance.Penalty(scorePenalty);
             // destroy cone
             Destroy(gameObject);
         }

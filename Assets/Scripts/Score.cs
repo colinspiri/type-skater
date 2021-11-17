@@ -11,6 +11,8 @@ public class Score : MonoBehaviour {
 
     [HideInInspector] public int score;
     private int unsecuredScore;
+
+    [HideInInspector] public int wipeouts;
     
     public GameObject unsecuredScorePrefab;
     private TextMeshProUGUI unsecuredScoreText;
@@ -55,6 +57,7 @@ public class Score : MonoBehaviour {
                 unsecuredScoreText = null;
             }
         };
+        Player.Instance.onWipeOut += () => wipeouts++;
     }
 
     private void SecureScore() {
@@ -84,12 +87,6 @@ public class Score : MonoBehaviour {
         }
     }
 
-    public void Penalty(int penalty) {
-        score -= penalty;
-        if (score < 0) score = 0;
-        scoreText.text = score.ToString();
-    }
-
     public int GetUnsecuredScore() {
         return unsecuredScore;
     }
@@ -100,7 +97,10 @@ public class Score : MonoBehaviour {
         // display game over
         TextMeshProUGUI gameOverText = Instantiate(gameOverPrefab, transform.parent, false).GetComponent<TextMeshProUGUI>();
         gameOverText.text = "your score: " + score;
-        gameOverText.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
+        string wipedouttext = "wiped out " + wipeouts + " time";
+        if (wipeouts != 1) wipedouttext += "s";
+        gameOverText.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = wipedouttext;
+        gameOverText.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text =
             Mathf.RoundToInt(TypingManager.Instance.GetWordsPerMinute()) + " words/min";
         // disable other objects
         Time.timeScale = 1.0f;
