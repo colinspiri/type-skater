@@ -15,6 +15,7 @@ public class Score : MonoBehaviour {
     public GameObject unsecuredScorePrefab;
     private TextMeshProUGUI unsecuredScoreText;
     private Animator unsecuredScoreAnimator;
+    public GameObject unsecuredScoreLocation;
     
     private TextMeshProUGUI scoreText;
     
@@ -37,7 +38,7 @@ public class Score : MonoBehaviour {
 
         Player.Instance.onJump += () => {
             // instantiate unsecured score
-            GameObject unsecuredScoreObject = Instantiate(unsecuredScorePrefab, transform, false);
+            GameObject unsecuredScoreObject = Instantiate(unsecuredScorePrefab, unsecuredScoreLocation.transform, false);
             unsecuredScoreText = unsecuredScoreObject.GetComponent<TextMeshProUGUI>();
             unsecuredScoreAnimator = unsecuredScoreObject.GetComponent<Animator>();
         };
@@ -45,9 +46,11 @@ public class Score : MonoBehaviour {
             SecureScore();
         };
         Player.Instance.onUnsafeLanding += () => {
+            unsecuredScore = 0;
             // destroy unsecured animator
             if (unsecuredScoreAnimator != null) {
-                Destroy(unsecuredScoreAnimator.gameObject);
+                unsecuredScoreAnimator.SetTrigger("lost");
+                // Destroy(unsecuredScoreAnimator.gameObject);
                 unsecuredScoreAnimator = null;
                 unsecuredScoreText = null;
             }
@@ -62,8 +65,8 @@ public class Score : MonoBehaviour {
         // animate unsecured score
         if (unsecuredScoreAnimator != null) {
             unsecuredScoreAnimator.SetBool("secured", true);
-            unsecuredScoreText = null;
             unsecuredScoreAnimator = null;
+            unsecuredScoreText = null;
         }
     }
 

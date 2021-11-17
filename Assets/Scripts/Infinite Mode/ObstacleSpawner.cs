@@ -40,7 +40,7 @@ public class ObstacleSpawner : MonoBehaviour {
 
     private void SpawnNewObstacle() {
         int randomNum = Random.Range(0, emptySpaceWeight + railWeight + rampWeight + coneWeight);
-        Debug.Log("spawn new obstacle " + randomNum);
+        // Debug.Log("spawn new obstacle " + randomNum);
 
         if (randomNum < emptySpaceWeight) {
             // empty space

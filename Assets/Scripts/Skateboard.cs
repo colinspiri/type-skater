@@ -120,7 +120,7 @@ public class Skateboard : MonoBehaviour {
         if (Input.GetKey(KeyCode.Return) && player.state == Player.State.Midair && currentAnimation != Animation.LevelOut)
         {
             SetAnimation(Animation.LevelOut);
-            Debug.Log("SA");
+            // Debug.Log("SA");
         }
         else if(!Input.GetKey(KeyCode.Return) && currentAnimation == Animation.LevelOut)
         {
@@ -137,7 +137,7 @@ public class Skateboard : MonoBehaviour {
         switch (currentAnimation)
         {
             case Animation.None:
-                Debug.Log("None!");
+                // Debug.Log("None!");
                 transform.rotation = Quaternion.identity;
                 break;
             case Animation.Ollie:
@@ -145,7 +145,7 @@ public class Skateboard : MonoBehaviour {
                 StartCoroutine(Ollie());
                 break;
             case Animation.LevelOut:
-                Debug.Log("LEveling Out!");
+                // Debug.Log("LEveling Out!");
                 StartCoroutine(LevelOut());
                 break;
             case Animation.Kickflip:
@@ -441,7 +441,7 @@ public class Skateboard : MonoBehaviour {
             if (completeCount == instructions.Length && loop)
             {
 
-                Debug.Log("Reset");
+                // Debug.Log("Reset");
                 completeCount = 0;
                 elapsedTime = 0;
                 startRotation = transform.rotation;
