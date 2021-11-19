@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.Timeline;
+using Random = UnityEngine.Random;
 
 public class TypingManager : MonoBehaviour {
     public static TypingManager Instance;
@@ -23,8 +24,9 @@ public class TypingManager : MonoBehaviour {
     public Color completedTrickTextColor;
 
     // state
-    private List<Word> words = new List<Word>();
-    private List<Word> doneTricks = new List<Word>();
+    private List<Word> allWords = new List<Word>();
+    private List<Word> availableWords = new List<Word>();
+    private List<Word> tricksLeft = new List<Word>();
     private float timeTyping;
     private int wordsTyped;
     
@@ -39,43 +41,44 @@ public class TypingManager : MonoBehaviour {
     private void Start() {
         playerAnimator = Player.Instance.GetComponent<Animator>();
 
-        Player.Instance.onLand += () => doneTricks.Clear();
-
         typingText.text = "";
 
         string sceneName = SceneManager.GetActiveScene().name;
         if (sceneName.Equals("Level0")) {
-            words.AddRange(level0Words);
+            allWords.AddRange(level0Words);
         }
         if (sceneName.Equals("Level1")) {
-            words.AddRange(level0Words);
-            words.AddRange(level1Words);
+            allWords.AddRange(level0Words);
+            allWords.AddRange(level1Words);
         }
         else if (sceneName.Equals("Level2")) {
-            words.AddRange(level0Words);
-            words.AddRange(level1Words);
-            words.AddRange(level2Words);
+            allWords.AddRange(level0Words);
+            allWords.AddRange(level1Words);
+            allWords.AddRange(level2Words);
         }
         else if (sceneName.Equals("Infinite")) {
-            words.AddRange(level0Words);
-            words.AddRange(level1Words);
-            words.AddRange(level2Words);
+            allWords.AddRange(level0Words);
+            allWords.AddRange(level1Words);
+            allWords.AddRange(level2Words);
         }
+        Player.Instance.onStateChange += UpdateAvailableWords;
+        UpdateAvailableWords(Player.Instance.state);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (GetAvailableWords().Count > 0 && (Player.Instance.state == Player.State.Midair || Player.Instance.state == Player.State.OnRail)) {
+        if (Player.Instance.state == Player.State.Midair || Player.Instance.state == Player.State.OnRail) {
             timeTyping += Time.unscaledDeltaTime;
+            if(availableWords.Count <= 2) AddRandomTrick();
         }
-        
+
         string input = Input.inputString;
         if (input.Equals("")) return;
         
         char c = input[0];
         Word currentWord = null;
-        foreach (Word w in GetAvailableWords()) {
+        foreach (Word w in availableWords) {
             // if the current input matches a word
             if (w.ContinueText(c)) {
                 // play typing sound
@@ -100,26 +103,26 @@ public class TypingManager : MonoBehaviour {
                     // grind
                     else if (w.text.Equals("grind")) Player.Instance.grindCount++;
 
-                    // if not OnGround, add to current tricks
-                    if (w.trickScore > 0 && Player.Instance.state != Player.State.OnGround)
-                    {
-                        doneTricks.Add(w);
+                    // if it's a trick
+                    if (w.trickScore > 0) {
                         // add to score
                         Score.Instance.AddScore(w.trickScore);
                         // do player animation
                         playerAnimator.SetTrigger("trick");
+                        // remove from available words
+                        if (!w.text.Equals("drop") && !w.text.Equals("grind")) availableWords.Remove(w);
                     }
                     // animate completed text
                     TextMeshProUGUI completedText = Instantiate(completedTextPrefab, typingText.transform.parent, false).GetComponent<TextMeshProUGUI>();
                     completedText.text = w.text;
-                    // clear current typing
-                    typingText.text = "";
-                    currentWord = null;
                     // spawn completed trick text
                     GameObject completedTrickText = Instantiate(completedTrickTextPrefab, Player.Instance.transform.position, Quaternion.identity);
                     TextMeshProUGUI text = completedTrickText.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
                     text.text = w.text;
                     text.color = completedTrickTextColor;
+                    // clear current typing
+                    typingText.text = "";
+                    currentWord = null;
                     // count words
                     wordsTyped++;
                     // call callback
@@ -132,17 +135,40 @@ public class TypingManager : MonoBehaviour {
         typingText.text = currentWord == null ? "" : currentWord.GetTyped();
     }
 
-    public List<Word> GetAvailableWords() {
-        List<Word> availableWords = new List<Word>();
-        foreach (var w in words) {
-            // skip tricks that you've already done, but not grind
-            if (doneTricks.Contains(w) && w.text != "grind" && w.text != "drop") continue;
-            // skip if not in state
-            if (!w.availableInStates.Contains(Player.Instance.state)) continue;
-            // add to available words
-            availableWords.Add(w);
+    private void UpdateAvailableWords(Player.State state) {
+        availableWords.Clear();
+        tricksLeft.Clear();
+        foreach (var word in allWords) {
+            if (word.availableInStates.Contains(state)) {
+                tricksLeft.Add(word);
+                if (state != Player.State.Midair && state != Player.State.OnRail) {
+                    availableWords.Add(word);
+                }
+            }
         }
+        if (state == Player.State.Midair || state == Player.State.OnRail) {
+            // add "drop" first
+            if (state == Player.State.Midair) {
+                int dropIndex = tricksLeft.FindIndex(word => word.text.Equals("drop"));
+                availableWords.Add(tricksLeft[dropIndex]);
+                tricksLeft.RemoveAt(dropIndex);
+            }
+            // choose random tricks
+            for (int i = 0; i < 2; i++) {
+                AddRandomTrick();
+            }
+        }
+    }
+
+    public List<Word> GetAvailableWords() {
         return availableWords;
+    }
+
+    private void AddRandomTrick() {
+        if (tricksLeft.Count == 0) return; // if no tricks left, do nothing
+        int randomIndex = Random.Range(0, tricksLeft.Count);
+        availableWords.Add(tricksLeft[randomIndex]);
+        tricksLeft.RemoveAt(randomIndex);
     }
 
     public float GetWordsPerMinute() {
