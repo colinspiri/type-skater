@@ -52,7 +52,6 @@ public class Score : MonoBehaviour {
             // destroy unsecured animator
             if (unsecuredScoreAnimator != null) {
                 unsecuredScoreAnimator.SetTrigger("lost");
-                // Destroy(unsecuredScoreAnimator.gameObject);
                 unsecuredScoreAnimator = null;
                 unsecuredScoreText = null;
             }

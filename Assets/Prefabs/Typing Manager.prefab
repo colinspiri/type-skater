@@ -89,3 +89,4 @@ MonoBehaviour:
     availableInStates: 00000000
   completedTrickTextPrefab: {fileID: 3783369161292865245, guid: dd696d0494d1c429c82bc27fe1b69a54, type: 3}
   completedTrickTextColor: {r: 0.5882353, g: 0.33333334, b: 1, a: 1}
+  errorTextPrefab: {fileID: 7186551362841254048, guid: c857f5c6a8269459abc9be00a622fb97, type: 3}

@@ -29,6 +29,10 @@ public class TypingManager : MonoBehaviour {
     private List<Word> tricksLeft = new List<Word>();
     private float timeTyping;
     private int wordsTyped;
+    private Word currentWord;
+    
+    // UI
+    public GameObject errorTextPrefab;
     
     // callbacks
     public delegate void OnCompleteWord(string word);
@@ -77,19 +81,19 @@ public class TypingManager : MonoBehaviour {
         if (input.Equals("")) return;
         
         char c = input[0];
-        Word currentWord = null;
+        Word newCurrentWord = null;
         foreach (Word w in availableWords) {
             // if the current input matches a word
             if (w.ContinueText(c)) {
                 // play typing sound
                 SoundManager.Instance.PlayTypingSound();
                 // check if this is the current word the player is typing
-                if (currentWord == null) {
-                    currentWord = w;
+                if (newCurrentWord == null) {
+                    newCurrentWord = w;
                 }
-                else if(w.GetTyped().Length > currentWord.GetTyped().Length) {
-                    currentWord.Clear();
-                    currentWord = w;
+                else if(w.GetTyped().Length > newCurrentWord.GetTyped().Length) {
+                    newCurrentWord.Clear();
+                    newCurrentWord = w;
                 }
                 // if user typed the whole word
                 if (w.GetTyped().Equals(w.text))
@@ -122,6 +126,7 @@ public class TypingManager : MonoBehaviour {
                     text.color = completedTrickTextColor;
                     // clear current typing
                     typingText.text = "";
+                    newCurrentWord = null;
                     currentWord = null;
                     // count words
                     wordsTyped++;
@@ -131,7 +136,15 @@ public class TypingManager : MonoBehaviour {
                 }
             }
         }
+        // check if player made a mistake
+        if (currentWord != null && newCurrentWord == null && currentWord.text.Length >= 2) {
+            var errorText = Instantiate(errorTextPrefab, typingText.transform, false).GetComponent<TextMeshProUGUI>();
+            string wrongCharacter = input.Trim();
+            if (wrongCharacter.Length == 0) wrongCharacter = "_";
+            errorText.text = typingText.text + "<color=#EC7357>" + wrongCharacter + "</color>";
+        }
         // update typing text
+        currentWord = newCurrentWord;
         typingText.text = currentWord == null ? "" : currentWord.GetTyped();
     }
 
