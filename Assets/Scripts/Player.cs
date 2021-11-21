@@ -95,6 +95,18 @@ public class Player : MonoBehaviour
 
     private void ChangeState(State newState) {
         state = newState;
+        if (state == State.Midair) {
+            Time.timeScale = midairTimeScale;
+        }
+        else if (state == State.OnRail) {
+            Time.timeScale = railTimeScale;
+        }
+        else if (state == State.OnGround) {
+            Time.timeScale = 1;
+        }
+        else if (state == State.OnRamp) {
+            Time.timeScale = 1;
+        }
         onStateChange?.Invoke(state);
     }
 
@@ -123,7 +135,6 @@ public class Player : MonoBehaviour
         bool newJump = state == State.OnGround || state == State.OnRamp;
         rb.AddForce(new Vector2(0, multiplier * Mathf.Lerp(minJumpForce, maxJumpForce, rb.velocity.x / maxRollingSpeed)));
         ChangeState(State.Midair);
-        Time.timeScale = midairTimeScale;
         Skateboard.Instance.SetAnimation(Skateboard.Animation.Ollie);
 
         if(newJump) onJump?.Invoke();
@@ -139,7 +150,6 @@ public class Player : MonoBehaviour
     }
 
     private void SafeLanding() {
-        Time.timeScale = 1;
         // speed boost
         float score = Score.Instance.GetUnsecuredScore();
         if (score == 0) {
@@ -154,7 +164,6 @@ public class Player : MonoBehaviour
         onSafeLanding?.Invoke(score);
     }
     private void UnsafeLanding() {
-        Time.timeScale = 1;
         // wipe out
         WipeOut();
         // callbacks
@@ -191,13 +200,11 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Rail") && state != State.OnRail) {
             if (safe) {
                 ChangeState(State.OnRail);
-                Time.timeScale = railTimeScale;
                 railSpeed = rb.velocity.x > railMinSpeed ? rb.velocity.x : railMinSpeed;
                 grindCount = 0;
             }
             else {
                 ChangeState(State.Midair);
-                Time.timeScale = midairTimeScale;
                 other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
                 WipeOut();
                 Jump(0.2f);
@@ -219,7 +226,6 @@ public class Player : MonoBehaviour
             }
             // unsafe landing from midair, bounce off
             else if (state == State.Midair && !safe) {
-                Time.timeScale = midairTimeScale;
                 other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
                 WipeOut();
                 Jump(0.2f);
