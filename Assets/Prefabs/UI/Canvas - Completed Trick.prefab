@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.34, y: 0.74}
+  m_AnchoredPosition: {x: -0.33999634, y: 0.7400055}
   m_SizeDelta: {x: 662, y: 372.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3783369161292865240
@@ -82,7 +82,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &3783369161292865246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,7 +174,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4294923670
   m_fontColor: {r: 0.5882353, g: 0.33333334, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
