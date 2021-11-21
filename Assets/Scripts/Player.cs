@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -40,6 +41,8 @@ public class Player : MonoBehaviour
     public bool safe;
 
     private float rampSpeed;
+
+    public TextMeshProUGUI speedText; 
 
     public delegate void OnJump();
     public OnJump onJump;
@@ -91,6 +94,8 @@ public class Player : MonoBehaviour
         if (rb.velocity.x < minRollingSpeed && rolling && !Score.Instance.gameOver) {
             SlowToMinSpeed();
         }
+
+        speedText.text = "" + Mathf.RoundToInt(rb.velocity.x);
     }
 
     private void ChangeState(State newState) {
@@ -133,6 +138,7 @@ public class Player : MonoBehaviour
         }
         
         bool newJump = state == State.OnGround || state == State.OnRamp;
+        if(rb.velocity.x > maxRollingSpeed) rb.velocity = new Vector2(maxRollingSpeed, rb.velocity.y);
         rb.AddForce(new Vector2(0, multiplier * Mathf.Lerp(minJumpForce, maxJumpForce, rb.velocity.x / maxRollingSpeed)));
         ChangeState(State.Midair);
         Skateboard.Instance.SetAnimation(Skateboard.Animation.Ollie);
