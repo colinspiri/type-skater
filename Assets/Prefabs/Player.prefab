@@ -582,8 +582,8 @@ MonoBehaviour:
   pushForce: 150
   minRollingSpeed: 2
   maxRollingSpeed: 8
-  minJumpForce: 150
-  maxJumpForce: 300
+  minJumpForce: 200
+  maxJumpForce: 350
   midairTimeScale: 0.5
   dropForce: 150
   railTimeScale: 0.7

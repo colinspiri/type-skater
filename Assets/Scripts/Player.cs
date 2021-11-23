@@ -158,13 +158,8 @@ public class Player : MonoBehaviour
     private void SafeLanding() {
         // speed boost
         float score = Score.Instance.GetUnsecuredScore();
-        if (score == 0) {
-            Push(0.5f);
-        }
-        else {
-            float multiplier = Mathf.Lerp(1f, 2.5f, score / 10.0f);
-            Push(multiplier);
-        }
+        float multiplier = Mathf.Lerp(0.5f, 1f, score / 10.0f);
+        Push(multiplier);
         // callbacks
         onLand?.Invoke();
         onSafeLanding?.Invoke(score);
