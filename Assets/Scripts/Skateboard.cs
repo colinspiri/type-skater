@@ -19,6 +19,8 @@ public class Skateboard : MonoBehaviour {
     private float lastAngleKickflip = 0f;
     private float lastAngleOllie = 0f;
     private float lastAngleGrind = 0f;
+    private float oneEightyFactor = 1f;
+
 
 
 
@@ -37,9 +39,7 @@ public class Skateboard : MonoBehaviour {
                     new RotationInstruction() { angle=360f,axis=Axis.KickflipAxis,inTime=0.32f,startAt=0f }
     };
 
-    private RotationInstruction[] oneEightyInstructions = {
-                    new RotationInstruction(){angle=180, axis=Axis.GrindAxis,inTime=0.25f,startAt=0f}
-    };
+  
 
     private void Awake() {
         Instance = this;
@@ -51,10 +51,14 @@ public class Skateboard : MonoBehaviour {
         player = Player.Instance;
 
         TypingManager.Instance.onCompleteWord += word => {
-            if (word.Equals("kickflip")) {
+            if (word.Equals("kickflip"))
+            {
                 SetAnimation(Animation.Kickflip);
             }
-            // else if(word.Equals("TRICK")) {
+            else if (word.Equals("180"))
+            {
+                SetAnimation(Animation.OneEighty);
+            }
         };
     }
 
@@ -145,7 +149,6 @@ public class Skateboard : MonoBehaviour {
                 StartCoroutine(Ollie());
                 break;
             case Animation.LevelOut:
-                // Debug.Log("LEveling Out!");
                 StartCoroutine(LevelOut());
                 break;
             case Animation.Kickflip:
@@ -153,6 +156,9 @@ public class Skateboard : MonoBehaviour {
                 break;
             case Animation.AirWobble:
                 StartCoroutine(AirWobble());
+                break;
+            case Animation.OneEighty:
+                StartCoroutine(OneEighty());
                 break;
             default:
                 break;
@@ -177,7 +183,7 @@ public class Skateboard : MonoBehaviour {
     {
         RotationInstruction[] inst = {
             new RotationInstruction() { angle=0, axis=Axis.KickflipAxis, inTime=0.2f, startAt=0f},
-            new RotationInstruction() { angle=0, axis=Axis.GrindAxis, inTime=0.2f, startAt=0f},
+            //new RotationInstruction() { angle=0, axis=Axis.GrindAxis, inTime=0.2f, startAt=0f},
             new RotationInstruction() { angle=0, axis=Axis.OllieAxis, inTime=0.2f, startAt=0f},};
         yield return StartCoroutine(SetRotation(inst, false));
     }
@@ -187,6 +193,24 @@ public class Skateboard : MonoBehaviour {
     {
         yield return StartCoroutine(SetRotation(CreateRotationInstructions(kickFlipInstructions), false));
         SetAnimation(Animation.AirWobble);
+    }
+
+    IEnumerator OneEighty()
+    {
+        RotationInstruction[] oneEightyInstructions = {
+                    new RotationInstruction(){angle=180, axis=Axis.GrindAxis,inTime=0.25f,startAt=0f},
+                    new RotationInstruction() { angle=0f,axis=Axis.OllieAxis,inTime=0.25f,startAt=0f },
+
+    };
+        yield return StartCoroutine(SetRotation(CreateRotationInstructions(oneEightyInstructions), false));
+
+        transform.rotation = Quaternion.identity;
+        lastAngleGrind = 0f;
+        lastAngleKickflip= 0f;
+        lastAngleOllie = 0f;
+
+        SetAnimation(Animation.AirWobble);
+
     }
 
     IEnumerator Ollie()
@@ -476,7 +500,8 @@ public class Skateboard : MonoBehaviour {
         LevelOut,
         Ollie,
         AirWobble,
-        Kickflip
+        Kickflip,
+        OneEighty
     }
     private enum Axis
     {
