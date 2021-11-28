@@ -31,14 +31,7 @@ LEVEL 2: rails that u can land on
     rail blockers that make u wipe out
     ollie off the rail without grinding causes a bug
         player stays on the rail and doesn't properly jump off it
-    
-Move unsecured score closer to player when in mid-jump
-animate score penalty 
 
-show in red text when the player messes up typing a trick
-    animate it downwards when player messes up?
-    or keep it there and let the player press backspace (-1 point each backspace)
-        if the player backspaces a correct letter, then clear current text
 game feel for unsafe/safe state
     wobble animation
     add sparks or something when ready to land

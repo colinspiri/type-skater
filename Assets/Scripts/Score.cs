@@ -22,7 +22,6 @@ public class Score : MonoBehaviour {
     private TextMeshProUGUI scoreText;
     
     // game over
-    public bool gameOver;
     public GameObject gameOverPrefab;
     public List<GameObject> objectsToDisable;
     public PauseMenu pauseMenu;
@@ -91,7 +90,6 @@ public class Score : MonoBehaviour {
     }
 
     public void GameOver() {
-        gameOver = true;
         SecureScore();
         // display game over
         TextMeshProUGUI gameOverText = Instantiate(gameOverPrefab, transform.parent, false).GetComponent<TextMeshProUGUI>();
@@ -102,8 +100,8 @@ public class Score : MonoBehaviour {
         gameOverText.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text =
             Mathf.RoundToInt(TypingManager.Instance.GetWordsPerMinute()) + " words/min";
         // disable other objects
+        Player.Instance.currentSpeed = Player.Speed.Stopped;
         Time.timeScale = 1.0f;
-        // Time.fixedDeltaTime = 0.02f * Time.timeScale;
         foreach (GameObject o in objectsToDisable) {
             o.SetActive(false);
         }

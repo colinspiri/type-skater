@@ -102,7 +102,7 @@ public class SoundManager : MonoBehaviour {
             }
             else if(rolling.isPlaying) rolling.Stop();
             // adjust volume based on player speed
-            rolling.volume = Mathf.Lerp(0.01f, 0.5f, (player.GetSpeed() - player.minRollingSpeed) / 2*player.maxRollingSpeed);
+            rolling.volume = Mathf.Lerp(0.01f, 0.5f, (player.GetSpeed() - player.slowSpeed) / 2*player.maxSpeed);
 
             // enter
             if (player.state == Player.State.Midair) {

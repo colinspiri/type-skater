@@ -579,20 +579,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dafa1cec193f4f95afe6afdc2037ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 150
-  minRollingSpeed: 2
-  maxRollingSpeed: 8
-  minJumpForce: 200
-  maxJumpForce: 350
-  midairTimeScale: 0.5
-  dropForce: 150
-  railTimeScale: 0.7
-  railMinSpeed: 5
-  rampMinSpeed: 6
-  unsafeRotationZ: 27
-  state: 1
-  safe: 1
+  slowSpeed: 2
+  mediumSpeed: 5
+  fastSpeed: 9
+  maxSpeed: 12
+  pushForce: 130
   speedText: {fileID: 6780266401471694673}
+  slowJumpForce: 200
+  mediumJumpForce: 250
+  fastJumpForce: 350
+  midairTimeScale: 0.5
+  unsafeRotationZ: 27
+  dropForce: 150
+  rampSpeed: 3
+  rampJump: 1
+  bounceForce: 0
+  railSpeed: 2
+  railJump: 1
+  railTimeScale: 0.7
+  state: 1
+  currentSpeed: 0
+  safe: 1
 --- !u!95 &7760741278451484482
 Animator:
   serializedVersion: 3
