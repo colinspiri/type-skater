@@ -160,11 +160,13 @@ public class TypingManager : MonoBehaviour {
             }
         }
         if (state == Player.State.Midair || state == Player.State.OnRail) {
-            // add "drop" first
+            // add "drop" if it exists
             if (state == Player.State.Midair) {
                 int dropIndex = tricksLeft.FindIndex(word => word.text.Equals("drop"));
-                availableWords.Add(tricksLeft[dropIndex]);
-                tricksLeft.RemoveAt(dropIndex);
+                if (dropIndex != -1) {
+                    availableWords.Add(tricksLeft[dropIndex]);
+                    tricksLeft.RemoveAt(dropIndex);
+                }
             }
             // choose random tricks
             for (int i = 0; i < 2; i++) {
