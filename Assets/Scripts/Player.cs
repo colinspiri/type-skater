@@ -91,6 +91,11 @@ public class Player : MonoBehaviour
             if(rb.velocity.x < rampSpeed) rb.velocity = new Vector2(rampSpeed, rb.velocity.y);
         }
 
+        // speed up time when holding ENTER (makes the physics wonky idk why)
+        // if (state == State.Midair) {
+        //     Time.timeScale = safe ? 1.5f : midairTimeScale;
+        // }
+
         if (rb.velocity.x < minRollingSpeed && rolling && !Score.Instance.gameOver) {
             SlowToMinSpeed();
         }
