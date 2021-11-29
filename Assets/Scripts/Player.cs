@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
     [Header("Component Constants")]
     public TextMeshProUGUI speedText;
     public TrailRenderer trail;
-    public Color endColor;
+    // public Color endColor;
     public Color slowTrailColor;
     public Color mediumTrailColor;
     public Color fastTrailColor;
@@ -130,15 +130,15 @@ public class Player : MonoBehaviour
         // trail color
         if (currentSpeed == Speed.Slow || currentSpeed == Speed.Stopped) {
             trail.startColor = slowTrailColor;
-            trail.endColor = endColor;
+            trail.endColor = slowTrailColor;
         }
         else if (currentSpeed == Speed.Medium) {
             trail.startColor = mediumTrailColor;
-            trail.endColor = slowTrailColor;
+            trail.endColor = mediumTrailColor;
         }
         else if (currentSpeed == Speed.Fast) {
             trail.startColor = fastTrailColor;
-            trail.endColor = mediumTrailColor;
+            trail.endColor = fastTrailColor;
         }
 
         // speed text

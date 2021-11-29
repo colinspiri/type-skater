@@ -601,9 +601,8 @@ MonoBehaviour:
   safe: 1
   speedText: {fileID: 6780266401471694673}
   trail: {fileID: 7760741279925662503}
-  endColor: {r: 1, g: 1, b: 1, a: 1}
   slowTrailColor: {r: 1, g: 0.9764706, b: 0, a: 1}
-  mediumTrailColor: {r: 0.9254902, g: 0.4509804, b: 0.34117648, a: 1}
+  mediumTrailColor: {r: 1, g: 0.52179044, b: 0, a: 1}
   fastTrailColor: {r: 1, g: 0.24056602, b: 0.24056602, a: 1}
 --- !u!95 &7760741278451484482
 Animator:

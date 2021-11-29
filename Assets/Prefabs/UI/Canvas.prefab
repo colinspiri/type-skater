@@ -1459,8 +1459,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 57.8013, y: -48}
-  m_SizeDelta: {x: 55.6025, y: 50}
+  m_AnchoredPosition: {x: 112.7345, y: -48}
+  m_SizeDelta: {x: 165.4689, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6791000251494287534
 CanvasRenderer:
@@ -1576,6 +1576,7 @@ MonoBehaviour:
   unsecuredScorePrefab: {fileID: 6941402312752193843, guid: 1480cb9595c844fd899db7ac79448859, type: 3}
   unsecuredScoreLocation: {fileID: 1110688572206153380}
   flyingScorePrefab: {fileID: 3390128065693615693, guid: d8abd2be22708429797aa2fcabfc0386, type: 3}
+  gameOverOnWipeOut: 0
   gameOverPrefab: {fileID: 142869858993317319, guid: dbd7e0bf9abca4aca8805151b180530f, type: 3}
   objectsToDisable:
   - {fileID: 1110688572206153380}
