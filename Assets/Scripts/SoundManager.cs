@@ -14,6 +14,8 @@ public class SoundManager : MonoBehaviour {
     
     // music
     public AudioSource music;
+    public AudioSource level1;
+    public AudioSource level2;
     // SFX
     public AudioSource recordScratch;
     public AudioSource digThis;
@@ -48,9 +50,26 @@ public class SoundManager : MonoBehaviour {
         SetVolume("MusicVolume", PlayerPrefs.GetFloat("MusicVolume", 1f));
         SetVolume("SFXVolume", PlayerPrefs.GetFloat("SFXVolume", 1f));
 
+        
+
         SceneManager.activeSceneChanged += (oldscene, newscene) => {
+            Scene currentScene = SceneManager.GetActiveScene();
+            string sceneName = currentScene.name;
             AddCallbacks();
             rolling.Stop();
+            music.Stop();
+            level1.Stop();
+            level2.Stop();
+
+            if(sceneName == "Level1")
+            {
+                Debug.Log("In Level 1 IF");
+                level1.Play();
+            }
+            else if(sceneName == "Level2")
+            {
+                level2.Play();
+            }
         };
     }
 
@@ -132,4 +151,5 @@ public class SoundManager : MonoBehaviour {
         mixer.SetFloat(mixerParameter, Mathf.Log10(value) * 20f);
         PlayerPrefs.SetFloat(mixerParameter, value);
     }
+
 }
