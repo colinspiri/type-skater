@@ -53,17 +53,15 @@ public class SoundManager : MonoBehaviour {
         
 
         SceneManager.activeSceneChanged += (oldscene, newscene) => {
-            Scene currentScene = SceneManager.GetActiveScene();
-            string sceneName = currentScene.name;
             AddCallbacks();
             rolling.Stop();
+            
+            string sceneName = newscene.name;
             music.Stop();
             level1.Stop();
             level2.Stop();
-
             if(sceneName == "Level1")
             {
-                Debug.Log("In Level 1 IF");
                 level1.Play();
             }
             else if(sceneName == "Level2")
