@@ -362,11 +362,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6790153280872057816, guid: 28e5da664f9d846fd9c9705736b30c7f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6790153280872057816, guid: 28e5da664f9d846fd9c9705736b30c7f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28e5da664f9d846fd9c9705736b30c7f, type: 3}
@@ -1051,11 +1051,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6790153280872057816, guid: 28e5da664f9d846fd9c9705736b30c7f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6790153280872057816, guid: 28e5da664f9d846fd9c9705736b30c7f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28e5da664f9d846fd9c9705736b30c7f, type: 3}
@@ -1578,11 +1578,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6790153280872057816, guid: 28e5da664f9d846fd9c9705736b30c7f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6790153280872057816, guid: 28e5da664f9d846fd9c9705736b30c7f, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28e5da664f9d846fd9c9705736b30c7f, type: 3}
@@ -1927,7 +1927,7 @@ GameObject:
   - component: {fileID: 680066174}
   - component: {fileID: 680066173}
   m_Layer: 5
-  m_Name: Street
+  m_Name: Level1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1974,7 +1974,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: street
+  m_text: kickers
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 76014a9e28e314d2fa442e172f9544b7, type: 2}
   m_sharedMaterial: {fileID: 5234065489357767008, guid: 76014a9e28e314d2fa442e172f9544b7, type: 2}
@@ -2364,7 +2364,7 @@ GameObject:
   - component: {fileID: 1045998655}
   - component: {fileID: 1045998654}
   m_Layer: 5
-  m_Name: Park
+  m_Name: Level2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2411,7 +2411,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: park
+  m_text: rails
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 76014a9e28e314d2fa442e172f9544b7, type: 2}
   m_sharedMaterial: {fileID: 5234065489357767008, guid: 76014a9e28e314d2fa442e172f9544b7, type: 2}
@@ -2772,7 +2772,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1087032733
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3407,7 +3407,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1301981021
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4066,7 +4066,7 @@ GameObject:
   - component: {fileID: 1583580825}
   - component: {fileID: 1583580824}
   m_Layer: 5
-  m_Name: Sidewalk
+  m_Name: Level0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4113,7 +4113,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: sidewalk
+  m_text: basics
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 76014a9e28e314d2fa442e172f9544b7, type: 2}
   m_sharedMaterial: {fileID: 5234065489357767008, guid: 76014a9e28e314d2fa442e172f9544b7, type: 2}
