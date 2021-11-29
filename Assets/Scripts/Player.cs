@@ -108,10 +108,10 @@ public class Player : MonoBehaviour
 
         // set current speed state
         if (state == State.OnRail) {
-            SetSpeed(railSpeed);
+            if(CurrentSpeedBelow(railSpeed)) SetSpeed(railSpeed);
         }
         else if (state == State.OnRamp) {
-            SetSpeed(rampSpeed);
+            if(CurrentSpeedBelow(rampSpeed)) SetSpeed(rampSpeed);
         }
         else {
             float speed = rb.velocity.x;
@@ -156,13 +156,26 @@ public class Player : MonoBehaviour
         }
         else if (state == State.OnRail) {
             Time.timeScale = railTimeScale;
-            SetSpeed(railSpeed);
         }
         else if (state == State.OnRamp) {
             Time.timeScale = 1;
-            SetSpeed(rampSpeed);
         }
         onStateChange?.Invoke(state);
+    }
+
+    private bool CurrentSpeedBelow(Speed speed) {
+        List<Speed> speedsInOrder = new List<Speed>() {Speed.Stopped, Speed.Slow, Speed.Medium, Speed.Fast};
+        bool playerSpeedFound = false;
+        Debug.Log("currentSpeed = " + currentSpeed + "  speed = " + speed);
+        foreach (var s in speedsInOrder) {
+            Debug.Log("s = " + s);
+            if (s == speed) {
+                if (playerSpeedFound) return true;
+                break;
+            }
+            if (s == currentSpeed) playerSpeedFound = true;
+        }
+        return false;
     }
 
     public float GetSpeed() {
@@ -195,7 +208,7 @@ public class Player : MonoBehaviour
         rb.AddForce(new Vector2(0, jumpForce));
         // set speed
         float newSpeed = currentSpeed switch {
-            Speed.Slow => mediumSpeed,
+            Speed.Slow => slowSpeed,
             Speed.Medium => mediumSpeed,
             Speed.Fast => fastSpeed,
             _ => 0
