@@ -81,7 +81,6 @@ public class Player : MonoBehaviour
     [Header("Component Constants")]
     public TextMeshProUGUI speedText;
     public TrailRenderer trail;
-    // public Color endColor;
     public Color slowTrailColor;
     public Color mediumTrailColor;
     public Color fastTrailColor;
@@ -107,10 +106,10 @@ public class Player : MonoBehaviour
 
         // set current speed state
         if (state == State.OnRail) {
-            if(CurrentSpeedBelow(railSpeed)) SetSpeed(railSpeed);
+            SetSpeed(railSpeed);
         }
         else if (state == State.OnRamp) {
-            if(CurrentSpeedBelow(rampSpeed)) SetSpeed(rampSpeed);
+            SetSpeed(rampSpeed);
         }
         else if(state == State.OnGround) {
             float speed = rb.velocity.x;
@@ -166,9 +165,7 @@ public class Player : MonoBehaviour
     private bool CurrentSpeedBelow(Speed speed) {
         List<Speed> speedsInOrder = new List<Speed>() {Speed.Stopped, Speed.Slow, Speed.Medium, Speed.Fast};
         bool playerSpeedFound = false;
-        Debug.Log("currentSpeed = " + currentSpeed + "  speed = " + speed);
         foreach (var s in speedsInOrder) {
-            Debug.Log("s = " + s);
             if (s == speed) {
                 if (playerSpeedFound) return true;
                 break;

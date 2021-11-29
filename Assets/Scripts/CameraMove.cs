@@ -12,7 +12,6 @@ public class CameraMove : MonoBehaviour {
     private bool panningOverLevel;
     private int direction = -1;
     private float levelStartX;
-    public Transform levelEndTransform;
     private float levelEndX;
     private float panVelocity;
     private float panAcceleration = 2f;
@@ -24,7 +23,7 @@ public class CameraMove : MonoBehaviour {
         levelStartX = transform.position.x;
 
         Score.Instance.onGameOver += () => {
-            levelEndX = levelEndTransform.position.x;
+            levelEndX = Player.Instance.transform.position.x;
             panningOverLevel = true;
         };
     }

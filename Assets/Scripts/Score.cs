@@ -12,7 +12,8 @@ public class Score : MonoBehaviour {
     // score-keeping data
     [HideInInspector] public int score;
     private int unsecuredScore;
-    private int multiplier;
+    private float multiplier;
+    public float multiplierIncrement;
     [HideInInspector] public int wipeouts;
     
     // unsecured score
@@ -20,7 +21,7 @@ public class Score : MonoBehaviour {
     private TextMeshProUGUI unsecuredScoreText;
     private Animator unsecuredScoreAnimator;
     public GameObject unsecuredScoreLocation;
-    private Color multiplierColor;
+    private TextMeshProUGUI multiplierText;
     
     // floating score
     public GameObject flyingScorePrefab;
@@ -49,23 +50,22 @@ public class Score : MonoBehaviour {
             GameObject unsecuredScoreObject = Instantiate(unsecuredScorePrefab, unsecuredScoreLocation.transform, false);
             unsecuredScoreText = unsecuredScoreObject.GetComponent<TextMeshProUGUI>();
             unsecuredScoreAnimator = unsecuredScoreObject.GetComponent<Animator>();
-            var multiplierText = unsecuredScoreObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            multiplierText = unsecuredScoreObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             // set multiplier based on player speed
             if (Player.Instance.currentSpeed == Player.Speed.Fast) {
-                multiplier = 3;
-                multiplierColor = Player.Instance.fastTrailColor;
+                multiplier = 2.0f;
+                multiplierText.color = Player.Instance.fastTrailColor;
             }
             else if (Player.Instance.currentSpeed == Player.Speed.Medium) {
-                multiplier = 2;
-                multiplierColor = Player.Instance.mediumTrailColor;
+                multiplier = 1.5f;
+                multiplierText.color = Player.Instance.mediumTrailColor;
             }
             else if (Player.Instance.currentSpeed == Player.Speed.Slow) {
-                multiplier = 1;
-                multiplierColor = Player.Instance.slowTrailColor;
+                multiplier = 1.0f;
+                multiplierText.color = Player.Instance.slowTrailColor;
             }
             else multiplier = 0;
-            multiplierText.text = "x" + multiplier;
-            multiplierText.color = multiplierColor;
+            multiplierText.text = "x" + multiplier.ToString("F1");
         };
         Player.Instance.onSafeLanding += s => {
             SecureScore();
@@ -98,7 +98,7 @@ public class Score : MonoBehaviour {
     }
 
     public void AddScore(int addition) {
-        int addedScore = addition * multiplier;
+        int addedScore = Mathf.FloorToInt(addition * multiplier);
         // if on ground
         if (Player.Instance.state == Player.State.OnGround) {
             score += addedScore;
@@ -108,11 +108,16 @@ public class Score : MonoBehaviour {
         else {
             unsecuredScore += addedScore;
             unsecuredScoreText.text = unsecuredScore.ToString();
+
+            multiplier += multiplierIncrement;
+            multiplierText.text = "x" + multiplier.ToString("F1");
+            
             SoundManager.Instance.PlayTrickSound();
+            
             var flyingScoreText = Instantiate(flyingScorePrefab, unsecuredScoreText.transform, false)
                 .GetComponent<TextMeshProUGUI>();
             flyingScoreText.text = "+" + addedScore.ToString();
-            flyingScoreText.color = multiplierColor;
+            flyingScoreText.color = multiplierText.color;
         }
     }
 

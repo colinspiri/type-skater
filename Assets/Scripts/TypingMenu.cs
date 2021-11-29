@@ -51,12 +51,12 @@ public class TypingMenu : MonoBehaviour {
             if (menuOptions[currentOption].slider != null) {
                 if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.J)) {
                     // increase slider value
-                    menuOptions[currentOption].slider.value += SliderAdjustment;
+                    menuOptions[currentOption].slider.value += SliderAdjustment * menuOptions[currentOption].slider.maxValue;
                     return;
                 }
                 if (Input.GetKeyDown(KeyCode.LeftArrow) | Input.GetKeyDown(KeyCode.F)) {
                     // decrease slider value
-                    menuOptions[currentOption].slider.value -= SliderAdjustment;
+                    menuOptions[currentOption].slider.value -= SliderAdjustment * menuOptions[currentOption].slider.maxValue;
                     return;
                 }
             }
