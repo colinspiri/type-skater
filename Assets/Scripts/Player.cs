@@ -99,7 +99,6 @@ public class Player : MonoBehaviour
         // safe
         safe = Input.GetKey(KeyCode.Return) || state != State.Midair;
         animator.SetBool("safe", state == State.Midair ? safe : true);
-
         
         // speed up time when holding ENTER (makes the physics wonky idk why)
         // if (state == State.Midair) {
@@ -113,7 +112,7 @@ public class Player : MonoBehaviour
         else if (state == State.OnRamp) {
             if(CurrentSpeedBelow(rampSpeed)) SetSpeed(rampSpeed);
         }
-        else {
+        else if(state == State.OnGround) {
             float speed = rb.velocity.x;
             if (speed >= fastSpeed) {
                 currentSpeed = Speed.Fast;
@@ -126,6 +125,7 @@ public class Player : MonoBehaviour
                 currentSpeed = Speed.Slow;
                 if(speed < slowSpeed) rb.velocity = new Vector2(slowSpeed, rb.velocity.y);
             }
+            TypingManager.Instance.UpdateAvailableWords(state);
         }
         // trail color
         if (currentSpeed == Speed.Slow || currentSpeed == Speed.Stopped) {
@@ -244,7 +244,7 @@ public class Player : MonoBehaviour
     }
 
     private void SafeLanding() {
-        // speed boost
+        // set speed
         SetSpeed(Speed.Medium);
         // callbacks
         onLand?.Invoke();
@@ -260,7 +260,7 @@ public class Player : MonoBehaviour
 
     public void WipeOut() {
         // slow
-        // SetSpeed(Speed.Stopped);
+        SetSpeed(Speed.Stopped);
 
         // if player landed with unsecured score, screen shake magnitude is proportional to the score
         float magnitude = (Score.Instance.GetUnsecuredScore() > 0) ? (0.2f + Score.Instance.GetUnsecuredScore() * 0.1f) : 1f;

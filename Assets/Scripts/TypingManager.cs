@@ -146,14 +146,14 @@ public class TypingManager : MonoBehaviour {
         typingText.text = currentWord == null ? "" : currentWord.GetTyped();
     }
 
-    private void UpdateAvailableWords(Player.State state) {
+    public void UpdateAvailableWords(Player.State state) {
         availableWords.Clear();
         tricksLeft.Clear();
         foreach (var word in allWords) {
             if (word.availableInStates.Contains(state)) {
                 tricksLeft.Add(word);
                 if (state != Player.State.Midair && state != Player.State.OnRail) {
-                    availableWords.Add(word);
+                    if(Player.Instance.currentSpeed != Player.Speed.Stopped || word.text != "ollie") availableWords.Add(word);
                 }
             }
         }
