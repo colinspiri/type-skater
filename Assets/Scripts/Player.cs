@@ -16,7 +16,6 @@ public class Player : MonoBehaviour
     public float fastSpeed;
     public float maxSpeed;
     public float pushForce;
-    public TextMeshProUGUI speedText;
 
     [Header("Jump Constants")]
     public float slowJumpForce;
@@ -31,7 +30,7 @@ public class Player : MonoBehaviour
     public Speed rampJump;
     public float bounceForce;
 
-    [Header("Rail Constants")] 
+    [Header("Rail Constants")]
     public Speed railSpeed;
     public Speed railJump;
     public float railTimeScale;
@@ -52,7 +51,6 @@ public class Player : MonoBehaviour
     }
     [HideInInspector] public Speed currentSpeed = Speed.Stopped;
     
-    [NonSerialized] public int grindCount;
     [HideInInspector] public bool safe;
     
     // callbacks
@@ -80,6 +78,13 @@ public class Player : MonoBehaviour
     // component stuff
     private Rigidbody2D rb;
     private Animator animator;
+    [Header("Component Constants")]
+    public TextMeshProUGUI speedText;
+    public TrailRenderer trail;
+    public Color endColor;
+    public Color slowTrailColor;
+    public Color mediumTrailColor;
+    public Color fastTrailColor;
 
     private void Awake()
     {
@@ -122,9 +127,22 @@ public class Player : MonoBehaviour
                 if(speed < slowSpeed) rb.velocity = new Vector2(slowSpeed, rb.velocity.y);
             }
         }
+        // trail color
+        if (currentSpeed == Speed.Slow || currentSpeed == Speed.Stopped) {
+            trail.startColor = slowTrailColor;
+            trail.endColor = endColor;
+        }
+        else if (currentSpeed == Speed.Medium) {
+            trail.startColor = mediumTrailColor;
+            trail.endColor = slowTrailColor;
+        }
+        else if (currentSpeed == Speed.Fast) {
+            trail.startColor = fastTrailColor;
+            trail.endColor = mediumTrailColor;
+        }
 
         // speed text
-        Debug.Log("current speed = " + currentSpeed + " " + Mathf.RoundToInt(rb.velocity.x));
+        // Debug.Log("current speed = " + currentSpeed + " " + Mathf.RoundToInt(rb.velocity.x));
         speedText.text = currentSpeed + " ";
     }
 
@@ -200,13 +218,13 @@ public class Player : MonoBehaviour
         rb.AddForce(new Vector2(0, -1 * dropForce));
     }
 
-    private void SetSpeed(Speed speed) {
+    public void SetSpeed(Speed speed) {
         currentSpeed = speed;
         float newSpeed = currentSpeed switch {
             Speed.Stopped => 0,
-            Speed.Slow => slowSpeed,
-            Speed.Medium => mediumSpeed,
-            Speed.Fast => fastSpeed,
+            Speed.Slow => Mathf.Lerp(slowSpeed, mediumSpeed, 0.5f),
+            Speed.Medium => Mathf.Lerp(mediumSpeed, fastSpeed, 0.5f),
+            Speed.Fast => Mathf.Lerp(fastSpeed, maxSpeed, 0.5f),
             _ => -1
         };
         rb.velocity = new Vector2(newSpeed, rb.velocity.y);
@@ -214,7 +232,7 @@ public class Player : MonoBehaviour
 
     private void SafeLanding() {
         // speed boost
-        // SetSpeed(Speed.Medium);
+        SetSpeed(Speed.Medium);
         // callbacks
         onLand?.Invoke();
         onSafeLanding?.Invoke(Score.Instance.GetUnsecuredScore());
@@ -229,7 +247,7 @@ public class Player : MonoBehaviour
 
     public void WipeOut() {
         // slow
-        SetSpeed(Speed.Slow);
+        // SetSpeed(Speed.Stopped);
 
         // if player landed with unsecured score, screen shake magnitude is proportional to the score
         float magnitude = (Score.Instance.GetUnsecuredScore() > 0) ? (0.2f + Score.Instance.GetUnsecuredScore() * 0.1f) : 1f;
@@ -256,7 +274,6 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Rail") && state != State.OnRail) {
             if (safe) {
                 ChangeState(State.OnRail);
-                grindCount = 0;
             }
             else {
                 ChangeState(State.Midair);

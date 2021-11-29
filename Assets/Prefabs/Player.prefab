@@ -313,7 +313,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4978452972005287940
 RectTransform:
   m_ObjectHideFlags: 0
@@ -582,24 +582,29 @@ MonoBehaviour:
   slowSpeed: 2
   mediumSpeed: 5
   fastSpeed: 9
-  maxSpeed: 12
+  maxSpeed: 14
   pushForce: 130
-  speedText: {fileID: 6780266401471694673}
   slowJumpForce: 200
   mediumJumpForce: 250
-  fastJumpForce: 350
+  fastJumpForce: 300
   midairTimeScale: 0.5
   unsafeRotationZ: 27
   dropForce: 150
-  rampSpeed: 3
+  rampSpeed: 2
   rampJump: 1
-  bounceForce: 0
+  bounceForce: 100
   railSpeed: 2
   railJump: 1
   railTimeScale: 0.7
   state: 1
   currentSpeed: 0
   safe: 1
+  speedText: {fileID: 6780266401471694673}
+  trail: {fileID: 7760741279925662503}
+  endColor: {r: 1, g: 1, b: 1, a: 1}
+  slowTrailColor: {r: 1, g: 0.9764706, b: 0, a: 1}
+  mediumTrailColor: {r: 0.9254902, g: 0.4509804, b: 0.34117648, a: 1}
+  fastTrailColor: {r: 1, g: 0.24056602, b: 0.24056602, a: 1}
 --- !u!95 &7760741278451484482
 Animator:
   serializedVersion: 3
@@ -691,7 +696,7 @@ TrailRenderer:
   m_SortingLayerID: 1325223003
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Time: 1
+  m_Time: 0.6
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1

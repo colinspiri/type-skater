@@ -104,8 +104,6 @@ public class TypingManager : MonoBehaviour {
                     else if (w.text.Equals("ollie")) Player.Instance.Jump();
                     // drop
                     else if (w.text.Equals("drop")) Player.Instance.Drop();
-                    // grind
-                    else if (w.text.Equals("grind")) Player.Instance.grindCount++;
 
                     // if it's a trick
                     if (w.trickScore > 0) {

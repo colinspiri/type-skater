@@ -100,6 +100,7 @@ public class Score : MonoBehaviour {
         gameOverText.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text =
             Mathf.RoundToInt(TypingManager.Instance.GetWordsPerMinute()) + " words/min";
         // disable other objects
+        Player.Instance.SetSpeed(Player.Speed.Slow);
         Player.Instance.currentSpeed = Player.Speed.Stopped;
         Time.timeScale = 1.0f;
         foreach (GameObject o in objectsToDisable) {
