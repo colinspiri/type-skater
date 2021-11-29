@@ -14,6 +14,7 @@ public class SoundManager : MonoBehaviour {
     
     // music
     public AudioSource music;
+    public AudioSource level0;
     public AudioSource level1;
     public AudioSource level2;
     // SFX
@@ -58,15 +59,24 @@ public class SoundManager : MonoBehaviour {
             
             string sceneName = newscene.name;
             music.Stop();
+            level0.Stop();
             level1.Stop();
             level2.Stop();
-            if(sceneName == "Level1")
+            if(sceneName == "Level0")
+            {
+                level0.Play();
+            }
+            else if(sceneName == "Level1")
             {
                 level1.Play();
             }
             else if(sceneName == "Level2")
             {
                 level2.Play();
+            }
+            else
+            {
+                music.Play();
             }
         };
     }
