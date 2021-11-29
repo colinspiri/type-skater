@@ -29,6 +29,7 @@ public class Score : MonoBehaviour {
     private TextMeshProUGUI scoreText;
     
     // pause menu + game over
+    public bool gameOverOnWipeOut;
     public GameObject gameOverPrefab;
     public List<GameObject> objectsToDisable;
     public PauseMenu pauseMenu;
@@ -44,7 +45,6 @@ public class Score : MonoBehaviour {
         scoreText.text = score.ToString();
 
         Player.Instance.onJump += () => {
-            
             // instantiate unsecured score
             GameObject unsecuredScoreObject = Instantiate(unsecuredScorePrefab, unsecuredScoreLocation.transform, false);
             unsecuredScoreText = unsecuredScoreObject.GetComponent<TextMeshProUGUI>();
@@ -80,6 +80,7 @@ public class Score : MonoBehaviour {
             }
         };
         Player.Instance.onWipeOut += () => wipeouts++;
+        if (gameOverOnWipeOut) Player.Instance.onWipeOut += GameOver;
     }
 
     private void SecureScore() {
@@ -120,6 +121,9 @@ public class Score : MonoBehaviour {
     }
 
     public void GameOver() {
+        // remove callback
+        if(gameOverOnWipeOut) Player.Instance.onWipeOut -= GameOver;
+        // secure unsecured store
         SecureScore();
         // display game over
         TextMeshProUGUI gameOverText = Instantiate(gameOverPrefab, transform.parent, false).GetComponent<TextMeshProUGUI>();
