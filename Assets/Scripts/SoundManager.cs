@@ -50,9 +50,7 @@ public class SoundManager : MonoBehaviour {
         SetVolume("MasterVolume", PlayerPrefs.GetFloat("MasterVolume", 0.4f));
         SetVolume("MusicVolume", PlayerPrefs.GetFloat("MusicVolume", 1f));
         SetVolume("SFXVolume", PlayerPrefs.GetFloat("SFXVolume", 1f));
-
         
-
         SceneManager.activeSceneChanged += (oldscene, newscene) => {
             AddCallbacks();
             rolling.Stop();
@@ -81,7 +79,8 @@ public class SoundManager : MonoBehaviour {
         };
     }
 
-    public void AddCallbacks() {
+    private void AddCallbacks() {
+        Debug.Log("added callbacks");
         if (Player.Instance != null) {
             Player.Instance.onJump += () => {
                 jump.Play();
