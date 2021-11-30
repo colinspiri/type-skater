@@ -74,7 +74,7 @@ public class TypingManager : MonoBehaviour {
     {
         if (Player.Instance.state == Player.State.Midair || Player.Instance.state == Player.State.OnRail) {
             timeTyping += Time.unscaledDeltaTime;
-            if(availableWords.Count <= 2) AddRandomTrick();
+            if(availableWords.Count <= 3) AddRandomTrick();
         }
 
         string input = Input.inputString;
@@ -104,6 +104,8 @@ public class TypingManager : MonoBehaviour {
                     else if (w.text.Equals("ollie")) Player.Instance.Jump();
                     // drop
                     else if (w.text.Equals("drop")) Player.Instance.Drop();
+                    // grab
+                    else if(w.text.Equals("grab")) Player.Instance.Grab();
 
                     // if it's a trick
                     if (w.trickScore > 0) {
@@ -112,7 +114,7 @@ public class TypingManager : MonoBehaviour {
                         // do player animation
                         playerAnimator.SetTrigger("trick");
                         // remove from available words
-                        if (!w.text.Equals("drop") && !w.text.Equals("grind")) availableWords.Remove(w);
+                        availableWords.Remove(w);
                     }
                     // animate completed text
                     TextMeshProUGUI completedText = Instantiate(completedTextPrefab, typingText.transform.parent, false).GetComponent<TextMeshProUGUI>();
@@ -158,8 +160,13 @@ public class TypingManager : MonoBehaviour {
             }
         }
         if (state == Player.State.Midair || state == Player.State.OnRail) {
-            // add "drop" if it exists
+            // add "drop" and "grab"
             if (state == Player.State.Midair) {
+                int grabIndex = tricksLeft.FindIndex(word => word.text.Equals("grab"));
+                if (grabIndex != -1) {
+                    availableWords.Add(tricksLeft[grabIndex]);
+                    tricksLeft.RemoveAt(grabIndex);
+                }
                 int dropIndex = tricksLeft.FindIndex(word => word.text.Equals("drop"));
                 if (dropIndex != -1) {
                     availableWords.Add(tricksLeft[dropIndex]);

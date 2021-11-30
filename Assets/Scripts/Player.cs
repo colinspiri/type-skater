@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
     public float midairTimeScale;
     public float unsafeRotationZ;
     public float dropForce;
+    public float grabJumpVelocity;
+    public float grabPushForce;
 
     [Header("Ramp Constants")] 
     public Speed rampSpeed;
@@ -159,18 +161,18 @@ public class Player : MonoBehaviour
         onStateChange?.Invoke(state);
     }
 
-    private bool CurrentSpeedBelow(Speed speed) {
-        List<Speed> speedsInOrder = new List<Speed>() {Speed.Stopped, Speed.Slow, Speed.Medium, Speed.Fast};
-        bool playerSpeedFound = false;
-        foreach (var s in speedsInOrder) {
-            if (s == speed) {
-                if (playerSpeedFound) return true;
-                break;
-            }
-            if (s == currentSpeed) playerSpeedFound = true;
-        }
-        return false;
-    }
+    // private bool CurrentSpeedBelow(Speed speed) {
+    //     List<Speed> speedsInOrder = new List<Speed>() {Speed.Stopped, Speed.Slow, Speed.Medium, Speed.Fast};
+    //     bool playerSpeedFound = false;
+    //     foreach (var s in speedsInOrder) {
+    //         if (s == speed) {
+    //             if (playerSpeedFound) return true;
+    //             break;
+    //         }
+    //         if (s == currentSpeed) playerSpeedFound = true;
+    //     }
+    //     return false;
+    // }
 
     public float GetSpeed() {
         return rb.velocity.x;
@@ -214,6 +216,13 @@ public class Player : MonoBehaviour
         Skateboard.Instance.SetAnimation(Skateboard.Animation.Ollie);
 
         if(newJump) onJump?.Invoke();
+    }
+
+    public void Grab() {
+        rb.velocity = new Vector2(rb.velocity.x,grabJumpVelocity);
+        rb.AddForce(new Vector2(grabPushForce, 0));
+        
+        Skateboard.Instance.SetAnimation(Skateboard.Animation.Ollie);
     }
 
     private void Bounce() {

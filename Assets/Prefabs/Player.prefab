@@ -590,9 +590,11 @@ MonoBehaviour:
   midairTimeScale: 0.5
   unsafeRotationZ: 27
   dropForce: 150
+  grabJumpVelocity: 3
+  grabPushForce: 70
   rampSpeed: 2
   rampJump: 1
-  bounceForce: 100
+  bounceForce: 80
   railSpeed: 2
   railJump: 1
   railTimeScale: 0.7
