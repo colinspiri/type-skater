@@ -104,9 +104,6 @@ MonoBehaviour:
   - text: crooked
     trickScore: 3
     availableInStates: 02000000
-  - text: 5-0
-    trickScore: 4
-    availableInStates: 02000000
   - text: varial flip
     trickScore: 4
     availableInStates: 00000000
@@ -116,7 +113,10 @@ MonoBehaviour:
   - text: lipslide
     trickScore: 4
     availableInStates: 02000000
-  - text: manhatan flip
+  - text: 5-0
+    trickScore: 4
+    availableInStates: 02000000
+  - text: manhattan flip
     trickScore: 5
     availableInStates: 00000000
   - text: backside 180
@@ -134,7 +134,7 @@ MonoBehaviour:
   - text: kickflip 50-50
     trickScore: 7
     availableInStates: 02000000
-  - text: 'backside 5-0 '
+  - text: backside 5-0
     trickScore: 7
     availableInStates: 02000000
   completedTrickTextPrefab: {fileID: 3783369161292865245, guid: dd696d0494d1c429c82bc27fe1b69a54, type: 3}
