@@ -71,9 +71,9 @@ public class TutorialManager : MonoBehaviour {
                 landingTricksCanvas.SetActive(true);
             }
         };
-        // Player.Instance.onWipeOut += () => {
-        //     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        // };
+        Player.Instance.onWipeOut += () => {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        };
         TypingManager.Instance.onCompleteWord += word => {
             if (word.Equals("push")) {
                 pushText.color = greyedOutColor;
