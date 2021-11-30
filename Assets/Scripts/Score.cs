@@ -17,6 +17,7 @@ public class Score : MonoBehaviour {
     [HideInInspector] public int wipeouts;
     
     // unsecured score
+    public bool scoreIsUnsecured;
     public GameObject unsecuredScorePrefab;
     private TextMeshProUGUI unsecuredScoreText;
     private Animator unsecuredScoreAnimator;
@@ -50,6 +51,7 @@ public class Score : MonoBehaviour {
             GameObject unsecuredScoreObject = Instantiate(unsecuredScorePrefab, unsecuredScoreLocation.transform, false);
             unsecuredScoreText = unsecuredScoreObject.GetComponent<TextMeshProUGUI>();
             unsecuredScoreAnimator = unsecuredScoreObject.GetComponent<Animator>();
+            scoreIsUnsecured = true;
             multiplierText = unsecuredScoreObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             // set multiplier based on player speed
             if (Player.Instance.currentSpeed == Player.Speed.Fast) {
@@ -72,6 +74,7 @@ public class Score : MonoBehaviour {
         };
         Player.Instance.onUnsafeLanding += () => {
             unsecuredScore = 0;
+            scoreIsUnsecured = false;
             // destroy unsecured animator
             if (unsecuredScoreAnimator != null) {
                 unsecuredScoreAnimator.SetTrigger("lost");
@@ -87,6 +90,7 @@ public class Score : MonoBehaviour {
         // add score
         score += unsecuredScore;
         unsecuredScore = 0;
+        scoreIsUnsecured = false;
         multiplier = 1;
         scoreText.text = score.ToString();
         // animate unsecured score

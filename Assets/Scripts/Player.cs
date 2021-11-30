@@ -57,9 +57,6 @@ public class Player : MonoBehaviour
     public delegate void OnJump();
     public OnJump onJump;
 
-    public delegate void OnLand();
-    public OnLand onLand;
-
     public delegate void OnUnsafeLanding();
     public OnUnsafeLanding onUnsafeLanding;
 
@@ -193,7 +190,7 @@ public class Player : MonoBehaviour
     public void Jump(Speed jumpType = Speed.Stopped)
     {
         // only do callback if starting new jump
-        bool newJump = state == State.OnGround || state == State.OnRamp;
+        bool newJump = state == State.OnGround || (state == State.OnRamp && !Score.Instance.scoreIsUnsecured);
         
         // use jump force based on speed
         float jumpForce = (jumpType != Speed.Stopped ? jumpType : currentSpeed) switch {
@@ -244,14 +241,12 @@ public class Player : MonoBehaviour
         // set speed
         SetSpeed(Speed.Medium);
         // callbacks
-        onLand?.Invoke();
         onSafeLanding?.Invoke(Score.Instance.GetUnsecuredScore());
     }
     private void UnsafeLanding() {
         // wipe out
         WipeOut();
         // callbacks
-        onLand?.Invoke();
         onUnsafeLanding?.Invoke();
     }
 
@@ -304,7 +299,7 @@ public class Player : MonoBehaviour
             // safe landing from midair
             else if (state == State.Midair && safe) {
                 ChangeState(State.OnRamp);
-                SafeLanding();
+                // SafeLanding();
             }
             // unsafe landing from midair, bounce off
             else if (state == State.Midair && !safe) {
