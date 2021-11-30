@@ -204,9 +204,9 @@ public class Player : MonoBehaviour
         rb.AddForce(new Vector2(0, jumpForce));
         // set speed
         float newSpeed = currentSpeed switch {
-            Speed.Slow => slowSpeed,
+            Speed.Slow => mediumSpeed,
             Speed.Medium => mediumSpeed,
-            Speed.Fast => fastSpeed,
+            Speed.Fast => mediumSpeed,
             _ => 0
         };
         rb.velocity = new Vector2(newSpeed, rb.velocity.y);

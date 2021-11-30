@@ -5,14 +5,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour {
+    // state
     private float previousTimeScale;
-    public Color greyedOutColor;
     private Color originalColor;
     
     // push text
+    [Header("Push")]
     public TextMeshProUGUI pushText;
-    
+    public Color greyedOutColor;
+
     // ollie text
+    [Header("Ollie")]
     public GameObject ollieCanvas;
     public TextMeshProUGUI ollieText;
 
@@ -24,39 +27,52 @@ public class TutorialManager : MonoBehaviour {
     }
 
     // safe
-    private TutorialStatus safeTutorialStatus = TutorialStatus.Incomplete;
-    public float safeTutorialDelay;
+    [Header("Safe")]
     public GameObject safeCanvasPrefab;
+    public float safeTutorialDelay;
+    private TutorialStatus safeTutorialStatus = TutorialStatus.Incomplete;
     private TextMeshProUGUI safeText;
 
     // higher ollie
-    private TutorialStatus higherOllieTutorialStatus = TutorialStatus.Incomplete;
+    [Header("Push Then Ollie")]
     public GameObject higherOllieCanvas;
+    private TutorialStatus higherOllieTutorialStatus = TutorialStatus.Incomplete;
     private TextMeshProUGUI higherOlliePushText;
     private TextMeshProUGUI higherOllieOllieText;
     
     // fakie
-    private TutorialStatus fakieTutorialStatus = TutorialStatus.Incomplete;
-    public float fakieTutorialDelay;
-    public TrickList trickList;
+    [Header("Fakie")]
     public GameObject fakieCanvasPrefab;
+    public float fakieTutorialDelay;
+    private TutorialStatus fakieTutorialStatus = TutorialStatus.Incomplete;
+    public TrickList trickList;
     private TextMeshProUGUI fakieText;
     
     // safe reminder
+    [Header("Safe Reminder")]
     public GameObject safeReminderPrefab;
+
+    // grab
+    [Header("Grab")]
+    public GameObject grabCanvasPrefab; // "grab to stay airborne"
+    public float grabDelay;
+    private TutorialStatus grabStatus = TutorialStatus.Incomplete;
+    private TextMeshProUGUI grabText;
     
-    // speed boost
-    public GameObject landingTricksCanvas;
+    // drop
+    [Header("Drop")]
+    public GameObject dropCanvasPrefab;
 
     // Start is called before the first frame update
     void Start() {
         ollieCanvas.SetActive(false);
         higherOllieCanvas.SetActive(false);
-        landingTricksCanvas.SetActive(false);
+        // landingTricksCanvas.SetActive(false);
         
         Player.Instance.onJump += () => {
             if(safeTutorialStatus == TutorialStatus.Incomplete) StartSafeTutorial();
             else if(fakieTutorialStatus == TutorialStatus.Incomplete) StartFakieTutorial();
+            else if(grabStatus == TutorialStatus.Incomplete) StartGrabTutorial();
         };
         Player.Instance.onSafeLanding += (float score) => {
             safeTutorialStatus = TutorialStatus.Done;
@@ -66,9 +82,6 @@ public class TutorialManager : MonoBehaviour {
                 higherOlliePushText = higherOllieCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
                 higherOllieOllieText = higherOllieCanvas.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
                 higherOllieTutorialStatus = TutorialStatus.Triggered;
-            }
-            if (score > 0) {
-                landingTricksCanvas.SetActive(true);
             }
         };
         Player.Instance.onWipeOut += () => {
@@ -95,6 +108,11 @@ public class TutorialManager : MonoBehaviour {
                 // spawn safe reminder
                 Instantiate(safeReminderPrefab, Player.Instance.transform.position, Quaternion.identity);
             }
+            else if (word.Equals("grab") && grabStatus == TutorialStatus.WaitingForInput) {
+                Time.timeScale = previousTimeScale;
+                grabText.color = greyedOutColor;
+                grabStatus = TutorialStatus.Done;
+            }
         };
         originalColor = pushText.color;
     }
@@ -103,10 +121,10 @@ public class TutorialManager : MonoBehaviour {
     void Update()
     {
         if (safeTutorialStatus == TutorialStatus.WaitingForInput) {
-            if (Input.GetKeyDown(KeyCode.Return)) {
+            safeText.color = Input.GetKey(KeyCode.Return) ? greyedOutColor : originalColor;
+            if (Input.GetKey(KeyCode.Return)) {
                 Time.timeScale = previousTimeScale;
             }
-            safeText.color = Input.GetKey(KeyCode.Return) ? greyedOutColor : originalColor;
         }
     }
 
@@ -115,7 +133,7 @@ public class TutorialManager : MonoBehaviour {
         safeTutorialStatus = TutorialStatus.Triggered;
     }
 
-    IEnumerator SafeTutorial() {
+    private IEnumerator SafeTutorial() {
         float seconds = safeTutorialDelay / (1f / Time.timeScale);
 
         yield return new WaitForSeconds(seconds);
@@ -133,7 +151,7 @@ public class TutorialManager : MonoBehaviour {
         fakieTutorialStatus = TutorialStatus.Triggered;
     }
 
-    IEnumerator FakieTutorial() {
+    private IEnumerator FakieTutorial() {
         float seconds = fakieTutorialDelay / (1f / Time.timeScale);
 
         yield return new WaitForSeconds(seconds);
@@ -145,6 +163,24 @@ public class TutorialManager : MonoBehaviour {
         var trickCanvas = Instantiate(fakieCanvasPrefab, Player.Instance.transform.position, Quaternion.identity);
         fakieText = trickCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         // show trick list
-        trickList.gameObject.SetActive(true);
+        // trickList.gameObject.SetActive(true);
+    }
+    
+    private void StartGrabTutorial() {
+        StartCoroutine(GrabTutorial());
+        grabStatus = TutorialStatus.Triggered;
+    }
+
+    private IEnumerator GrabTutorial() {
+        float seconds = grabDelay / (1f / Time.timeScale);
+
+        yield return new WaitForSeconds(seconds);
+
+        grabStatus = TutorialStatus.WaitingForInput;
+        previousTimeScale = Time.timeScale;
+        Time.timeScale = 0;
+        // spawn grab canvas that prompts player to type grab
+        var trickCanvas = Instantiate(grabCanvasPrefab, Player.Instance.transform.position, Quaternion.identity);
+        grabText = trickCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 }
