@@ -42,37 +42,41 @@ public class TutorialManager : MonoBehaviour {
     
     // fakie
     [Header("Fakie")]
+    public TrickList trickList;
     public GameObject fakieCanvasPrefab;
     public float fakieTutorialDelay;
     private TutorialStatus fakieTutorialStatus = TutorialStatus.Incomplete;
-    public TrickList trickList;
     private TextMeshProUGUI fakieText;
-    
+
     // safe reminder
     [Header("Safe Reminder")]
     public GameObject safeReminderPrefab;
 
     // grab
     [Header("Grab")]
-    public GameObject grabCanvasPrefab; // "grab to stay airborne"
+    public GameObject grabCanvasPrefab;
     public float grabDelay;
     private TutorialStatus grabStatus = TutorialStatus.Incomplete;
     private TextMeshProUGUI grabText;
     
     // drop
     [Header("Drop")]
-    public GameObject dropCanvasPrefab;
+    public GameObject dropCanvasPrefab; // "drop to land earlier"
+    public float dropDelay;
+    private TutorialStatus dropStatus = TutorialStatus.Incomplete;
+    private TextMeshProUGUI dropText;
 
     // Start is called before the first frame update
     void Start() {
         ollieCanvas.SetActive(false);
         higherOllieCanvas.SetActive(false);
-        // landingTricksCanvas.SetActive(false);
+        trickList.gameObject.SetActive(false);
         
         Player.Instance.onJump += () => {
             if(safeTutorialStatus == TutorialStatus.Incomplete) StartSafeTutorial();
             else if(fakieTutorialStatus == TutorialStatus.Incomplete) StartFakieTutorial();
             else if(grabStatus == TutorialStatus.Incomplete) StartGrabTutorial();
+            else if(dropStatus == TutorialStatus.Incomplete) StartDropTutorial();
         };
         Player.Instance.onSafeLanding += (float score) => {
             safeTutorialStatus = TutorialStatus.Done;
@@ -112,6 +116,11 @@ public class TutorialManager : MonoBehaviour {
                 Time.timeScale = previousTimeScale;
                 grabText.color = greyedOutColor;
                 grabStatus = TutorialStatus.Done;
+            }
+            else if (word.Equals("drop") && dropStatus == TutorialStatus.WaitingForInput) {
+                Time.timeScale = previousTimeScale;
+                dropText.color = greyedOutColor;
+                dropStatus = TutorialStatus.Done;
             }
         };
         originalColor = pushText.color;
@@ -163,7 +172,8 @@ public class TutorialManager : MonoBehaviour {
         var trickCanvas = Instantiate(fakieCanvasPrefab, Player.Instance.transform.position, Quaternion.identity);
         fakieText = trickCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         // show trick list
-        // trickList.gameObject.SetActive(true);
+        trickList.gameObject.SetActive(true);
+        trickList.fakieEnabled = true;
     }
     
     private void StartGrabTutorial() {
@@ -182,5 +192,25 @@ public class TutorialManager : MonoBehaviour {
         // spawn grab canvas that prompts player to type grab
         var trickCanvas = Instantiate(grabCanvasPrefab, Player.Instance.transform.position, Quaternion.identity);
         grabText = trickCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        trickList.grabEnabled = true;
+    }
+    
+    private void StartDropTutorial() {
+        StartCoroutine(DropTutorial());
+        dropStatus = TutorialStatus.Triggered;
+    }
+
+    private IEnumerator DropTutorial() {
+        float seconds = dropDelay / (1f / Time.timeScale);
+
+        yield return new WaitForSeconds(seconds);
+
+        dropStatus = TutorialStatus.WaitingForInput;
+        previousTimeScale = Time.timeScale;
+        Time.timeScale = 0;
+        // spawn drop canvas that prompts player to type drop
+        var trickCanvas = Instantiate(dropCanvasPrefab, Player.Instance.transform.position, Quaternion.identity);
+        dropText = trickCanvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        trickList.dropEnabled = true;
     }
 }

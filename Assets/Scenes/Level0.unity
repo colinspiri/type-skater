@@ -1008,11 +1008,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7981045465561468171, guid: a28a59915d9ae4d2b9bbe5d1890158c8, type: 3}
       propertyPath: m_LocalScale.x
-      value: 147.39883
+      value: 184.8971
       objectReference: {fileID: 0}
     - target: {fileID: 7981045465561468171, guid: a28a59915d9ae4d2b9bbe5d1890158c8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 49.9748
+      value: 68.7215
       objectReference: {fileID: 0}
     - target: {fileID: 7981045465561468171, guid: a28a59915d9ae4d2b9bbe5d1890158c8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3503,7 +3503,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9185238080452091855, guid: de0d4f345ffa840be961759f454e2622, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de0d4f345ffa840be961759f454e2622, type: 3}
@@ -3572,13 +3572,14 @@ MonoBehaviour:
   safeCanvasPrefab: {fileID: 2640094840865205619, guid: 94c26cbb702b04d57a6c3a259de1bbaa, type: 3}
   safeTutorialDelay: 2
   higherOllieCanvas: {fileID: 2086039189683659012}
+  trickList: {fileID: 811555937}
   fakieCanvasPrefab: {fileID: 7915776127728874000, guid: f04c2216c379d480e8a76e9adb2dd883, type: 3}
   fakieTutorialDelay: 1
-  trickList: {fileID: 811555937}
   safeReminderPrefab: {fileID: 2579102859547581716, guid: 35f44b1a57c144daebda984872998b13, type: 3}
   grabCanvasPrefab: {fileID: 6256426813329146881, guid: 0a03a9b3ba2824dca87989fa33164859, type: 3}
   grabDelay: 2.75
-  dropCanvasPrefab: {fileID: 0}
+  dropCanvasPrefab: {fileID: 1605340238479437388, guid: 4d67fb5406c594575818981c8bc24272, type: 3}
+  dropDelay: 2
 --- !u!222 &2086039188959424260
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4001,7 +4002,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 56.68, y: -1.95}
+  m_AnchoredPosition: {x: 74.74, y: -0.4}
   m_SizeDelta: {x: 401.2145, y: 212.4962}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7649925692028730264
@@ -4330,7 +4331,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9181818052719921353, guid: ca6a4f98a938149d0ab1b8bea141fcd7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 109.2
+      value: 106.1
       objectReference: {fileID: 0}
     - target: {fileID: 9181818052719921353, guid: ca6a4f98a938149d0ab1b8bea141fcd7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4370,7 +4371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9181818052719921354, guid: ca6a4f98a938149d0ab1b8bea141fcd7, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9181818052719921357, guid: ca6a4f98a938149d0ab1b8bea141fcd7, type: 3}
       propertyPath: m_Name
