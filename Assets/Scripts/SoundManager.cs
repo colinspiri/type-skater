@@ -77,6 +77,7 @@ public class SoundManager : MonoBehaviour {
                 music.Play();
             }
         };
+        AddCallbacks();
     }
 
     private void AddCallbacks() {
