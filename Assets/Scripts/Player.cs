@@ -30,7 +30,6 @@ public class Player : MonoBehaviour
     [Header("Ramp Constants")] 
     public Speed rampSpeed;
     public Speed rampJump;
-    public float bounceForce;
 
     [Header("Rail Constants")]
     public Speed railSpeed;
@@ -225,10 +224,6 @@ public class Player : MonoBehaviour
         Skateboard.Instance.SetAnimation(Skateboard.Animation.Ollie);
     }
 
-    private void Bounce() {
-        rb.AddForce(new Vector2(0, bounceForce));
-    }
-
     public void Drop() {
         if(rb.velocity.y > 0) rb.velocity = new Vector2(rb.velocity.x, 0);
         rb.AddForce(new Vector2(0, -1 * dropForce));
@@ -293,9 +288,9 @@ public class Player : MonoBehaviour
             }
             else {
                 ChangeState(State.Midair);
-                other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
                 WipeOut();
-                Bounce();
+                Grab();
+                other.gameObject.GetComponent<Rail>().disableCollider = true;
             }
         }
         
@@ -308,13 +303,12 @@ public class Player : MonoBehaviour
             // safe landing from midair
             else if (state == State.Midair && safe) {
                 ChangeState(State.OnRamp);
-                // SafeLanding();
             }
             // unsafe landing from midair, bounce off
             else if (state == State.Midair && !safe) {
                 other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
                 WipeOut();
-                Bounce();
+                Grab();
             }
         }
     }

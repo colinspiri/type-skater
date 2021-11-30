@@ -45,6 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typingText: {fileID: 0}
   completedTextPrefab: {fileID: 2434471693609180520, guid: 82fc9180d8d6246ba888b3936a999fe5, type: 3}
+  midairTricksToShow: 2
+  railTricksToShow: 2
   level0Words:
   - text: push
     trickScore: 0

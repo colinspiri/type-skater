@@ -9,6 +9,8 @@ public class Rail : MonoBehaviour
     public Transform thresholdAbove;
     public Transform thresholdBelow;
 
+    public bool disableCollider;
+
     private BoxCollider2D boxCollider;
     private bool playerAboveRail;
 
@@ -19,8 +21,12 @@ public class Rail : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
+        if (disableCollider) {
+            boxCollider.enabled = false;
+            return;
+        }
+        
         var playerTransform = Player.Instance.transform;
 
         var right_side = playerTransform.position.x + (playerTransform.localScale.x / 2);

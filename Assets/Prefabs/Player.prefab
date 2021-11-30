@@ -592,12 +592,12 @@ MonoBehaviour:
   dropForce: 150
   grabJumpVelocity: 3
   grabPushForce: 70
-  rampSpeed: 2
+  rampSpeed: 3
   rampJump: 1
   bounceForce: 80
   railSpeed: 2
   railJump: 1
-  railTimeScale: 0.7
+  railTimeScale: 0.5
   state: 1
   currentSpeed: 0
   safe: 1
