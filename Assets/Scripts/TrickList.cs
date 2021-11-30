@@ -17,7 +17,7 @@ public class TrickList : MonoBehaviour
         trickListText.text = "";
         foreach (Word w in TypingManager.Instance.GetAvailableWords()) {
             trickListText.text += w.text + '\n';
-            if (w.text == "drop" || w.text == "grind") trickListText.text += "\n";
+            // if (w.text == "drop") trickListText.text += "\n";
         }
     }
 }

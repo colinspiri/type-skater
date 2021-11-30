@@ -81,7 +81,6 @@ public class SoundManager : MonoBehaviour {
     }
 
     private void AddCallbacks() {
-        Debug.Log("added callbacks");
         if (Player.Instance != null) {
             Player.Instance.onJump += () => {
                 jump.Play();

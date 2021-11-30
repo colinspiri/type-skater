@@ -55,10 +55,13 @@ MonoBehaviour:
   - text: fakie
     trickScore: 1
     availableInStates: 00000000
-  level1Words:
+  - text: grab
+    trickScore: 1
+    availableInStates: 00000000
   - text: drop
     trickScore: 1
     availableInStates: 00000000
+  level1Words:
   - text: switch
     trickScore: 1
     availableInStates: 00000000
@@ -68,25 +71,70 @@ MonoBehaviour:
   - text: heelflip
     trickScore: 2
     availableInStates: 00000000
+  - text: hardflip
+    trickScore: 2
+    availableInStates: 00000000
+  - text: impossible
+    trickScore: 3
+    availableInStates: 00000000
   - text: 180
     trickScore: 3
     availableInStates: 00000000
   - text: 360
     trickScore: 3
     availableInStates: 00000000
+  - text: mo flip
+    trickScore: 3
+    availableInStates: 00000000
+  - text: merlin twist
+    trickScore: 4
+    availableInStates: 00000000
   level2Words:
-  - text: grind
-    trickScore: 1
+  - text: salad
+    trickScore: 2
+    availableInStates: 02000000
+  - text: smith
+    trickScore: 2
+    availableInStates: 02000000
+  - text: feeble
+    trickScore: 2
+    availableInStates: 02000000
+  - text: crooked
+    trickScore: 3
+    availableInStates: 02000000
+  - text: 5-0
+    trickScore: 4
     availableInStates: 02000000
   - text: varial flip
     trickScore: 4
     availableInStates: 00000000
+  - text: boardslide
+    trickScore: 4
+    availableInStates: 02000000
+  - text: lipslide
+    trickScore: 4
+    availableInStates: 02000000
+  - text: manhatan flip
+    trickScore: 5
+    availableInStates: 00000000
   - text: backside 180
     trickScore: 5
     availableInStates: 00000000
+  - text: over crook
+    trickScore: 5
+    availableInStates: 02000000
   - text: pop shove-it
     trickScore: 7
     availableInStates: 00000000
+  - text: front-foot spin
+    trickScore: 7
+    availableInStates: 00000000
+  - text: kickflip 50-50
+    trickScore: 7
+    availableInStates: 02000000
+  - text: 'backside 5-0 '
+    trickScore: 7
+    availableInStates: 02000000
   completedTrickTextPrefab: {fileID: 3783369161292865245, guid: dd696d0494d1c429c82bc27fe1b69a54, type: 3}
   completedTrickTextColor: {r: 0.5882353, g: 0.33333334, b: 1, a: 1}
   errorTextPrefab: {fileID: 7186551362841254048, guid: c857f5c6a8269459abc9be00a622fb97, type: 3}
