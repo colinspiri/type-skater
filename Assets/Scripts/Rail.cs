@@ -4,28 +4,43 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class Rail : MonoBehaviour {
+public class Rail : MonoBehaviour
+{
     public Transform thresholdAbove;
     public Transform thresholdBelow;
-    
+
     private BoxCollider2D boxCollider;
     private bool playerAboveRail;
 
-    private void Awake() {
+    private void Awake()
+    {
         boxCollider = GetComponent<BoxCollider2D>();
+        playerAboveRail = false;
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         var playerTransform = Player.Instance.transform;
-        
-        if (playerAboveRail) {
+
+        var right_side = playerTransform.position.x + (playerTransform.localScale.x / 2);
+        var left_pole = this.gameObject.transform.GetChild(4);
+
+        var left_side = left_pole.transform.position.x - (left_pole.transform.localScale.x / 2);
+        if (right_side < left_side)
+        {
+            playerAboveRail = false;
+        }
+
+        if (playerAboveRail)
+        {
             boxCollider.enabled = true;
 
             if (playerTransform.position.y + playerTransform.localScale.y / 2 < thresholdBelow.position.y)
                 playerAboveRail = false;
         }
-        else {
+        else
+        {
             boxCollider.enabled = false;
 
             if (playerTransform.position.y - playerTransform.localScale.y / 2 > thresholdAbove.position.y) playerAboveRail = true;
