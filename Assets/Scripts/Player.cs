@@ -283,6 +283,8 @@ public class Player : MonoBehaviour
         // land on rail
         if (other.gameObject.CompareTag("Rail") && state != State.OnRail) {
             if (safe) {
+                Skateboard.Instance.SetAnimation(Skateboard.Animation.None);
+
                 ChangeState(State.OnRail);
             }
             else {

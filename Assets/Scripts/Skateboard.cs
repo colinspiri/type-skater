@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skateboard : MonoBehaviour {
+public class Skateboard : MonoBehaviour
+{
     public static Skateboard Instance;
 
     private Player player;
@@ -19,13 +20,15 @@ public class Skateboard : MonoBehaviour {
     private float lastAngleKickflip = 0f;
     private float lastAngleOllie = 0f;
     private float lastAngleGrind = 0f;
+    private float oneEightyFactor = 1f;
+
 
 
 
     private RotationInstruction[] ollieInstructions =  {
                     new RotationInstruction() { angle=20f,axis=Axis.OllieAxis,inTime=0.25f,startAt=0f },
                     new RotationInstruction() { angle=0f,axis=Axis.KickflipAxis,inTime=0.2f, startAt=0f } };
-    
+
     private RotationInstruction[] wobbleInstructions = {
                     new RotationInstruction() { angle=50f, axis=Axis.KickflipAxis,inTime=0.1f,startAt=0f },
                     new RotationInstruction() { angle=-100f, axis=Axis.KickflipAxis,inTime=0.1f,startAt=0.1f },
@@ -34,27 +37,70 @@ public class Skateboard : MonoBehaviour {
     };
 
     private RotationInstruction[] kickFlipInstructions = {
+                    new RotationInstruction() { angle=0f,axis=Axis.GrindAxis,inTime=0.32f,startAt=0f },
                     new RotationInstruction() { angle=360f,axis=Axis.KickflipAxis,inTime=0.32f,startAt=0f }
-    };
 
+
+
+    };
     private RotationInstruction[] oneEightyInstructions = {
-                    new RotationInstruction(){angle=180, axis=Axis.GrindAxis,inTime=0.25f,startAt=0f}
+                    new RotationInstruction(){angle=180, axis=Axis.GrindAxis,inTime=0.25f,startAt=0f},
+                    new RotationInstruction() { angle=0f,axis=Axis.OllieAxis,inTime=0.25f,startAt=0f },
+                    new RotationInstruction(){angle=0f, axis=Axis.KickflipAxis, inTime=0.25f, startAt=0f}
+
+    };
+    private RotationInstruction[] threeSixtyInstructions = {
+                    new RotationInstruction() { angle=360f,axis=Axis.GrindAxis,inTime=0.32f,startAt=0f },
+                    new RotationInstruction() { angle=0f,axis=Axis.OllieAxis,inTime=0.25f,startAt=0f },
+                    new RotationInstruction(){angle=0f, axis=Axis.KickflipAxis, inTime=0.25f, startAt=0f}
+    };
+    private RotationInstruction[] grindInstructions = {
+                    new RotationInstruction() { angle=70f,axis=Axis.GrindAxis,inTime=0.32f,startAt=0f },
+                    new RotationInstruction() { angle=0f,axis=Axis.OllieAxis,inTime=0.25f,startAt=0f },
+                    new RotationInstruction(){angle=0f, axis=Axis.KickflipAxis, inTime=0.25f, startAt=0f},
     };
 
-    private void Awake() {
+
+
+    private void Awake()
+    {
         Instance = this;
     }
-    
+
     // Start is called before the first frame update
     void Start()
     {
         player = Player.Instance;
 
         TypingManager.Instance.onCompleteWord += word => {
-            if (word.Equals("kickflip")) {
+            if (word.Equals("kickflip"))
+            {
                 SetAnimation(Animation.Kickflip);
             }
-            // else if(word.Equals("TRICK")) {
+            else if (word.Equals("heelflip"))
+            {
+                SetAnimation(Animation.Kickflip);
+            }
+            else if (word.Equals("varial flip"))
+            {
+                SetAnimation(Animation.Kickflip);
+            }
+            else if (word.Equals("pop shove-it"))
+            {
+                SetAnimation(Animation.OneEighty);
+            }
+            else if (word.Equals("backside 180"))
+            {
+                SetAnimation(Animation.OneEighty);
+            }
+            else if (word.Equals("180"))
+            {
+                SetAnimation(Animation.OneEighty);
+            }
+            else if (word.Equals("360"))
+            {
+                SetAnimation(Animation.ThreeSixty);
+            }
         };
     }
 
@@ -107,14 +153,8 @@ public class Skateboard : MonoBehaviour {
     void Update()
     {
         //Update position based on animation state
-        if (currentAnimation == Animation.Ollie)
-        {
-            transform.position = RightUnderFeet(0, -0.01f);
-        }
-        else
-        {
-            transform.position = RightUnderFeet(0, 0f);
-        }
+
+        transform.position = RightUnderFeet(0, -0.01f);
 
         //Have to do level check
         if (Input.GetKey(KeyCode.Return) && player.state == Player.State.Midair && currentAnimation != Animation.LevelOut)
@@ -122,7 +162,7 @@ public class Skateboard : MonoBehaviour {
             SetAnimation(Animation.LevelOut);
             // Debug.Log("SA");
         }
-        else if(!Input.GetKey(KeyCode.Return) && currentAnimation == Animation.LevelOut)
+        else if (!Input.GetKey(KeyCode.Return) && currentAnimation == Animation.LevelOut)
         {
             SetAnimation(Animation.AirWobble);
         }
@@ -145,7 +185,6 @@ public class Skateboard : MonoBehaviour {
                 StartCoroutine(Ollie());
                 break;
             case Animation.LevelOut:
-                // Debug.Log("LEveling Out!");
                 StartCoroutine(LevelOut());
                 break;
             case Animation.Kickflip:
@@ -153,6 +192,15 @@ public class Skateboard : MonoBehaviour {
                 break;
             case Animation.AirWobble:
                 StartCoroutine(AirWobble());
+                break;
+            case Animation.OneEighty:
+                StartCoroutine(OneEighty());
+                break;
+            case Animation.ThreeSixty:
+                StartCoroutine(ThreeSixty());
+                break;
+            case Animation.Grind:
+                StartCoroutine(Grind());
                 break;
             default:
                 break;
@@ -162,7 +210,7 @@ public class Skateboard : MonoBehaviour {
     {
         if (grounded)
         {
-            return new Vector3(player.transform.position.x + xOffset, transform.position.y, transform.position.z);
+            return new Vector3(player.transform.position.x + xOffset, playerFeet.transform.position.y, transform.position.z);
         }
 
         float newY = Mathf.Lerp(transform.position.y, playerFeet.transform.position.y + yOffset, 15 * Time.deltaTime);
@@ -177,7 +225,7 @@ public class Skateboard : MonoBehaviour {
     {
         RotationInstruction[] inst = {
             new RotationInstruction() { angle=0, axis=Axis.KickflipAxis, inTime=0.2f, startAt=0f},
-            new RotationInstruction() { angle=0, axis=Axis.GrindAxis, inTime=0.2f, startAt=0f},
+            //new RotationInstruction() { angle=0, axis=Axis.GrindAxis, inTime=0.2f, startAt=0f},
             new RotationInstruction() { angle=0, axis=Axis.OllieAxis, inTime=0.2f, startAt=0f},};
         yield return StartCoroutine(SetRotation(inst, false));
     }
@@ -189,61 +237,87 @@ public class Skateboard : MonoBehaviour {
         SetAnimation(Animation.AirWobble);
     }
 
+    IEnumerator OneEighty()
+    {
+
+        yield return StartCoroutine(SetRotation(CreateRotationInstructions(oneEightyInstructions), false));
+
+        transform.rotation = Quaternion.identity;
+        lastAngleGrind = 0f;
+        lastAngleKickflip = 0f;
+        lastAngleOllie = 0f;
+
+        SetAnimation(Animation.AirWobble);
+
+    }
+    IEnumerator ThreeSixty()
+    {
+
+        yield return StartCoroutine(SetRotation(CreateRotationInstructions(threeSixtyInstructions), false));
+
+        SetAnimation(Animation.AirWobble);
+
+    }
+
     IEnumerator Ollie()
     {
-        yield return StartCoroutine(SetRotation(CreateRotationInstructions( ollieInstructions), false));
+        yield return StartCoroutine(SetRotation(CreateRotationInstructions(ollieInstructions), false));
         SetAnimation(Animation.AirWobble);
 
     }
 
     IEnumerator AirWobble()
     {
-        yield return StartCoroutine(SetRotation(CreateRotationInstructions( wobbleInstructions), true));
+        yield return StartCoroutine(SetRotation(CreateRotationInstructions(wobbleInstructions), true));
+    }
+    IEnumerator Grind()
+    {
+        yield return StartCoroutine(SetRotation(CreateRotationInstructions(grindInstructions), true));
     }
 
     //SET Skateboard Rotation to X degrees, not Rotate. Give instructions for how much, how long rotation will take. Prob more useful
     IEnumerator SetRotation(RotationInstruction[] instructions, bool loop)
     {
-        (float,float) lastAngleKickflip = (0,-1);
-        (float, float) lastAngleOllie= (0, -1);
-        (float, float) lastAngleGrind= (0, -1);
-        for (int i =0; i< instructions.Length; i++)
+        (float, float) lastAngleKickflip = (0, -1);
+        (float, float) lastAngleOllie = (0, -1);
+        (float, float) lastAngleGrind = (0, -1);
+        for (int i = 0; i < instructions.Length; i++)
         {
             float time = instructions[i].inTime + instructions[i].startAt;
             if (instructions[i].axis == Axis.GrindAxis && lastAngleGrind.Item2 < time)
             {
-                lastAngleGrind = (instructions[i].angle, time);
+                lastAngleGrind = (instructions[i].angle % 360, time);
             }
-            else if(instructions[i].axis == Axis.OllieAxis && lastAngleOllie.Item2 < time)
+            else if (instructions[i].axis == Axis.OllieAxis && lastAngleOllie.Item2 < time)
             {
-                lastAngleOllie= (instructions[i].angle, time);
+                lastAngleOllie = (instructions[i].angle, time);
 
             }
-            else if(instructions[i].axis == Axis.KickflipAxis&& lastAngleKickflip.Item2 < time)
+            else if (instructions[i].axis == Axis.KickflipAxis && lastAngleKickflip.Item2 < time)
             {
-                lastAngleKickflip= (instructions[i].angle, time);
+                lastAngleKickflip = (instructions[i].angle, time);
             }
         }
         this.lastAngleGrind = lastAngleGrind.Item1;
-        this.lastAngleOllie= lastAngleOllie.Item1;
-        this.lastAngleKickflip= lastAngleKickflip.Item1;
+        this.lastAngleOllie = lastAngleOllie.Item1;
+        this.lastAngleKickflip = lastAngleKickflip.Item1;
 
 
         float elapsedTime = 0f;
         Quaternion startRotation = transform.rotation;
         Quaternion result = Quaternion.identity;
         float endTime = -1f;
-        foreach(RotationInstruction i in instructions)
+        foreach (RotationInstruction i in instructions)
         {
             if (i.axis == Axis.GrindAxis)
             {
                 result *= Quaternion.Euler(0, i.angle, 0);
             }
-            else if (i.axis == Axis.KickflipAxis )
+            else if (i.axis == Axis.KickflipAxis)
             {
-                result*= Quaternion.Euler(i.angle, 0, 0);
+                result *= Quaternion.Euler(i.angle, 0, 0);
             }
-            else 
+            else
             {
                 result *= Quaternion.Euler(0, 0, i.angle);
             }
@@ -254,7 +328,7 @@ public class Skateboard : MonoBehaviour {
             }
         }
 
-        while (elapsedTime<endTime)
+        while (elapsedTime < endTime)
         {
             Quaternion totalRotation = Quaternion.identity;
             for (int i = 0; i < instructions.Length; i++)
@@ -262,7 +336,7 @@ public class Skateboard : MonoBehaviour {
                 if (elapsedTime >= instructions[i].startAt)
                 {
                     Quaternion quat = Quaternion.identity;
-                    float rotationAmount = instructions[i].angle*((elapsedTime-instructions[i].startAt )/(instructions[i].inTime));
+                    float rotationAmount = instructions[i].angle * ((elapsedTime - instructions[i].startAt) / (instructions[i].inTime));
                     if (elapsedTime - instructions[i].startAt > instructions[i].inTime)
                     {
                         rotationAmount = instructions[i].angle;
@@ -275,7 +349,7 @@ public class Skateboard : MonoBehaviour {
                     {
                         quat = Quaternion.Euler(rotationAmount, 0, 0);
                     }
-                    else if(rotationAmount != 0)
+                    else if (rotationAmount != 0)
                     {
                         quat = Quaternion.Euler(0, 0, rotationAmount);
                     }
@@ -285,7 +359,7 @@ public class Skateboard : MonoBehaviour {
             Quaternion finalRotation = Quaternion.Lerp(startRotation, totalRotation, (1 / endTime) * elapsedTime);
             transform.rotation = finalRotation;
             elapsedTime += Time.deltaTime;
-            if (elapsedTime>endTime&& loop)
+            if (elapsedTime > endTime && loop)
             {
                 elapsedTime = 0;
                 startRotation = transform.rotation;
@@ -476,7 +550,10 @@ public class Skateboard : MonoBehaviour {
         LevelOut,
         Ollie,
         AirWobble,
-        Kickflip
+        Kickflip,
+        OneEighty,
+        ThreeSixty,
+        Grind
     }
     private enum Axis
     {
