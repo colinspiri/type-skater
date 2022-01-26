@@ -55,11 +55,6 @@ public class TrickSuggestion : MonoBehaviour
                 leastUsedWords.Add(pair.Key.text);
             }
         }
-        // string debugstring = "min frequency = " + minValue + " ";
-        // foreach (var word in leastUsedWords) {
-        //     debugstring += " ";
-        // }
-        // Debug.Log(debugstring);
         
         // select a random word
         int randomIndex = Random.Range(0, leastUsedWords.Count);
@@ -82,10 +77,9 @@ public class TrickSuggestion : MonoBehaviour
         }
         trickFrequency[key]++;
 
-        // if word is suggested, clear it and suggest another
+        // if word is suggested, clear it
         if (typed.Equals(suggestionText.text)) {
             suggestionText.text = "";
-            SuggestTrick(Player.Instance.state);
         }
     }
 }

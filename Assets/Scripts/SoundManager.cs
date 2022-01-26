@@ -129,17 +129,14 @@ public class SoundManager : MonoBehaviour {
             else if(rolling.isPlaying) rolling.Stop();
             // adjust volume based on player speed
             rolling.volume = Mathf.Lerp(0.01f, 0.5f, (player.GetSpeed() - player.slowSpeed) / 2*player.maxSpeed);
-
-            // enter
-            if (player.state == Player.State.Midair) {
-                if (Input.GetKeyDown(KeyCode.Return)) {
-                    scratchAscending.Play();
-                }
-                if (Input.GetKeyUp(KeyCode.Return)) {
-                    scratchDescending.Play();
-                }
-            }
         }
+    }
+
+    public void PlaySafeSound() {
+        scratchAscending.Play();
+    }
+    public void PlayUnsafeSound() {
+        scratchDescending.Play();
     }
 
     public void PlayTypingSound() {

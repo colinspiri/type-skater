@@ -94,14 +94,20 @@ public class Player : MonoBehaviour
 
     private void Update() {
         // safe
-        // safe = Input.GetKey(KeyCode.Return) || state != State.Midair;
-        safe = state != State.Midair || !TypingManager.Instance.IsCurrentlyTyping();
+        bool shouldBeSafe = !TypingManager.Instance.IsCurrentlyTyping();
+        // bool shouldBeSafe = Input.GetKey(KeyCode.Return);
+        if (state != State.Midair) safe = true;
+        else if (safe) {
+            if (!shouldBeSafe) {
+                safe = false;
+                SoundManager.Instance.PlaySafeSound();
+            }
+        }
+        else if(shouldBeSafe) {
+            safe = true;
+            SoundManager.Instance.PlayUnsafeSound();
+        }
         animator.SetBool("safe", state == State.Midair ? safe : true);
-        
-        // speed up time when holding ENTER (makes the physics wonky idk why)
-        // if (state == State.Midair) {
-        //     Time.timeScale = safe ? 1.5f : midairTimeScale;
-        // }
 
         // set current speed state
         if (state == State.OnRail) {
@@ -160,19 +166,6 @@ public class Player : MonoBehaviour
         }
         onStateChange?.Invoke(state);
     }
-
-    // private bool CurrentSpeedBelow(Speed speed) {
-    //     List<Speed> speedsInOrder = new List<Speed>() {Speed.Stopped, Speed.Slow, Speed.Medium, Speed.Fast};
-    //     bool playerSpeedFound = false;
-    //     foreach (var s in speedsInOrder) {
-    //         if (s == speed) {
-    //             if (playerSpeedFound) return true;
-    //             break;
-    //         }
-    //         if (s == currentSpeed) playerSpeedFound = true;
-    //     }
-    //     return false;
-    // }
 
     public float GetSpeed() {
         return rb.velocity.x;
