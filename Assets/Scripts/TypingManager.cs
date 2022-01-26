@@ -16,6 +16,7 @@ public class TypingManager : MonoBehaviour {
     
     // public constants
     public TextMeshProUGUI typingText;
+    public TextMeshProUGUI predictiveText;
     public GameObject completedTextPrefab;
     public List<Word> allWords;
     public GameObject completedTrickTextPrefab;
@@ -42,6 +43,7 @@ public class TypingManager : MonoBehaviour {
         playerAnimator = Player.Instance.GetComponent<Animator>();
 
         typingText.text = "";
+        predictiveText.text = "";
         
         Player.Instance.onStateChange += UpdateAvailableWords;
         UpdateAvailableWords(Player.Instance.state);
@@ -50,13 +52,8 @@ public class TypingManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Player.Instance.state == Player.State.Midair) {
+        if (Player.Instance.state == Player.State.Midair || Player.Instance.state == Player.State.OnRail) {
             timeTyping += Time.unscaledDeltaTime;
-            // if(availableWords.Count < 2 + midairTricksToShow) AddRandomTrick();
-        }
-        else if (Player.Instance.state == Player.State.OnRail) {
-            timeTyping += Time.unscaledDeltaTime;
-            // if(availableWords.Count < 1 + railTricksToShow) AddRandomTrick();
         }
 
         string input = Input.inputString;
@@ -128,6 +125,7 @@ public class TypingManager : MonoBehaviour {
         // update typing text
         currentWord = newCurrentWord;
         typingText.text = currentWord == null ? "" : currentWord.GetTyped();
+        predictiveText.text = currentWord == null ? "" : currentWord.text;
     }
 
     public bool IsCurrentlyTyping() {

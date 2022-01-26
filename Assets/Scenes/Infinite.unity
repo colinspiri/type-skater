@@ -628,6 +628,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de0d4f345ffa840be961759f454e2622, type: 3}
+--- !u!114 &554326969 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5050352322666136732, guid: de0d4f345ffa840be961759f454e2622, type: 3}
+  m_PrefabInstance: {fileID: 554326968}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &561132899 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 190654776045194320, guid: 40fdb9c8aa7ee4b158226da54fe3aa49, type: 3}
@@ -1934,6 +1945,10 @@ PrefabInstance:
       propertyPath: playerAnimator
       value: 
       objectReference: {fileID: 2008911373}
+    - target: {fileID: 190654776045194327, guid: 40fdb9c8aa7ee4b158226da54fe3aa49, type: 3}
+      propertyPath: predictiveText
+      value: 
+      objectReference: {fileID: 554326969}
     - target: {fileID: 190654776045194327, guid: 40fdb9c8aa7ee4b158226da54fe3aa49, type: 3}
       propertyPath: words.Array.data[0].onTyped.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

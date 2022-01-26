@@ -241,6 +241,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6663930722031257766}
     - target: {fileID: 190654776045194327, guid: 40fdb9c8aa7ee4b158226da54fe3aa49, type: 3}
+      propertyPath: predictiveText
+      value: 
+      objectReference: {fileID: 6663930722031257767}
+    - target: {fileID: 190654776045194327, guid: 40fdb9c8aa7ee4b158226da54fe3aa49, type: 3}
       propertyPath: completedTrickParent
       value: 
       objectReference: {fileID: 0}
@@ -3274,6 +3278,17 @@ PrefabInstance:
 --- !u!114 &6663930722031257766 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8270978717557474378, guid: de0d4f345ffa840be961759f454e2622, type: 3}
+  m_PrefabInstance: {fileID: 6663930722031257765}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6663930722031257767 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5050352322666136732, guid: de0d4f345ffa840be961759f454e2622, type: 3}
   m_PrefabInstance: {fileID: 6663930722031257765}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
