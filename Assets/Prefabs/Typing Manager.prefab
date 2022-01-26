@@ -45,25 +45,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typingText: {fileID: 0}
   completedTextPrefab: {fileID: 2434471693609180520, guid: 82fc9180d8d6246ba888b3936a999fe5, type: 3}
-  midairTricksToShow: 2
-  railTricksToShow: 2
-  level0Words:
+  allWords:
   - text: push
     trickScore: 0
     availableInStates: 01000000
   - text: ollie
     trickScore: 0
     availableInStates: 010000000200000003000000
-  - text: fakie
-    trickScore: 1
-    availableInStates: 00000000
   - text: grab
     trickScore: 1
     availableInStates: 00000000
   - text: drop
     trickScore: 1
     availableInStates: 00000000
-  level1Words:
+  - text: fakie
+    trickScore: 1
+    availableInStates: 00000000
   - text: switch
     trickScore: 1
     availableInStates: 00000000
@@ -91,7 +88,6 @@ MonoBehaviour:
   - text: merlin twist
     trickScore: 4
     availableInStates: 00000000
-  level2Words:
   - text: salad
     trickScore: 2
     availableInStates: 02000000
@@ -114,7 +110,7 @@ MonoBehaviour:
     trickScore: 4
     availableInStates: 02000000
   - text: 5-0
-    trickScore: 4
+    trickScore: 5
     availableInStates: 02000000
   - text: manhattan flip
     trickScore: 5

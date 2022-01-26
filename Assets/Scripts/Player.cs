@@ -94,7 +94,8 @@ public class Player : MonoBehaviour
 
     private void Update() {
         // safe
-        safe = Input.GetKey(KeyCode.Return) || state != State.Midair;
+        // safe = Input.GetKey(KeyCode.Return) || state != State.Midair;
+        safe = state != State.Midair || !TypingManager.Instance.IsCurrentlyTyping();
         animator.SetBool("safe", state == State.Midair ? safe : true);
         
         // speed up time when holding ENTER (makes the physics wonky idk why)

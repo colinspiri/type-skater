@@ -17,18 +17,12 @@ public class TypingManager : MonoBehaviour {
     // public constants
     public TextMeshProUGUI typingText;
     public GameObject completedTextPrefab;
-    public int midairTricksToShow;
-    public int railTricksToShow;
-    public List<Word> level0Words;
-    public List<Word> level1Words;
-    public List<Word> level2Words;
+    public List<Word> allWords;
     public GameObject completedTrickTextPrefab;
     public Color completedTrickTextColor;
     
     // state
-    private List<Word> allWords = new List<Word>();
     private List<Word> availableWords = new List<Word>();
-    private List<Word> tricksLeft = new List<Word>();
     private float timeTyping;
     private int wordsTyped;
     private Word currentWord;
@@ -48,25 +42,7 @@ public class TypingManager : MonoBehaviour {
         playerAnimator = Player.Instance.GetComponent<Animator>();
 
         typingText.text = "";
-
-        string sceneName = SceneManager.GetActiveScene().name;
-        if (sceneName.Equals("Level0")) {
-            allWords.AddRange(level0Words);
-        }
-        if (sceneName.Equals("Level1")) {
-            allWords.AddRange(level0Words);
-            allWords.AddRange(level1Words);
-        }
-        else if (sceneName.Equals("Level2")) {
-            allWords.AddRange(level0Words);
-            allWords.AddRange(level1Words);
-            allWords.AddRange(level2Words);
-        }
-        else if (sceneName.Equals("Infinite")) {
-            allWords.AddRange(level0Words);
-            allWords.AddRange(level1Words);
-            allWords.AddRange(level2Words);
-        }
+        
         Player.Instance.onStateChange += UpdateAvailableWords;
         UpdateAvailableWords(Player.Instance.state);
     }
@@ -76,11 +52,11 @@ public class TypingManager : MonoBehaviour {
     {
         if (Player.Instance.state == Player.State.Midair) {
             timeTyping += Time.unscaledDeltaTime;
-            if(availableWords.Count < 2 + midairTricksToShow) AddRandomTrick();
+            // if(availableWords.Count < 2 + midairTricksToShow) AddRandomTrick();
         }
         else if (Player.Instance.state == Player.State.OnRail) {
             timeTyping += Time.unscaledDeltaTime;
-            if(availableWords.Count < 1 + railTricksToShow) AddRandomTrick();
+            // if(availableWords.Count < 1 + railTricksToShow) AddRandomTrick();
         }
 
         string input = Input.inputString;
@@ -154,49 +130,58 @@ public class TypingManager : MonoBehaviour {
         typingText.text = currentWord == null ? "" : currentWord.GetTyped();
     }
 
+    public bool IsCurrentlyTyping() {
+        return typingText.text != "";
+    }
+
+    public List<string> GetAllTricks() {
+        List<string> tricks = new List<string>();
+        foreach (var word in allWords) {
+            if (word.trickScore > 0) tricks.Add(word.text);
+        }
+        return tricks;
+    }
+
     public void UpdateAvailableWords(Player.State state) {
         availableWords.Clear();
-        tricksLeft.Clear();
         foreach (var word in allWords) {
             if (word.availableInStates.Contains(state)) {
-                tricksLeft.Add(word);
-                if (state != Player.State.Midair && state != Player.State.OnRail) {
-                    if(Player.Instance.currentSpeed != Player.Speed.Stopped || word.text != "ollie") availableWords.Add(word);
-                }
+                availableWords.Add(word);
             }
         }
-        // add "grab" and "drop"
-        if (state == Player.State.Midair) {
-            // grab
-            int grabIndex = tricksLeft.FindIndex(word => word.text.Equals("grab"));
-            if (grabIndex != -1) {
-                availableWords.Add(tricksLeft[grabIndex]);
-                tricksLeft.RemoveAt(grabIndex);
-            }
-            // drop
-            int dropIndex = tricksLeft.FindIndex(word => word.text.Equals("drop"));
-            if (dropIndex != -1) {
-                availableWords.Add(tricksLeft[dropIndex]);
-                tricksLeft.RemoveAt(dropIndex);
-            }
-            // add random tricks
-            for (int i = 0; i < midairTricksToShow; i++) {
-                AddRandomTrick();
-            }
-        }
-        // add "ollie"
-        if (state == Player.State.OnRail) {
-            // ollie
-            int ollieIndex = tricksLeft.FindIndex(word => word.text.Equals("ollie"));
-            if (ollieIndex != -1) {
-                availableWords.Add(tricksLeft[ollieIndex]);
-                tricksLeft.RemoveAt(ollieIndex);
-            }
-            // add random tricks
-            for (int i = 0; i < railTricksToShow; i++) {
-                AddRandomTrick();
-            }
-        }
+        
+        // // add "grab" and "drop"
+        // if (state == Player.State.Midair) {
+        //     // grab
+        //     int grabIndex = tricksLeft.FindIndex(word => word.text.Equals("grab"));
+        //     if (grabIndex != -1) {
+        //         availableWords.Add(tricksLeft[grabIndex]);
+        //         tricksLeft.RemoveAt(grabIndex);
+        //     }
+        //     // drop
+        //     int dropIndex = tricksLeft.FindIndex(word => word.text.Equals("drop"));
+        //     if (dropIndex != -1) {
+        //         availableWords.Add(tricksLeft[dropIndex]);
+        //         tricksLeft.RemoveAt(dropIndex);
+        //     }
+        //     // add random tricks
+        //     for (int i = 0; i < midairTricksToShow; i++) {
+        //         AddRandomTrick();
+        //     }
+        // }
+        // // add "ollie"
+        // if (state == Player.State.OnRail) {
+        //     // ollie
+        //     int ollieIndex = tricksLeft.FindIndex(word => word.text.Equals("ollie"));
+        //     if (ollieIndex != -1) {
+        //         availableWords.Add(tricksLeft[ollieIndex]);
+        //         tricksLeft.RemoveAt(ollieIndex);
+        //     }
+        //     // add random tricks
+        //     for (int i = 0; i < railTricksToShow; i++) {
+        //         AddRandomTrick();
+        //     }
+        // }
         
     }
 
@@ -204,12 +189,12 @@ public class TypingManager : MonoBehaviour {
         return availableWords;
     }
 
-    private void AddRandomTrick() {
-        if (tricksLeft.Count == 0) return; // if no tricks left, do nothing
-        int randomIndex = Random.Range(0, tricksLeft.Count);
-        availableWords.Add(tricksLeft[randomIndex]);
-        tricksLeft.RemoveAt(randomIndex);
-    }
+    // private void AddRandomTrick() {
+    //     if (tricksLeft.Count == 0) return; // if no tricks left, do nothing
+    //     int randomIndex = Random.Range(0, tricksLeft.Count);
+    //     availableWords.Add(tricksLeft[randomIndex]);
+    //     tricksLeft.RemoveAt(randomIndex);
+    // }
 
     public float GetWordsPerMinute() {
         return 60f * wordsTyped / timeTyping;
