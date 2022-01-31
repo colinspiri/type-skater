@@ -63,22 +63,15 @@ public class TrickSuggestion : MonoBehaviour
         suggestionText.text = suggestedWord;
     }
 
-    private void CountWord(string typed) {
+    private void CountWord(Word word) {
         // ignore non-tricks
-        if (typed.Equals("push") || typed.Equals("ollie") || typed.Equals("grab") || typed.Equals("drop")) return;
+        if (word.text.Equals("push") || word.text.Equals("ollie") || word.text.Equals("grab") || word.text.Equals("drop")) return;
 
         // increment frequency
-        Word key = null;
-        foreach (var word in trickFrequency.Keys) {
-            if (word.text.Equals(typed)) {
-                key = word;
-                break;
-            }
-        }
-        trickFrequency[key]++;
+        trickFrequency[word]++;
 
         // if word is suggested, clear it
-        if (typed.Equals(suggestionText.text)) {
+        if (word.text == suggestionText.text) {
             suggestionText.text = "";
         }
     }

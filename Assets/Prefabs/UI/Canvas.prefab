@@ -593,7 +593,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 47.6, y: 12.7}
+  m_AnchoredPosition: {x: 133, y: 12.7}
   m_SizeDelta: {x: 336.0393, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4866075379246405836
@@ -1710,10 +1710,13 @@ MonoBehaviour:
   score: 0
   multiplierIncrement: 0.1
   wipeouts: 0
+  maxStaleTricks: 10
   scoreIsUnsecured: 0
   unsecuredScorePrefab: {fileID: 6941402312752193843, guid: 1480cb9595c844fd899db7ac79448859, type: 3}
   unsecuredScoreLocation: {fileID: 1110688572206153380}
   flyingScorePrefab: {fileID: 3390128065693615693, guid: d8abd2be22708429797aa2fcabfc0386, type: 3}
+  completedTrickTextPrefab: {fileID: 3783369161292865245, guid: dd696d0494d1c429c82bc27fe1b69a54, type: 3}
+  completedTrickTextColor: {r: 0.5882353, g: 0.33333334, b: 1, a: 1}
   gameOverOnWipeOut: 0
   gameOverPrefab: {fileID: 142869858993317319, guid: dbd7e0bf9abca4aca8805151b180530f, type: 3}
   objectsToDisable:

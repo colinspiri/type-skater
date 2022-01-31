@@ -185,6 +185,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1941875239}
     - target: {fileID: 308843183818454226, guid: de0d4f345ffa840be961759f454e2622, type: 3}
+      propertyPath: completedTrickTextColor.b
+      value: 0.50980395
+      objectReference: {fileID: 0}
+    - target: {fileID: 308843183818454226, guid: de0d4f345ffa840be961759f454e2622, type: 3}
+      propertyPath: completedTrickTextColor.g
+      value: 0.61960787
+      objectReference: {fileID: 0}
+    - target: {fileID: 308843183818454226, guid: de0d4f345ffa840be961759f454e2622, type: 3}
+      propertyPath: completedTrickTextColor.r
+      value: 0.4509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 308843183818454226, guid: de0d4f345ffa840be961759f454e2622, type: 3}
       propertyPath: objectsToDisable.Array.data[2]
       value: 
       objectReference: {fileID: 811861920}

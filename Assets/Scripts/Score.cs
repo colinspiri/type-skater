@@ -15,6 +15,8 @@ public class Score : MonoBehaviour {
     private float multiplier;
     public float multiplierIncrement;
     [HideInInspector] public int wipeouts;
+    private List<string> staleTricks = new List<string>();
+    public int maxStaleTricks;
     
     // unsecured score
     public bool scoreIsUnsecured;
@@ -29,7 +31,9 @@ public class Score : MonoBehaviour {
     
     // component stuff
     private TextMeshProUGUI scoreText;
-    
+    public GameObject completedTrickTextPrefab;
+    public Color completedTrickTextColor;
+
     // pause menu + game over
     public bool gameOverOnWipeOut;
     public GameObject gameOverPrefab;
@@ -45,6 +49,8 @@ public class Score : MonoBehaviour {
 
     private void Start() {
         scoreText.text = score.ToString();
+
+        TypingManager.Instance.onCompleteWord += CountTrick;
 
         Player.Instance.onJump += () => {
             // instantiate unsecured score
@@ -101,16 +107,50 @@ public class Score : MonoBehaviour {
         }
     }
 
-    public void AddScore(int addition) {
-        int addedScore = Mathf.FloorToInt(addition * multiplier);
+    private void CountTrick(Word word) {
+        int score = 0;
+        if (word.trickScore > 0) {
+            // count how many times the trick appears in the stale list
+            int appearing = 0;
+            foreach (var staleTrick in staleTricks) {
+                if (word.text == staleTrick) appearing++;
+            }
+            // calculate score
+            float roughScore = word.trickScore * multiplier;
+            float staleMultiplier = 0.7f;
+            for (int i = 0; i < appearing; i++) {
+                var newRoughScore = roughScore * staleMultiplier;
+                if (roughScore - newRoughScore < 1) {
+                    roughScore--;
+                }
+                else roughScore = newRoughScore;
+            }
+            score = Mathf.FloorToInt(roughScore);
+            if (score <= 0) score = 1;
+            AddScore(score);
+        
+            // add to stale tricks
+            staleTricks.Add(word.text);
+            // push a trick out if stale maximum reached
+            if(staleTricks.Count > maxStaleTricks) staleTricks.RemoveAt(0);
+        }
+        
+        // spawn completed trick text
+        GameObject completedTrickText = Instantiate(completedTrickTextPrefab, Player.Instance.transform.position, Quaternion.identity);
+        TextMeshProUGUI text = completedTrickText.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        text.text = word.trickScore > 0 ? word.text + " " + score : word.text;
+        text.color = completedTrickTextColor;
+    }
+
+    private void AddScore(int addition) {
         // if on ground
         if (Player.Instance.state == Player.State.OnGround) {
-            score += addedScore;
+            score += addition;
             scoreText.text = score.ToString();
         }
         // if in the air, score is unsecured
         else {
-            unsecuredScore += addedScore;
+            unsecuredScore += addition;
             unsecuredScoreText.text = unsecuredScore.ToString();
 
             multiplier += multiplierIncrement;
@@ -120,7 +160,7 @@ public class Score : MonoBehaviour {
             
             var flyingScoreText = Instantiate(flyingScorePrefab, unsecuredScoreText.transform, false)
                 .GetComponent<TextMeshProUGUI>();
-            flyingScoreText.text = "+" + addedScore.ToString();
+            flyingScoreText.text = "+" + addition.ToString();
             flyingScoreText.color = multiplierText.color;
         }
     }

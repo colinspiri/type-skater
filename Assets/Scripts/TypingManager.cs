@@ -19,8 +19,6 @@ public class TypingManager : MonoBehaviour {
     public TextMeshProUGUI predictiveText;
     public GameObject completedTextPrefab;
     public List<Word> allWords;
-    public GameObject completedTrickTextPrefab;
-    public Color completedTrickTextColor;
     
     // state
     private List<Word> availableWords = new List<Word>();
@@ -32,7 +30,7 @@ public class TypingManager : MonoBehaviour {
     public GameObject errorTextPrefab;
     
     // callbacks
-    public delegate void OnCompleteWord(string word);
+    public delegate void OnCompleteWord(Word word);
     public OnCompleteWord onCompleteWord;
 
     private void Awake() {
@@ -88,8 +86,6 @@ public class TypingManager : MonoBehaviour {
 
                     // if it's a trick
                     if (w.trickScore > 0) {
-                        // add to score
-                        Score.Instance.AddScore(w.trickScore);
                         // do player animation
                         playerAnimator.SetTrigger("trick");
                         // remove from available words
@@ -98,11 +94,6 @@ public class TypingManager : MonoBehaviour {
                     // animate completed text
                     TextMeshProUGUI completedText = Instantiate(completedTextPrefab, typingText.transform.parent, false).GetComponent<TextMeshProUGUI>();
                     completedText.text = w.text;
-                    // spawn completed trick text
-                    GameObject completedTrickText = Instantiate(completedTrickTextPrefab, Player.Instance.transform.position, Quaternion.identity);
-                    TextMeshProUGUI text = completedTrickText.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-                    text.text = w.text;
-                    text.color = completedTrickTextColor;
                     // clear current typing
                     typingText.text = "";
                     newCurrentWord = null;
@@ -110,7 +101,7 @@ public class TypingManager : MonoBehaviour {
                     // count words
                     wordsTyped++;
                     // call callback
-                    onCompleteWord?.Invoke(w.text);
+                    onCompleteWord?.Invoke(w);
                     break;
                 }
             }
@@ -147,52 +138,11 @@ public class TypingManager : MonoBehaviour {
                 availableWords.Add(word);
             }
         }
-        
-        // // add "grab" and "drop"
-        // if (state == Player.State.Midair) {
-        //     // grab
-        //     int grabIndex = tricksLeft.FindIndex(word => word.text.Equals("grab"));
-        //     if (grabIndex != -1) {
-        //         availableWords.Add(tricksLeft[grabIndex]);
-        //         tricksLeft.RemoveAt(grabIndex);
-        //     }
-        //     // drop
-        //     int dropIndex = tricksLeft.FindIndex(word => word.text.Equals("drop"));
-        //     if (dropIndex != -1) {
-        //         availableWords.Add(tricksLeft[dropIndex]);
-        //         tricksLeft.RemoveAt(dropIndex);
-        //     }
-        //     // add random tricks
-        //     for (int i = 0; i < midairTricksToShow; i++) {
-        //         AddRandomTrick();
-        //     }
-        // }
-        // // add "ollie"
-        // if (state == Player.State.OnRail) {
-        //     // ollie
-        //     int ollieIndex = tricksLeft.FindIndex(word => word.text.Equals("ollie"));
-        //     if (ollieIndex != -1) {
-        //         availableWords.Add(tricksLeft[ollieIndex]);
-        //         tricksLeft.RemoveAt(ollieIndex);
-        //     }
-        //     // add random tricks
-        //     for (int i = 0; i < railTricksToShow; i++) {
-        //         AddRandomTrick();
-        //     }
-        // }
-        
     }
 
     public List<Word> GetAvailableWords() {
         return availableWords;
     }
-
-    // private void AddRandomTrick() {
-    //     if (tricksLeft.Count == 0) return; // if no tricks left, do nothing
-    //     int randomIndex = Random.Range(0, tricksLeft.Count);
-    //     availableWords.Add(tricksLeft[randomIndex]);
-    //     tricksLeft.RemoveAt(randomIndex);
-    // }
 
     public float GetWordsPerMinute() {
         return 60f * wordsTyped / timeTyping;
