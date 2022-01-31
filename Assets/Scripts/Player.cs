@@ -10,14 +10,14 @@ public class Player : MonoBehaviour
     public static Player Instance;
     
     // public constants
-    [Header("Speed Constants")]
+    [Header("Speed Constants")] 
     public float slowSpeed;
     public float mediumSpeed;
     public float fastSpeed;
     public float maxSpeed;
     public float pushForce;
 
-    [Header("Jump Constants")]
+    [Header("Jump Constants")] 
     public float slowJumpForce;
     public float mediumJumpForce;
     public float fastJumpForce;
@@ -250,7 +250,7 @@ public class Player : MonoBehaviour
 
     public void WipeOut() {
         // slow
-        SetSpeed(Speed.Stopped);
+        SetSpeed(Speed.Slow);
 
         // if player landed with unsecured score, screen shake magnitude is proportional to the score
         float magnitude = (Score.Instance.GetUnsecuredScore() > 0) ? (0.2f + Score.Instance.GetUnsecuredScore() * 0.1f) : 1f;
