@@ -56,6 +56,10 @@ public class TypingManager : MonoBehaviour {
 
         string input = Input.inputString;
         if (input.Equals("")) return;
+        if (Input.GetKeyDown(KeyCode.Backspace)) {
+            currentWord = null;
+            typingText.text = "";
+        }
         
         char c = input[0];
         Word newCurrentWord = null;
