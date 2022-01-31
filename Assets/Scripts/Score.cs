@@ -117,7 +117,7 @@ public class Score : MonoBehaviour {
             }
             // calculate score
             float roughScore = word.trickScore * multiplier;
-            float staleMultiplier = 0.7f;
+            float staleMultiplier = 0.6f;
             for (int i = 0; i < appearing; i++) {
                 var newRoughScore = roughScore * staleMultiplier;
                 if (roughScore - newRoughScore < 1) {

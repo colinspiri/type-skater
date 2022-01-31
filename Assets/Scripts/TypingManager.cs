@@ -88,8 +88,6 @@ public class TypingManager : MonoBehaviour {
                     if (w.trickScore > 0) {
                         // do player animation
                         playerAnimator.SetTrigger("trick");
-                        // remove from available words
-                        availableWords.Remove(w);
                     }
                     // animate completed text
                     TextMeshProUGUI completedText = Instantiate(completedTextPrefab, typingText.transform.parent, false).GetComponent<TextMeshProUGUI>();
