@@ -174,13 +174,22 @@ public class Score : MonoBehaviour {
         if(gameOverOnWipeOut) Player.Instance.onWipeOut -= GameOver;
         // secure unsecured store
         SecureScore();
+        
+        // compare with high score
+        int highScore = PlayerPrefs.GetInt(SceneManager.GetActiveScene().name + "HighScore", 0);
+        if (score > highScore) {
+            highScore = score;
+            PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + "HighScore", highScore);
+        }
+
         // display game over
         TextMeshProUGUI gameOverText = Instantiate(gameOverPrefab, transform.parent, false).GetComponent<TextMeshProUGUI>();
         gameOverText.text = "your score: " + score;
+        gameOverText.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "high score: " + highScore;
         string wipedouttext = "wiped out " + wipeouts + " time";
         if (wipeouts != 1) wipedouttext += "s";
-        gameOverText.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = wipedouttext;
-        gameOverText.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text =
+        gameOverText.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = wipedouttext;
+        gameOverText.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
             Mathf.RoundToInt(TypingManager.Instance.GetWordsPerMinute()) + " words/min";
         // disable other objects
         Player.Instance.SetSpeed(Player.Speed.Slow);
