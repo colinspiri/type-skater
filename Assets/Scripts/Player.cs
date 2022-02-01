@@ -95,8 +95,7 @@ public class Player : MonoBehaviour
     private void Update() {
         // safe
         bool shouldBeSafe = !TypingManager.Instance.IsCurrentlyTyping();
-        // bool shouldBeSafe = Input.GetKey(KeyCode.Return);
-        if (state != State.Midair) safe = true;
+        if (state == State.OnGround || state == State.OnRamp) safe = true;
         else if (safe) {
             if (!shouldBeSafe) {
                 safe = false;
@@ -310,9 +309,15 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         // end of rail
         if (other.CompareTag("RailEnd") && state == State.OnRail) {
-            // set to midair
-            ChangeState(State.Midair);
-            Jump(railJump);
+            if (safe) {
+                // set to midair
+                ChangeState(State.Midair);
+                Jump(railJump);
+            }
+            else {
+                ChangeState(State.Midair);
+                WipeOut();
+            }
         }
         // end of ramp
         if (other.CompareTag("RampEnd") && state == State.OnRamp) {
