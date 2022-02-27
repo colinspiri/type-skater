@@ -50,14 +50,13 @@ public class TypingManager : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         if (Player.Instance.state == Player.State.Midair || Player.Instance.state == Player.State.OnRail) {
             timeTyping += Time.unscaledDeltaTime;
         }
 
         string input = Input.inputString;
-        if (input.Equals("")) return;
+        if (input.Equals("") || Time.timeScale == 0.0f) return;
         if (Input.GetKeyDown(KeyCode.Backspace)) {
             ClearCurrentTyping();
         }
