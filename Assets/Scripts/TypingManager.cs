@@ -45,6 +45,8 @@ public class TypingManager : MonoBehaviour {
         
         Player.Instance.onStateChange += UpdateAvailableWords;
         UpdateAvailableWords(Player.Instance.state);
+
+        Player.Instance.onWipeOut += ClearCurrentTyping;
     }
 
     // Update is called once per frame
@@ -57,8 +59,7 @@ public class TypingManager : MonoBehaviour {
         string input = Input.inputString;
         if (input.Equals("")) return;
         if (Input.GetKeyDown(KeyCode.Backspace)) {
-            currentWord = null;
-            typingText.text = "";
+            ClearCurrentTyping();
         }
         
         char c = input[0];
@@ -97,9 +98,8 @@ public class TypingManager : MonoBehaviour {
                     TextMeshProUGUI completedText = Instantiate(completedTextPrefab, typingText.transform.parent, false).GetComponent<TextMeshProUGUI>();
                     completedText.text = w.text;
                     // clear current typing
-                    typingText.text = "";
+                    ClearCurrentTyping();
                     newCurrentWord = null;
-                    currentWord = null;
                     // count words
                     wordsTyped++;
                     // call callback
@@ -121,16 +121,15 @@ public class TypingManager : MonoBehaviour {
         predictiveText.text = currentWord == null ? "" : currentWord.text;
     }
 
-    public bool IsCurrentlyTyping() {
-        return typingText.text != "";
+    private void ClearCurrentTyping() {
+        currentWord?.Clear();
+        currentWord = null;
+        typingText.text = "";
+        predictiveText.text = "";
     }
 
-    public List<string> GetAllTricks() {
-        List<string> tricks = new List<string>();
-        foreach (var word in allWords) {
-            if (word.trickScore > 0) tricks.Add(word.text);
-        }
-        return tricks;
+    public bool IsCurrentlyTyping() {
+        return typingText.text != "";
     }
 
     public void UpdateAvailableWords(Player.State state) {
