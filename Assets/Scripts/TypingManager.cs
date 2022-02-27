@@ -64,7 +64,8 @@ public class TypingManager : MonoBehaviour {
         
         char c = input[0];
         Word newCurrentWord = null;
-        foreach (Word w in availableWords) {
+        for (var i = 0; i < availableWords.Count; i++) {
+            Word w = availableWords[i];
             // if the current input matches a word
             if (w.ContinueText(c)) {
                 // play typing sound
@@ -73,29 +74,37 @@ public class TypingManager : MonoBehaviour {
                 if (newCurrentWord == null) {
                     newCurrentWord = w;
                 }
-                else if(w.GetTyped().Length > newCurrentWord.GetTyped().Length) {
+                else if (w.GetTyped().Length > newCurrentWord.GetTyped().Length) {
                     newCurrentWord.Clear();
                     newCurrentWord = w;
                 }
+
                 // if user typed the whole word
-                if (w.GetTyped().Equals(w.text))
-                {
+                if (w.GetTyped().Equals(w.text)) {
                     // push
                     if (w.text.Equals("push")) Player.Instance.Push();
                     // ollie
                     else if (w.text.Equals("ollie")) Player.Instance.Jump();
                     // drop
-                    else if (w.text.Equals("drop")) Player.Instance.Drop();
+                    else if (w.text.Equals("drop")) {
+                        Player.Instance.Drop();
+                        availableWords.Remove(w);
+                    }
                     // grab
-                    else if(w.text.Equals("grab")) Player.Instance.Grab();
+                    else if (w.text.Equals("grab")) {
+                        Player.Instance.Grab();
+                        availableWords.Remove(w);
+                    }
 
                     // if it's a trick
                     if (w.trickScore > 0) {
                         // do player animation
                         playerAnimator.SetTrigger("trick");
                     }
+
                     // animate completed text
-                    TextMeshProUGUI completedText = Instantiate(completedTextPrefab, typingText.transform.parent, false).GetComponent<TextMeshProUGUI>();
+                    TextMeshProUGUI completedText = Instantiate(completedTextPrefab, typingText.transform.parent, false)
+                        .GetComponent<TextMeshProUGUI>();
                     completedText.text = w.text;
                     // clear current typing
                     ClearCurrentTyping();
@@ -108,6 +117,7 @@ public class TypingManager : MonoBehaviour {
                 }
             }
         }
+
         // check if player made a mistake
         if (currentWord != null && newCurrentWord == null && currentWord.text.Length >= 2) {
             var errorText = Instantiate(errorTextPrefab, typingText.transform, false).GetComponent<TextMeshProUGUI>();
