@@ -39,11 +39,10 @@ public class TrickSuggestion : MonoBehaviour
     }
 
     private void SuggestTrick(Player.State state) {
-        if (state == Player.State.OnGround || state == Player.State.OnRail) {
+        if (state == Player.State.OnGround || state == Player.State.OnRamp) {
             suggestionText.text = "";
             return;
         }
-        if (suggestionText.text != "") return;
 
         // get a list of the least used words
         int minValue = Int32.MaxValue;

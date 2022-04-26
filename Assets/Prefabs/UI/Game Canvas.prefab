@@ -1381,7 +1381,7 @@ MonoBehaviour:
     queueOnLevel0: 1
     queueOnLevel1: 1
     queueOnLevel2: 1
-    instructionText: type <color=#E3C41C>grab</color> for a boost
+    instructionText: type <color=#E3C41C>grab</color> in midair for a boost
   - instructionName: drop
     queueOnLevel0: 1
     queueOnLevel1: 1

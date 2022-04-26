@@ -45,11 +45,12 @@ public class TrickManager : MonoBehaviour {
 
         typingText.text = "";
         predictiveText.text = "";
-        
+
+        Player.Instance.onStateChange += _ => ClearCurrentTyping();
         Player.Instance.onStateChange += UpdateAvailableWords;
         UpdateAvailableWords(Player.Instance.state);
 
-        Player.Instance.onWipeOut += ClearCurrentTyping;
+        // Player.Instance.onWipeOut += ClearCurrentTyping;
     }
 
     // Update is called once per frame

@@ -298,15 +298,9 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         // end of rail
         if (other.CompareTag("RailEnd") && state == State.OnRail) {
-            if (safe) {
-                // set to midair
-                ChangeState(State.Midair);
-                Jump(railJump);
-            }
-            else {
-                ChangeState(State.Midair);
-                WipeOut();
-            }
+            // set to midair
+            ChangeState(State.Midair);
+            Jump(railJump);
         }
         // end of ramp
         if (other.CompareTag("RampEnd") && state == State.OnRamp) {
