@@ -107,16 +107,16 @@ public class Score : MonoBehaviour {
         }
     }
 
-    private void CountTrick(Trick trick) {
+    private void CountTrick(Word word) {
         int score = 0;
-        if (trick.trickScore > 0) {
+        if (word.trickScore > 0) {
             // count how many times the trick appears in the stale list
             int appearing = 0;
             foreach (var staleTrick in staleTricks) {
-                if (trick.text == staleTrick) appearing++;
+                if (word.text == staleTrick) appearing++;
             }
             // calculate score
-            float roughScore = trick.trickScore * multiplier;
+            float roughScore = word.trickScore * multiplier;
             float staleMultiplier = 0.6f;
             for (int i = 0; i < appearing; i++) {
                 var newRoughScore = roughScore * staleMultiplier;
@@ -130,7 +130,7 @@ public class Score : MonoBehaviour {
             AddScore(score);
         
             // add to stale tricks
-            staleTricks.Add(trick.text);
+            staleTricks.Add(word.text);
             // push a trick out if stale maximum reached
             if(staleTricks.Count > maxStaleTricks) staleTricks.RemoveAt(0);
         }
@@ -138,7 +138,7 @@ public class Score : MonoBehaviour {
         // spawn completed trick text
         GameObject completedTrickText = Instantiate(completedTrickTextPrefab, Player.Instance.transform.position, Quaternion.identity);
         TextMeshProUGUI text = completedTrickText.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        text.text = trick.trickScore > 0 ? trick.text + " " + score : trick.text;
+        text.text = word.trickScore > 0 ? word.text + " " + score : word.text;
         text.color = completedTrickTextColor;
     }
 

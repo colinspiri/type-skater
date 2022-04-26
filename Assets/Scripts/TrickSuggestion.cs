@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 public class TrickSuggestion : MonoBehaviour
 {
     // private state
-    private Dictionary<Trick, int> trickFrequency;
+    private Dictionary<Word, int> trickFrequency;
     
     // component stuff
     private TextMeshProUGUI suggestionText;
@@ -21,7 +21,7 @@ public class TrickSuggestion : MonoBehaviour
     // Start is called before the first frame update
     void Start() {
         // TODO: load from PlayerPrefs
-        trickFrequency = new Dictionary<Trick, int>();
+        trickFrequency = new Dictionary<Word, int>();
         foreach (var word in TrickManager.Instance.allWords) {
             if (word.text == "push" || word.text == "ollie" || word.text == "grab" || word.text == "drop") continue;
             if (word.trickScore > 0) trickFrequency[word] = 0;
@@ -63,15 +63,15 @@ public class TrickSuggestion : MonoBehaviour
         suggestionText.text = suggestedWord;
     }
 
-    private void CountWord(Trick trick) {
+    private void CountWord(Word word) {
         // ignore non-tricks
-        if (trick.text.Equals("push") || trick.text.Equals("ollie") || trick.text.Equals("grab") || trick.text.Equals("drop")) return;
+        if (word.text.Equals("push") || word.text.Equals("ollie") || word.text.Equals("grab") || word.text.Equals("drop")) return;
 
         // increment frequency
-        trickFrequency[trick]++;
+        trickFrequency[word]++;
 
         // if word is suggested, clear it
-        if (trick.text == suggestionText.text) {
+        if (word.text == suggestionText.text) {
             suggestionText.text = "";
         }
     }
