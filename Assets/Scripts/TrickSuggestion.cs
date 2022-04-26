@@ -8,11 +8,15 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class TrickSuggestion : MonoBehaviour
 {
+    // constants 
+    private float suggestionWaitTime = 0.5f;
+    
     // private state
     private Dictionary<Word, int> trickFrequency;
+    private Coroutine suggestionCoroutine;
     
     // component stuff
-    private TextMeshProUGUI suggestionText;
+    public TextMeshProUGUI suggestionText;
 
     private void Awake() {
         suggestionText = GetComponent<TextMeshProUGUI>();
@@ -20,7 +24,6 @@ public class TrickSuggestion : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        // TODO: load from PlayerPrefs
         trickFrequency = new Dictionary<Word, int>();
         foreach (var word in TrickManager.Instance.allWords) {
             if (word.text == "push" || word.text == "ollie" || word.text == "grab" || word.text == "drop") continue;
@@ -31,13 +34,24 @@ public class TrickSuggestion : MonoBehaviour
 
         // add callbacks
         TrickManager.Instance.onCompleteWord += CountWord;
-        Player.Instance.onStateChange += SuggestTrick;
+        Player.Instance.onStateChange += state => {
+            suggestionText.text = "";
+            if(suggestionCoroutine != null) StopCoroutine(suggestionCoroutine);
+            suggestionCoroutine = StartCoroutine(SuggestTrick(state));
+        };
     }
 
-    private void SuggestTrick(Player.State state) {
+    private IEnumerator SuggestTrick(Player.State state) {
         if (state != Player.State.Midair && state != Player.State.OnRail) {
-            suggestionText.text = "";
-            return;
+            yield break;
+        }
+        
+        // wait some time
+        yield return new WaitForSeconds(suggestionWaitTime);
+        
+        // wait until done typing to suggest trick
+        if (TrickManager.Instance.IsCurrentlyTyping()) {
+            yield break;
         }
         
         // get a list of the least used words

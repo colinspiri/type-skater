@@ -92,18 +92,12 @@ public class Player : MonoBehaviour
         onJump += () => transform.eulerAngles = new Vector3(0, 0, unsafeRotationZ);
     }
 
-    private void Start() {
-        TrickManager.Instance.onTyping.AddListener(() => { 
-            if(state == State.Midair || state == State.OnRail) SetSafe(false);
-        });
-        TrickManager.Instance.onStopTyping.AddListener(() => {
-            SetSafe(true);
-        });
-    }
-
     private void Update() {
         // safe
         if (state == State.OnGround || state == State.OnRamp) SetSafe(true);
+        else {
+            SetSafe(!TrickManager.Instance.IsCurrentlyTyping());
+        }
 
         // set current speed state
         if (state == State.OnRail) {
