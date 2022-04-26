@@ -595,7 +595,7 @@ MonoBehaviour:
   menuOptions:
   - menuText: {fileID: 3376877348679659390}
     slider: {fileID: 0}
-    onSelect:
+    onClick:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3376877350127197085}
@@ -613,7 +613,7 @@ MonoBehaviour:
     text: 
   - menuText: {fileID: 3376877348137027585}
     slider: {fileID: 0}
-    onSelect:
+    onClick:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3376877350127197085}
@@ -631,7 +631,7 @@ MonoBehaviour:
     text: 
   - menuText: {fileID: 3376877349147351555}
     slider: {fileID: 0}
-    onSelect:
+    onClick:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3376877350127197085}
@@ -649,7 +649,7 @@ MonoBehaviour:
     text: 
   - menuText: {fileID: 3376877348806830757}
     slider: {fileID: 0}
-    onSelect:
+    onClick:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3376877350127197085}
@@ -1017,7 +1017,7 @@ MonoBehaviour:
   menuOptions:
   - menuText: {fileID: 3376877348149060809}
     slider: {fileID: 0}
-    onSelect:
+    onClick:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3376877350127197085}
@@ -1035,7 +1035,7 @@ MonoBehaviour:
     text: 
   - menuText: {fileID: 3376877350063414828}
     slider: {fileID: 0}
-    onSelect:
+    onClick:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3376877350127197085}
@@ -1053,7 +1053,7 @@ MonoBehaviour:
     text: 
   - menuText: {fileID: 3376877349756194415}
     slider: {fileID: 0}
-    onSelect:
+    onClick:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3376877350127197085}
@@ -1071,7 +1071,7 @@ MonoBehaviour:
     text: 
   - menuText: {fileID: 3376877348703011610}
     slider: {fileID: 0}
-    onSelect:
+    onClick:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3376877350127197085}
@@ -1089,7 +1089,7 @@ MonoBehaviour:
     text: 
   - menuText: {fileID: 3376877348970111835}
     slider: {fileID: 0}
-    onSelect:
+    onClick:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3376877350127197085}
@@ -1187,25 +1187,25 @@ MonoBehaviour:
   menuOptions:
   - menuText: {fileID: 8135308937842049982}
     slider: {fileID: 8135308938198389367}
-    onSelect:
+    onClick:
       m_PersistentCalls:
         m_Calls: []
     text: 
   - menuText: {fileID: 8135308937653777114}
     slider: {fileID: 8135308938404635411}
-    onSelect:
+    onClick:
       m_PersistentCalls:
         m_Calls: []
     text: 
   - menuText: {fileID: 8135308938041485346}
     slider: {fileID: 8135308938263869931}
-    onSelect:
+    onClick:
       m_PersistentCalls:
         m_Calls: []
     text: 
   - menuText: {fileID: 3376877348441376508}
     slider: {fileID: 0}
-    onSelect:
+    onClick:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3376877350127197085}
@@ -3995,7 +3995,7 @@ MonoBehaviour:
   menuOptions:
   - menuText: {fileID: 3376877349313734276}
     slider: {fileID: 0}
-    onSelect:
+    onClick:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 3376877350127197085}

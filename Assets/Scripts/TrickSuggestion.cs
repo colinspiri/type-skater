@@ -34,26 +34,15 @@ public class TrickSuggestion : MonoBehaviour
 
         // add callbacks
         TrickManager.Instance.onCompleteWord += CountWord;
-        Player.Instance.onStateChange += state => {
-            suggestionText.text = "";
-            if(suggestionCoroutine != null) StopCoroutine(suggestionCoroutine);
-            suggestionCoroutine = StartCoroutine(SuggestTrick(state));
-        };
+        Player.Instance.onStateChange += SuggestTrick;
     }
 
-    private IEnumerator SuggestTrick(Player.State state) {
+    private void SuggestTrick(Player.State state) {
         if (state != Player.State.Midair && state != Player.State.OnRail) {
-            yield break;
+            suggestionText.text = "";
+            return;
         }
-        
-        // wait some time
-        yield return new WaitForSeconds(suggestionWaitTime);
-        
-        // wait until done typing to suggest trick
-        if (TrickManager.Instance.IsCurrentlyTyping()) {
-            yield break;
-        }
-        
+
         // get a list of the least used words
         int minValue = Int32.MaxValue;
         List<string> leastUsedWords = new List<string>();

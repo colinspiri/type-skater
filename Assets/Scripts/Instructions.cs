@@ -41,10 +41,16 @@ public class Instructions : MonoBehaviour {
 
         // queue starting instructions
         string sceneName = SceneManager.GetActiveScene().name;
+        bool clearPlayerPrefs = sceneName == "Level0";
         for (var i = 0; i < allInstructions.Count; i++)
         {
             var instruction = allInstructions[i];
-            bool alreadyCompleted = PlayerPrefs.GetInt("Instruction" + instruction.instructionName, 0) == 1;
+            string playerPrefsKey = "Instruction" + instruction.instructionName;
+            // clear player prefs if on level 0
+            if(clearPlayerPrefs) PlayerPrefs.DeleteKey(playerPrefsKey);
+
+            // decide whether or not to queue
+            bool alreadyCompleted = PlayerPrefs.GetInt(playerPrefsKey, 0) == 1;
             bool queueOnThisScene = (instruction.queueOnLevel0 && sceneName == "Level0") ||
                                     (instruction.queueOnLevel1 && sceneName == "Level1") ||
                                     (instruction.queueOnLevel2 && sceneName == "Level2");

@@ -5,6 +5,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class TypingMenu : MonoBehaviour {
@@ -28,7 +29,7 @@ public class TypingMenu : MonoBehaviour {
         // numbers to directly select the option
         for (int i = 0; i < menuOptions.Count; i++) {
             if (Input.GetKeyDown("" + i)) {
-                menuOptions[i].onSelect?.Invoke();
+                menuOptions[i].onClick?.Invoke();
             }
         }
         // arrow keys to navigate between options
@@ -62,7 +63,7 @@ public class TypingMenu : MonoBehaviour {
             }
             // select current option
             if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.RightArrow)) {
-                menuOptions[currentOption].onSelect?.Invoke();
+                menuOptions[currentOption].onClick?.Invoke();
                 return;
             }
         }
@@ -74,7 +75,6 @@ public class TypingMenu : MonoBehaviour {
         int typedOption = -1;
         for (int i = 0; i < menuOptions.Count; i++) {
             MenuOption option = menuOptions[i];
-            // if (option.slider != null) continue; // skip sliders
             // if the current input matches a word
             if (option.ContinueText(c)) {
                 SoundManager.Instance.PlayTypingSound();
@@ -83,6 +83,9 @@ public class TypingMenu : MonoBehaviour {
                 }
                 else if(option.GetTyped().Length > menuOptions[typedOption].GetTyped().Length) {
                     menuOptions[typedOption].Clear();
+                    typedOption = i;
+                }
+                else if(option.GetTyped().Length == menuOptions[typedOption].GetTyped().Length && option.GetTotalLength() < menuOptions[typedOption].GetTotalLength()) {
                     typedOption = i;
                 }
             }
@@ -116,7 +119,7 @@ public class MenuOption {
     public TextMeshProUGUI menuText;
     public Slider slider;
     
-    public UnityEvent onSelect;
+    [FormerlySerializedAs("onSelect")] public UnityEvent onClick;
     
     private TextMeshProUGUI highlightedText;
 
@@ -127,7 +130,7 @@ public class MenuOption {
     public void Initialize() {
         text = menuText.text;
         highlightedText = menuText.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        onSelect.AddListener(Clear);
+        onClick.AddListener(Clear);
     }
     
     public bool ContinueText(char c)
@@ -143,7 +146,7 @@ public class MenuOption {
             if (curChar >= text.Length)
             {
                 Clear();
-                onSelect?.Invoke();
+                onClick?.Invoke();
             }
             return true;
         }
@@ -169,5 +172,9 @@ public class MenuOption {
     public string GetTyped()
     {
         return hasTyped;
+    }
+
+    public int GetTotalLength() {
+        return text.Length;
     }
 }

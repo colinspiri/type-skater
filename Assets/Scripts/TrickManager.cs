@@ -82,6 +82,9 @@ public class TrickManager : MonoBehaviour {
                     newCurrentWord.Clear();
                     newCurrentWord = w;
                 }
+                else if(w.GetTyped().Length == newCurrentWord.GetTyped().Length && w.GetTotalLength() < newCurrentWord.GetTotalLength()) {
+                    newCurrentWord = w;
+                }
 
                 // if user typed the whole word
                 if (w.GetTyped().Equals(w.text)) {
@@ -211,5 +214,9 @@ public class Word
     public string GetTyped()
     {
         return hasTyped;
+    }
+    
+    public int GetTotalLength() {
+        return text.Length;
     }
 }
