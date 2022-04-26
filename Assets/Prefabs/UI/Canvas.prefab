@@ -594,7 +594,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 135.1, y: 40}
+  m_AnchoredPosition: {x: 29, y: -12}
   m_SizeDelta: {x: 336.0393, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4866075379246405836
@@ -1175,10 +1175,10 @@ RectTransform:
   m_Father: {fileID: 778772984167664515}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 124, y: 0}
-  m_SizeDelta: {x: 191, y: 50}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.0000076293945, y: 4.5110937e-10}
+  m_SizeDelta: {x: 340.96, y: 66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8331060085098777028
 CanvasRenderer:
@@ -1208,7 +1208,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: instruction here
+  m_text: instructions go here
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5fc21c1703c7f4f118488b9f551a416f, type: 2}
   m_sharedMaterial: {fileID: 91488236501625513, guid: 5fc21c1703c7f4f118488b9f551a416f, type: 2}
@@ -1217,8 +1217,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280075491
-  m_fontColor: {r: 0.8901961, g: 0.76862746, b: 0.10980392, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1235,14 +1235,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
-  m_fontSizeBase: 25
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1251,7 +1251,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -1309,10 +1309,10 @@ RectTransform:
   m_Father: {fileID: 1475067489247883454}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 95.60736, y: 49}
-  m_SizeDelta: {x: 191.21472, y: 100}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -189.5, y: 36}
+  m_SizeDelta: {x: 103.2218, y: 66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4007351263971513383
 MonoBehaviour:
@@ -1328,6 +1328,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   instructionText: {fileID: 2124713896668606207}
   timeToFadeAway: 2
+  timeoutTime: 50
+  allInstructions:
+  - instructionName: push
+    queueOnLevel0: 1
+    queueOnLevel1: 1
+    queueOnLevel2: 1
+    instructionText: type <color=#E3C41C>push</color> to gain speed
+  - instructionName: ollie
+    queueOnLevel0: 1
+    queueOnLevel1: 1
+    queueOnLevel2: 1
+    instructionText: type <color=#E3C41C>ollie</color> to get air
+  - instructionName: trick
+    queueOnLevel0: 1
+    queueOnLevel1: 1
+    queueOnLevel2: 1
+    instructionText: do a trick in midair
+  - instructionName: multiple
+    queueOnLevel0: 1
+    queueOnLevel1: 1
+    queueOnLevel2: 1
+    instructionText: do multiple tricks to get a multiplier
+  - instructionName: grab
+    queueOnLevel0: 1
+    queueOnLevel1: 1
+    queueOnLevel2: 1
+    instructionText: type <color=#E3C41C>grab</color> for a boost
+  - instructionName: drop
+    queueOnLevel0: 1
+    queueOnLevel1: 1
+    queueOnLevel2: 1
+    instructionText: type <color=#E3C41C>drop</color> to land sooner
+  - instructionName: ramp_launch
+    queueOnLevel0: 0
+    queueOnLevel1: 1
+    queueOnLevel2: 1
+    instructionText: launch off a ramp
+  - instructionName: ramp_land
+    queueOnLevel0: 0
+    queueOnLevel1: 1
+    queueOnLevel2: 1
+    instructionText: land on a ramp to keep your multiplier
+  - instructionName: rail_land
+    queueOnLevel0: 0
+    queueOnLevel1: 0
+    queueOnLevel2: 1
+    instructionText: land on a rail
+  - instructionName: rail_trick
+    queueOnLevel0: 0
+    queueOnLevel1: 0
+    queueOnLevel2: 1
+    instructionText: do a trick on a rail
+  - instructionName: rail_ollie
+    queueOnLevel0: 0
+    queueOnLevel1: 0
+    queueOnLevel2: 1
+    instructionText: ollie off a rail
 --- !u!1 &5086094303030413432
 GameObject:
   m_ObjectHideFlags: 0
@@ -1821,8 +1878,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4280075491
-  m_fontColor: {r: 0.8901961, g: 0.76862746, b: 0.10980392, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

@@ -11,16 +11,18 @@ public class Instructions : MonoBehaviour {
     // public variables
     public TextMeshProUGUI instructionText;
     public float timeToFadeAway;
+    public float timeoutTime;
+    public List<Instruction> allInstructions = new List<Instruction>();
 
     // private state
-    private string currentInstruction;
-    private List<KeyValuePair<string, string>> queuedInstructions = new List<KeyValuePair<string, string>>();
-    private enum InstructionState {
+    private Instruction currentInstruction;
+    private List<Instruction> queuedInstructions = new List<Instruction>();
+    private enum DisplayState {
         Active,
         FadingAway,
         None,
     }
-    private InstructionState state = InstructionState.None;
+    private DisplayState state = DisplayState.None;
     private float fadeTimer;
     private float activeTimer;
 
@@ -33,33 +35,42 @@ public class Instructions : MonoBehaviour {
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         // set text blank
         instructionText.text = "";
-        
-        // add starting instructions
-        if (SceneManager.GetActiveScene().name == "Level0") {
-            queuedInstructions.Add(new KeyValuePair<string, string>("push", "type <color=#FFFFFF>push</color> to gain speed"));
-            queuedInstructions.Add(new KeyValuePair<string, string>("ollie", "type <color=#FFFFFF>ollie</color> to get air"));
-            queuedInstructions.Add(new KeyValuePair<string, string>("trick", "do a trick in midair"));
 
-            // set finish conditions
-            TrickManager.Instance.onCompleteWord += word => {
-                if(word.text == "push") FinishInstruction("push");
-                else if(word.text == "ollie") FinishInstruction("ollie");
-                else if(word.trickScore > 0) FinishInstruction("trick");
-            };
+        // queue starting instructions
+        string sceneName = SceneManager.GetActiveScene().name;
+        for (var i = 0; i < allInstructions.Count; i++)
+        {
+            var instruction = allInstructions[i];
+            bool alreadyCompleted = PlayerPrefs.GetInt("Instruction" + instruction.instructionName, 0) == 1;
+            bool queueOnThisScene = (instruction.queueOnLevel0 && sceneName == "Level0") ||
+                                    (instruction.queueOnLevel1 && sceneName == "Level1") ||
+                                    (instruction.queueOnLevel2 && sceneName == "Level2");
+            if (!alreadyCompleted && queueOnThisScene) {
+                queuedInstructions.Add(instruction);
+                allInstructions.RemoveAt(i);
+                i--;
+            }
         }
-        
-        // activate queue
-        if(queuedInstructions.Count > 0) ShowNextInstruction();
+
+        // set finish conditions
+        TrickManager.Instance.onCompleteWord += word => {
+            if(word.text == "push") FinishInstruction("push");
+            if(word.text == "ollie") FinishInstruction("ollie");
+            if(word.trickScore > 0) FinishInstruction("trick");
+            if(word.trickScore > 0 && Score.Instance.GetUnsecuredScore() > 0) FinishInstruction("multiple");
+            if(word.text == "grab") FinishInstruction("grab");
+            if(word.text == "drop") FinishInstruction("drop");
+            if(word.availableInStates.Contains(Player.State.OnRail)) FinishInstruction("rail_trick");
+        };
     }
 
     // Update is called once per frame
     void Update()
-    {
-        if (state == InstructionState.FadingAway) {
+    {   
+        if (state == DisplayState.FadingAway) {
             // fade away
             fadeTimer -= Time.unscaledDeltaTime;
             byte a = (byte) (255 * (fadeTimer / timeToFadeAway));
@@ -68,42 +79,74 @@ public class Instructions : MonoBehaviour {
             // if done fading, remove instruction
             if (fadeTimer <= 0) {
                 RemoveCurrentInstruction();
-                state = InstructionState.None;
+                state = DisplayState.None;
             }
         }
-        else if (state == InstructionState.None) {
+        else if (state == DisplayState.None) {
             if (queuedInstructions.Count > 0) {
                 ShowNextInstruction();
+            }
+        }
+        else if(state == DisplayState.Active) {
+            activeTimer += Time.unscaledDeltaTime;
+            if(activeTimer >= timeoutTime) {
+                FinishInstruction(currentInstruction.instructionName);
             }
         }
     }
 
     private void RemoveCurrentInstruction() {
         instructionText.enabled = false;
-        currentInstruction = "";
+        currentInstruction = null;
     }
 
     private void ShowNextInstruction() {
-        // keep track of current instruction name
-        currentInstruction = queuedInstructions[0].Key;
+        // pop from queue
+        currentInstruction = queuedInstructions[0];
+        queuedInstructions.RemoveAt(0);
 
         // set instruction text
         instructionText.enabled = true;
-        instructionText.text = queuedInstructions[0].Value;
+        instructionText.text = currentInstruction.instructionText;
         instructionText.faceColor = new Color32(instructionText.faceColor.r, instructionText.faceColor.g, instructionText.faceColor.b, 255);
         instructionText.fontStyle = FontStyles.Normal;
-        
-        // remove from queue
-        queuedInstructions.RemoveAt(0);
 
         // set state
-        state = InstructionState.Active;
+        state = DisplayState.Active;
         fadeTimer = timeToFadeAway;
+        activeTimer = 0;
     }
 
-    public void FinishInstruction(string instructionName) {
-        if (currentInstruction == instructionName) {
-            state = InstructionState.FadingAway;
+    public void QueueInstruction(string instructionName)
+    {
+        for (var i = 0; i < allInstructions.Count; i++)
+        {
+            var instruction = allInstructions[i];
+            if (instruction.instructionName == instructionName)
+            {
+                queuedInstructions.Add(instruction);
+                allInstructions.RemoveAt(i);
+                return;
+            }
         }
     }
+
+    public void FinishInstruction(string instructionName)
+    {
+        if (currentInstruction == null) return;
+        if (currentInstruction.instructionName == instructionName) {
+            state = DisplayState.FadingAway;
+            PlayerPrefs.SetInt("Instruction" + instructionName, 1);
+        }
+    }
+}
+
+[Serializable]
+public class Instruction
+{
+    public string instructionName;
+    public bool queueOnLevel0;
+    public bool queueOnLevel1;
+    public bool queueOnLevel2;
+    [TextArea] public string instructionText;
 }

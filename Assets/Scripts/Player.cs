@@ -105,7 +105,6 @@ public class Player : MonoBehaviour
         // safe
         if (state == State.OnGround || state == State.OnRamp) SetSafe(true);
 
-
         // set current speed state
         if (state == State.OnRail) {
             SetSpeed(railSpeed);
@@ -196,6 +195,7 @@ public class Player : MonoBehaviour
     {
         // only do callback if starting new jump
         bool newJump = state == State.OnGround || (state == State.OnRamp && !Score.Instance.scoreIsUnsecured);
+        if(state == State.OnRail) Instructions.Instance.FinishInstruction("rail_ollie");
         
         // use jump force based on speed
         float jumpForce = (jumpType != Speed.Stopped ? jumpType : currentSpeed) switch {
@@ -289,6 +289,7 @@ public class Player : MonoBehaviour
                 Skateboard.Instance.SetAnimation(Skateboard.Animation.None);
 
                 ChangeState(State.OnRail);
+                Instructions.Instance.FinishInstruction("rail_land");
             }
             else {
                 ChangeState(State.Midair);
@@ -307,6 +308,7 @@ public class Player : MonoBehaviour
             // safe landing from midair
             else if (state == State.Midair && safe) {
                 ChangeState(State.OnRamp);
+                Instructions.Instance.FinishInstruction("ramp_land");
             }
             // unsafe landing from midair, bounce off
             else if (state == State.Midair && !safe) {
@@ -333,6 +335,7 @@ public class Player : MonoBehaviour
         // end of ramp
         if (other.CompareTag("RampEnd") && state == State.OnRamp) {
             Jump(rampJump);
+            Instructions.Instance.FinishInstruction("ramp_launch");
         }
     }
 }
