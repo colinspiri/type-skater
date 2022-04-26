@@ -18,19 +18,19 @@ public class TrickManager : MonoBehaviour {
     public TextMeshProUGUI typingText;
     public TextMeshProUGUI predictiveText;
     public GameObject completedTextPrefab;
-    public List<Trick> allWords;
+    public List<Word> allWords;
     
     // state
-    private List<Trick> availableWords = new List<Trick>();
+    private List<Word> availableWords = new List<Word>();
     private float timeTyping;
     private int wordsTyped;
-    private Trick currentTrick;
+    private Word currentWord;
     
     // UI
     public GameObject errorTextPrefab;
     
     // callbacks
-    public delegate void OnCompleteWord(Trick trick);
+    public delegate void OnCompleteWord(Word word);
     public OnCompleteWord onCompleteWord;
 
     private void Awake() {
@@ -62,20 +62,20 @@ public class TrickManager : MonoBehaviour {
         }
         
         char c = input[0];
-        Trick newCurrentTrick = null;
+        Word newCurrentWord = null;
         for (var i = 0; i < availableWords.Count; i++) {
-            Trick w = availableWords[i];
+            Word w = availableWords[i];
             // if the current input matches a word
             if (w.ContinueText(c)) {
                 // play typing sound
                 SoundManager.Instance.PlayTypingSound();
                 // check if this is the current word the player is typing
-                if (newCurrentTrick == null) {
-                    newCurrentTrick = w;
+                if (newCurrentWord == null) {
+                    newCurrentWord = w;
                 }
-                else if (w.GetTyped().Length > newCurrentTrick.GetTyped().Length) {
-                    newCurrentTrick.Clear();
-                    newCurrentTrick = w;
+                else if (w.GetTyped().Length > newCurrentWord.GetTyped().Length) {
+                    newCurrentWord.Clear();
+                    newCurrentWord = w;
                 }
 
                 // if user typed the whole word
@@ -107,7 +107,7 @@ public class TrickManager : MonoBehaviour {
                     completedText.text = w.text;
                     // clear current typing
                     ClearCurrentTyping();
-                    newCurrentTrick = null;
+                    newCurrentWord = null;
                     // count words
                     wordsTyped++;
                     // call callback
@@ -118,21 +118,21 @@ public class TrickManager : MonoBehaviour {
         }
 
         // check if player made a mistake
-        if (currentTrick != null && newCurrentTrick == null && currentTrick.text.Length >= 2) {
+        if (currentWord != null && newCurrentWord == null && currentWord.text.Length >= 2) {
             var errorText = Instantiate(errorTextPrefab, typingText.transform, false).GetComponent<TextMeshProUGUI>();
             string wrongCharacter = input.Trim();
             if (wrongCharacter.Length == 0) wrongCharacter = "_";
             errorText.text = typingText.text + "<color=#EC7357>" + wrongCharacter + "</color>";
         }
         // update typing text
-        currentTrick = newCurrentTrick;
-        typingText.text = currentTrick == null ? "" : currentTrick.GetTyped();
-        predictiveText.text = currentTrick == null ? "" : currentTrick.text;
+        currentWord = newCurrentWord;
+        typingText.text = currentWord == null ? "" : currentWord.GetTyped();
+        predictiveText.text = currentWord == null ? "" : currentWord.text;
     }
 
     private void ClearCurrentTyping() {
-        currentTrick?.Clear();
-        currentTrick = null;
+        currentWord?.Clear();
+        currentWord = null;
         typingText.text = "";
         predictiveText.text = "";
     }
@@ -150,7 +150,7 @@ public class TrickManager : MonoBehaviour {
         }
     }
 
-    public List<Trick> GetAvailableWords() {
+    public List<Word> GetAvailableWords() {
         return availableWords;
     }
 
@@ -160,7 +160,7 @@ public class TrickManager : MonoBehaviour {
 }
 
 [Serializable]
-public class Trick
+public class Word
 {
     public string text;
     public int trickScore;
@@ -169,7 +169,7 @@ public class Trick
     private string hasTyped;
     private int curChar;
 
-    public Trick(string t)
+    public Word(string t)
     {
         text = t;
         hasTyped = "";
