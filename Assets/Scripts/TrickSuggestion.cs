@@ -34,14 +34,16 @@ public class TrickSuggestion : MonoBehaviour
 
         // add callbacks
         TrickManager.Instance.onCompleteWord += CountWord;
+        TrickManager.Instance.onTypingError.AddListener(() => SuggestTrick(Player.Instance.state));
         Player.Instance.onStateChange += SuggestTrick;
     }
 
     private void SuggestTrick(Player.State state) {
-        if (state != Player.State.Midair && state != Player.State.OnRail) {
+        if (state == Player.State.OnGround || state == Player.State.OnRail) {
             suggestionText.text = "";
             return;
         }
+        if (suggestionText.text != "") return;
 
         // get a list of the least used words
         int minValue = Int32.MaxValue;

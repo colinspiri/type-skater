@@ -34,6 +34,7 @@ public class TrickManager : MonoBehaviour {
     public OnCompleteWord onCompleteWord;
     public UnityEvent onTyping;
     public UnityEvent onStopTyping;
+    public UnityEvent onTypingError;
 
     private void Awake() {
         Instance = this;
@@ -132,6 +133,7 @@ public class TrickManager : MonoBehaviour {
             string wrongCharacter = input.Trim();
             if (wrongCharacter.Length == 0) wrongCharacter = "_";
             errorText.text = typingText.text + "<color=#EC7357>" + wrongCharacter + "</color>";
+            onTypingError?.Invoke();
         }
         // update typing text
         currentWord = newCurrentWord;
