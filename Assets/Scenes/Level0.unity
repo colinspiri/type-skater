@@ -485,7 +485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1239525711}
-  parallaxEffect: 0
+  parallaxEffect: 0.1
 --- !u!212 &527606857
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -586,7 +586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1239525711}
-  parallaxEffect: 0.1
+  parallaxEffect: 0.5
 --- !u!212 &554273919
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1262,7 +1262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1239525711}
-  parallaxEffect: 0
+  parallaxEffect: 0.8
 --- !u!212 &1324638410
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1524,11 +1524,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 190654776045194320, guid: 40fdb9c8aa7ee4b158226da54fe3aa49, type: 3}
   m_PrefabInstance: {fileID: 1366926172}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1391630178 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8784241559984216461, guid: a03407549f4af4d1f8d0f48d3f56be46, type: 3}
-  m_PrefabInstance: {fileID: 1239525709}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1393458201
 GameObject:
   m_ObjectHideFlags: 0
@@ -1621,7 +1616,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1506285710}
   m_Layer: 0
-  m_Name: background (1)
+  m_Name: Buildings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1635,14 +1630,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1506285709}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3, y: 2.5, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 527606855}
   - {fileID: 554273917}
   - {fileID: 1324638408}
-  m_Father: {fileID: 1391630178}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1560152024
 GameObject:
@@ -1882,7 +1877,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7184748623170363403, guid: e7abf9b37c3da437b92272f71d9d1dd5, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7184748623170363403, guid: e7abf9b37c3da437b92272f71d9d1dd5, type: 3}
       propertyPath: m_LocalPosition.x

@@ -637,7 +637,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1978807672}
-  parallaxEffect: 0
+  parallaxEffect: 0.8
 --- !u!212 &463201418
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -738,7 +738,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1978807672}
-  parallaxEffect: 0
+  parallaxEffect: 0.1
 --- !u!212 &519787070
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1016,7 +1016,7 @@ Transform:
   - {fileID: 1862693507}
   - {fileID: 271973980}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &982321759
 GameObject:
@@ -1562,7 +1562,7 @@ Transform:
   m_Children:
   - {fileID: 2043342650}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1407107623
 PrefabInstance:
@@ -1774,11 +1774,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a03407549f4af4d1f8d0f48d3f56be46, type: 3}
---- !u!4 &1417387214 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8784241559984216461, guid: a03407549f4af4d1f8d0f48d3f56be46, type: 3}
-  m_PrefabInstance: {fileID: 1417387213}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1428658099
 GameObject:
   m_ObjectHideFlags: 0
@@ -1789,7 +1784,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1428658100}
   m_Layer: 0
-  m_Name: background (1)
+  m_Name: Buildings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1803,14 +1798,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428658099}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3, y: 2.5, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 519787068}
   - {fileID: 1836554592}
   - {fileID: 463201416}
-  m_Father: {fileID: 1417387214}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1460477579 stripped
 MonoBehaviour:
@@ -1987,7 +1982,7 @@ Transform:
   m_LocalScale: {x: 1.4715756, y: 22.375824, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1517407865
 BoxCollider2D:
@@ -2548,7 +2543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 1978807672}
-  parallaxEffect: 0.1
+  parallaxEffect: 0.5
 --- !u!212 &1836554594
 SpriteRenderer:
   m_ObjectHideFlags: 0
