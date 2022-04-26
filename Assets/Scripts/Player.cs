@@ -92,21 +92,19 @@ public class Player : MonoBehaviour
         onJump += () => transform.eulerAngles = new Vector3(0, 0, unsafeRotationZ);
     }
 
+    private void Start() {
+        TrickManager.Instance.onTyping.AddListener(() => { 
+            if(state == State.Midair || state == State.OnRail) SetSafe(false);
+        });
+        TrickManager.Instance.onStopTyping.AddListener(() => {
+            SetSafe(true);
+        });
+    }
+
     private void Update() {
         // safe
-        bool shouldBeSafe = !TrickManager.Instance.IsCurrentlyTyping();
-        if (state == State.OnGround || state == State.OnRamp) safe = true;
-        else if (safe) {
-            if (!shouldBeSafe) {
-                safe = false;
-                SoundManager.Instance.PlaySafeSound();
-            }
-        }
-        else if(shouldBeSafe) {
-            safe = true;
-            SoundManager.Instance.PlayUnsafeSound();
-        }
-        animator.SetBool("safe", state == State.Midair ? safe : true);
+        if (state == State.OnGround || state == State.OnRamp) SetSafe(true);
+
 
         // set current speed state
         if (state == State.OnRail) {
@@ -147,6 +145,19 @@ public class Player : MonoBehaviour
         // speed text
         // Debug.Log("current speed = " + currentSpeed + " " + Mathf.RoundToInt(rb.velocity.x));
         speedText.text = currentSpeed + " ";
+    }
+
+    private void SetSafe(bool value) {
+        if (safe == value) return;
+
+        safe = value;
+        animator.SetBool("safe", state == State.Midair ? safe : true);
+        if (safe) {
+            SoundManager.Instance.PlaySafeSound();
+        }
+        else {
+            SoundManager.Instance.PlayUnsafeSound();
+        }
     }
 
     private void ChangeState(State newState) {

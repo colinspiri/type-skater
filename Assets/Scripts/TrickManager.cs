@@ -32,6 +32,8 @@ public class TrickManager : MonoBehaviour {
     // callbacks
     public delegate void OnCompleteWord(Word word);
     public OnCompleteWord onCompleteWord;
+    public UnityEvent onTyping;
+    public UnityEvent onStopTyping;
 
     private void Awake() {
         Instance = this;
@@ -59,8 +61,11 @@ public class TrickManager : MonoBehaviour {
         if (input.Equals("") || Time.timeScale == 0.0f) return;
         if (Input.GetKeyDown(KeyCode.Backspace)) {
             ClearCurrentTyping();
+            onStopTyping?.Invoke();
+            return;
         }
         
+        onTyping?.Invoke();
         char c = input[0];
         Word newCurrentWord = null;
         for (var i = 0; i < availableWords.Count; i++) {
@@ -80,6 +85,7 @@ public class TrickManager : MonoBehaviour {
 
                 // if user typed the whole word
                 if (w.GetTyped().Equals(w.text)) {
+                    onStopTyping?.Invoke();
                     // push
                     if (w.text.Equals("push")) Player.Instance.Push();
                     // ollie

@@ -2,16 +2,6 @@
 
 TODO FOR NEXT WEEK
 
-TYPING MANAGER
-list of words 
-watches keyboard input 
-get current text
-get current word
-
-TRICK MANAGER
-
-MENU
-
 
 RANDOM IDEAS
 "tuck" to bend down & touch your board (trick in the air but can tuck under obstacles on the ground
