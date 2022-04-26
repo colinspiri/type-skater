@@ -91,6 +91,15 @@ public class TrickManager : MonoBehaviour {
                 // if user typed the whole word
                 if (w.GetTyped().Equals(w.text)) {
                     onStopTyping?.Invoke();
+                    // animate completed text
+                    TextMeshProUGUI completedText = Instantiate(completedTextPrefab, typingText.transform.parent, false)
+                        .GetComponent<TextMeshProUGUI>();
+                    completedText.text = w.text;
+                    // clear current typing
+                    ClearCurrentTyping();
+                    newCurrentWord = null;
+                    // count words
+                    wordsTyped++;
                     // push
                     if (w.text.Equals("push")) Player.Instance.Push();
                     // ollie
@@ -111,16 +120,6 @@ public class TrickManager : MonoBehaviour {
                         // do player animation
                         playerAnimator.SetTrigger("trick");
                     }
-
-                    // animate completed text
-                    TextMeshProUGUI completedText = Instantiate(completedTextPrefab, typingText.transform.parent, false)
-                        .GetComponent<TextMeshProUGUI>();
-                    completedText.text = w.text;
-                    // clear current typing
-                    ClearCurrentTyping();
-                    newCurrentWord = null;
-                    // count words
-                    wordsTyped++;
                     // call callback
                     onCompleteWord?.Invoke(w);
                     break;
@@ -139,7 +138,7 @@ public class TrickManager : MonoBehaviour {
         // update typing text
         currentWord = newCurrentWord;
         typingText.text = currentWord == null ? "" : currentWord.GetTyped();
-        predictiveText.text = currentWord == null ? "" : currentWord.text;
+        if(currentWord != null) predictiveText.text = currentWord.text;
     }
 
     private void ClearCurrentTyping() {

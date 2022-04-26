@@ -5,22 +5,13 @@ using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
 public class TrickSuggestion : MonoBehaviour
 {
-    // constants 
-    private float suggestionWaitTime = 0.0f;
-    
     // private state
     private Dictionary<Word, int> trickFrequency;
-    private Coroutine suggestionCoroutine;
     
     // component stuff
     public TextMeshProUGUI suggestionText;
-
-    private void Awake() {
-        suggestionText = GetComponent<TextMeshProUGUI>();
-    }
 
     // Start is called before the first frame update
     void Start() {
@@ -40,7 +31,6 @@ public class TrickSuggestion : MonoBehaviour
 
     private void SuggestTrick(Player.State state) {
         if (state == Player.State.OnGround || state == Player.State.OnRamp) {
-            suggestionText.text = "";
             return;
         }
 
