@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraMove : MonoBehaviour {
-    private GameObject objectToFollow;
+    public GameObject objectToFollow;
     private float followSpeed = 5f;
 
     private Vector3 offset;
@@ -18,14 +18,15 @@ public class CameraMove : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        objectToFollow = Player.Instance.gameObject;
         offset = transform.position - objectToFollow.transform.position;
         levelStartX = transform.position.x;
 
-        Score.Instance.onGameOver += () => {
-            levelEndX = Player.Instance.transform.position.x;
-            panningOverLevel = true;
-        };
+        if (Score.Instance != null) {
+            Score.Instance.onGameOver += () => {
+                levelEndX = Player.Instance.transform.position.x;
+                panningOverLevel = true;
+            };
+        }
     }
 
     void FixedUpdate() {

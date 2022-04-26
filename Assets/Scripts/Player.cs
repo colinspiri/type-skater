@@ -37,20 +37,10 @@ public class Player : MonoBehaviour
     public float railTimeScale;
 
     // private state
-    public enum State {
-        Midair,
-        OnGround,
-        OnRail,
-        OnRamp,
-    }
+    public enum State { Midair, OnGround, OnRail, OnRamp, }
     [HideInInspector] public State state = State.OnGround;
-    public enum Speed {
-        Stopped,
-        Slow,
-        Medium,
-        Fast,
-    }
-    [HideInInspector] public Speed currentSpeed = Speed.Stopped;
+    public enum Speed { Stopped, Slow, Medium, Fast, }
+    public Speed currentSpeed = Speed.Stopped;
     
     private bool safe;
     
@@ -69,15 +59,11 @@ public class Player : MonoBehaviour
     
     public delegate void OnStateChange(State newState);
     public OnStateChange onStateChange;
-    
-    // particle effects
-    // public GameObject pushParticles;
 
     // component stuff
     private Rigidbody2D rb;
     private Animator animator;
     [Header("Component Constants")]
-    public TextMeshProUGUI speedText;
     public TrailRenderer trail;
     public Color slowTrailColor;
     public Color mediumTrailColor;
@@ -134,10 +120,6 @@ public class Player : MonoBehaviour
             trail.startColor = fastTrailColor;
             trail.endColor = fastTrailColor;
         }
-
-        // speed text
-        // Debug.Log("current speed = " + currentSpeed + " " + Mathf.RoundToInt(rb.velocity.x));
-        speedText.text = currentSpeed + " ";
     }
 
     private void SetSafe(bool value) {
