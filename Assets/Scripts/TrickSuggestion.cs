@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 public class TrickSuggestion : MonoBehaviour
 {
     // constants 
-    private float suggestionWaitTime = 0.5f;
+    private float suggestionWaitTime = 0.0f;
     
     // private state
     private Dictionary<Word, int> trickFrequency;
