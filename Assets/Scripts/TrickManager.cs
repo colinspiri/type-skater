@@ -167,6 +167,7 @@ public class TrickManager : MonoBehaviour {
     }
 
     public float GetWordsPerMinute() {
+        if (timeTyping <= 0) return 0;
         return 60f * wordsTyped / timeTyping;
     }
 }

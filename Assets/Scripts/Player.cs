@@ -78,6 +78,12 @@ public class Player : MonoBehaviour
         onJump += () => transform.eulerAngles = new Vector3(0, 0, unsafeRotationZ);
     }
 
+    private void Start() {
+        Score.Instance.onGameOver += () => {
+            currentSpeed = Speed.Stopped;
+        };
+    }
+
     private void Update() {
         // safe
         if (state == State.OnGround || state == State.OnRamp) SetSafe(true);
