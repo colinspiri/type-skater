@@ -91,7 +91,7 @@ public class TutorialManager : MonoBehaviour {
         Player.Instance.onWipeOut += () => {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         };
-        TypingManager.Instance.onCompleteWord += word => {
+        TrickManager.Instance.onCompleteWord += word => {
             if (word.Equals("push")) {
                 pushText.color = greyedOutColor;
                 ollieCanvas.SetActive(true);

@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
     }
     [HideInInspector] public Speed currentSpeed = Speed.Stopped;
     
-    [HideInInspector] public bool safe;
+    private bool safe;
     
     // callbacks
     public delegate void OnJump();
@@ -94,7 +94,7 @@ public class Player : MonoBehaviour
 
     private void Update() {
         // safe
-        bool shouldBeSafe = !TypingManager.Instance.IsCurrentlyTyping();
+        bool shouldBeSafe = !TrickManager.Instance.IsCurrentlyTyping();
         if (state == State.OnGround || state == State.OnRamp) safe = true;
         else if (safe) {
             if (!shouldBeSafe) {
@@ -128,7 +128,7 @@ public class Player : MonoBehaviour
                 currentSpeed = Speed.Slow;
                 if(speed < slowSpeed) rb.velocity = new Vector2(slowSpeed, rb.velocity.y);
             }
-            TypingManager.Instance.UpdateAvailableWords(state);
+            TrickManager.Instance.UpdateAvailableWords(state);
         }
         // trail color
         if (currentSpeed == Speed.Slow || currentSpeed == Speed.Stopped) {

@@ -72,7 +72,7 @@ public class Skateboard : MonoBehaviour
     {
         player = Player.Instance;
 
-        TypingManager.Instance.onCompleteWord += word => {
+        TrickManager.Instance.onCompleteWord += word => {
             if (word.Equals("kickflip"))
             {
                 SetAnimation(Animation.Kickflip);

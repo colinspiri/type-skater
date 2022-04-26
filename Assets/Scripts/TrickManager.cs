@@ -8,8 +8,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Timeline;
 using Random = UnityEngine.Random;
 
-public class TypingManager : MonoBehaviour {
-    public static TypingManager Instance;
+public class TrickManager : MonoBehaviour {
+    public static TrickManager Instance;
     
     // component stuff
     private Animator playerAnimator;

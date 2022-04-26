@@ -25,7 +25,7 @@ public class TrickList : MonoBehaviour
     private void Update() {
         trickListText.text = "";
         bool insertExtraLine = false;
-        foreach (Word w in TypingManager.Instance.GetAvailableWords()) {
+        foreach (Word w in TrickManager.Instance.GetAvailableWords()) {
             if (SceneManager.GetActiveScene().name == "Level0") {
                 if (w.text == "fakie" && !fakieEnabled) continue;
                 if (w.text == "grab" && !grabEnabled) continue;

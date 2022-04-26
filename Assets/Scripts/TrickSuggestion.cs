@@ -22,7 +22,7 @@ public class TrickSuggestion : MonoBehaviour
     void Start() {
         // TODO: load from PlayerPrefs
         trickFrequency = new Dictionary<Word, int>();
-        foreach (var word in TypingManager.Instance.allWords) {
+        foreach (var word in TrickManager.Instance.allWords) {
             if (word.text == "push" || word.text == "ollie" || word.text == "grab" || word.text == "drop") continue;
             if (word.trickScore > 0) trickFrequency[word] = 0;
         }
@@ -30,7 +30,7 @@ public class TrickSuggestion : MonoBehaviour
         suggestionText.text = "";
 
         // add callbacks
-        TypingManager.Instance.onCompleteWord += CountWord;
+        TrickManager.Instance.onCompleteWord += CountWord;
         Player.Instance.onStateChange += SuggestTrick;
     }
 

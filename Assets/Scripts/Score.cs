@@ -50,7 +50,7 @@ public class Score : MonoBehaviour {
     private void Start() {
         scoreText.text = score.ToString();
 
-        TypingManager.Instance.onCompleteWord += CountTrick;
+        TrickManager.Instance.onCompleteWord += CountTrick;
 
         Player.Instance.onJump += () => {
             // instantiate unsecured score
@@ -190,7 +190,7 @@ public class Score : MonoBehaviour {
         if (wipeouts != 1) wipedouttext += "s";
         gameOverText.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = wipedouttext;
         gameOverText.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text =
-            Mathf.RoundToInt(TypingManager.Instance.GetWordsPerMinute()) + " words/min";
+            Mathf.RoundToInt(TrickManager.Instance.GetWordsPerMinute()) + " words/min";
         // disable other objects
         Player.Instance.SetSpeed(Player.Speed.Slow);
         Player.Instance.currentSpeed = Player.Speed.Stopped;

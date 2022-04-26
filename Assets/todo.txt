@@ -1,54 +1,20 @@
-SFX 
-typing
-    complete word
-    mess up word
-menu switch option
-menu select option
+
 
 TODO FOR NEXT WEEK
 
+TYPING MANAGER
+list of words 
+watches keyboard input 
+get current text
+get current word
+
+TRICK MANAGER
+
 MENU
-"infinite" --> "timed"
-maybe "infinite" is literally just infinite until you wipe out or mess up
-options
-    enable mouse on menu
-    accessibility options
-make credits typeable with animations or something cute
-SFX on switching options
-
-randomize which tricks show up for each jump
-    dependent on jump height?
-    3 show up and keep getting replaced as u do tricks
-    style "drop" differently in the trick list 
-        different color or spaced differently to show that it does something special
-    
-ramp improvements
-    area near the end where u can ollie for a larger jump
-    if u ollie before that, you wipe out
-    
-LEVEL 2: rails that u can land on
-    can do tricks (special rail tricks), can ollie off, can also "grind"
-    rail blockers that make u wipe out
-    ollie off the rail without grinding causes a bug
-        player stays on the rail and doesn't properly jump off it
-
-game feel for unsafe/safe state
-    wobble animation
-    add sparks or something when ready to land
-
-More chill lo-fi royalty-free music
-
-TODO - LATER
-Fix Time.deltaTime to make it look smoother
 
 
 RANDOM IDEAS
-training mode where time stops between tricks so you can take a break and look at the tricklist and see which one you should do next
-maybe fakie and switch make things harder but they give u more points
-maybe some tricks give you a mini double jump
-    fakie and switch? the low-points ones?
 "tuck" to bend down & touch your board (trick in the air but can tuck under obstacles on the ground
-
 https://www.masterclass.com/articles/guide-to-skate-lingo#66-basic-skateboarding-terms
 
 COLORS

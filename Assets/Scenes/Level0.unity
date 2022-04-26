@@ -1323,7 +1323,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 190654776045194320, guid: 40fdb9c8aa7ee4b158226da54fe3aa49, type: 3}
       propertyPath: m_Name
-      value: Typing Manager
+      value: Trick Manager
       objectReference: {fileID: 0}
     - target: {fileID: 190654776045194326, guid: 40fdb9c8aa7ee4b158226da54fe3aa49, type: 3}
       propertyPath: m_RootOrder

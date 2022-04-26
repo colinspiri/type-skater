@@ -110,8 +110,8 @@ public class SoundManager : MonoBehaviour {
             };
         }
 
-        if (TypingManager.Instance != null) {
-            TypingManager.Instance.onCompleteWord += word => {
+        if (TrickManager.Instance != null) {
+            TrickManager.Instance.onCompleteWord += word => {
                 if (word.Equals("push")) {
                     push.Play();
                 }

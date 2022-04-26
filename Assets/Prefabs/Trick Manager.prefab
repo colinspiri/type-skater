@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 190654776045194326}
   - component: {fileID: 190654776045194327}
   m_Layer: 0
-  m_Name: Typing Manager
+  m_Name: Trick Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   typingText: {fileID: 0}
+  predictiveText: {fileID: 0}
   completedTextPrefab: {fileID: 2434471693609180520, guid: 82fc9180d8d6246ba888b3936a999fe5, type: 3}
   allWords:
   - text: push
@@ -133,6 +134,4 @@ MonoBehaviour:
   - text: backside 5-0
     trickScore: 7
     availableInStates: 02000000
-  completedTrickTextPrefab: {fileID: 3783369161292865245, guid: dd696d0494d1c429c82bc27fe1b69a54, type: 3}
-  completedTrickTextColor: {r: 0.5882353, g: 0.33333334, b: 1, a: 1}
   errorTextPrefab: {fileID: 7186551362841254048, guid: c857f5c6a8269459abc9be00a622fb97, type: 3}

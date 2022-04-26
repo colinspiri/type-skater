@@ -45,7 +45,7 @@ public class Instructions : MonoBehaviour {
             queuedInstructions.Add(new KeyValuePair<string, string>("trick", "do a trick in midair"));
 
             // set finish conditions
-            TypingManager.Instance.onCompleteWord += word => {
+            TrickManager.Instance.onCompleteWord += word => {
                 if(word.text == "push") FinishInstruction("push");
                 else if(word.text == "ollie") FinishInstruction("ollie");
                 else if(word.trickScore > 0) FinishInstruction("trick");
