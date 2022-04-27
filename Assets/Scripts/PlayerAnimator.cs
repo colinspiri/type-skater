@@ -13,6 +13,7 @@ public class PlayerAnimator : MonoBehaviour {
     
     // components
     private SpriteRenderer sprite;
+    public ParticleSystem trickParticles;
 
     private void Awake() {
         Instance = this;
@@ -35,5 +36,7 @@ public class PlayerAnimator : MonoBehaviour {
         Sequence sequence = DOTween.Sequence();
         sequence.Append(sprite.DOColor(flashColor, 0.1f));
         sequence.Append(sprite.DOColor(originalColor, 0.2f));
+
+        trickParticles.Play();
     }
 }
