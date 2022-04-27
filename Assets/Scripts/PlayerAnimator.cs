@@ -12,14 +12,13 @@ public class PlayerAnimator : MonoBehaviour {
     private Color originalColor;
     
     // components
-    private SpriteRenderer sprite;
+    public SpriteRenderer sprite;
     public ParticleSystem trickParticles;
     public ParticleSystem pushParticles;
+    public ParticleSystem grindParticles;
 
     private void Awake() {
         Instance = this;
-
-        sprite = GetComponent<SpriteRenderer>();
     }
 
     // Start is called before the first frame update
@@ -30,7 +29,12 @@ public class PlayerAnimator : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        
+        GrindParticles();
+    }
+
+    private void GrindParticles() {
+        if(Player.Instance.state == Player.State.OnRail) grindParticles.Play();
+        else if (grindParticles.isPlaying) grindParticles.Stop();
     }
 
     public void PushParticles() {

@@ -4910,7 +4910,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 1
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -9930,8 +9930,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashColor: {r: 1, g: 1, b: 1, a: 1}
+  sprite: {fileID: 7760741278451484485}
   trickParticles: {fileID: 3656069023193763041}
   pushParticles: {fileID: 4955309379855717801}
+  grindParticles: {fileID: 0}
 --- !u!1 &7760741279925662505
 GameObject:
   m_ObjectHideFlags: 0

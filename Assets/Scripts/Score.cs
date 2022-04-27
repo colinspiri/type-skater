@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,6 +18,10 @@ public class Score : MonoBehaviour {
     [HideInInspector] public int wipeouts;
     private List<string> staleTricks = new List<string>();
     public int maxStaleTricks;
+    
+    // score animation
+    public int minimumFontSize;
+    public int maximumFontSize;
     
     // unsecured score
     public bool scoreIsUnsecured;
@@ -99,6 +104,12 @@ public class Score : MonoBehaviour {
         scoreIsUnsecured = false;
         multiplier = 1;
         scoreText.text = score.ToString();
+        // animate score
+        scoreText.fontSize = Mathf.Lerp(minimumFontSize, maximumFontSize, score / 400f);
+        Color originalColor = scoreText.color;
+        scoreText.color = Color.white;
+        scoreText.DOColor(originalColor, 1f);
+
         // animate unsecured score
         if (unsecuredScoreAnimator != null) {
             unsecuredScoreAnimator.SetBool("secured", true);

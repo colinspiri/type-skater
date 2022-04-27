@@ -513,6 +513,11 @@ PrefabInstance:
       objectReference: {fileID: 1200098155}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc22a31f8e3c099479c5c66750466585, type: 3}
+--- !u!198 &144624308 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6030168974266017144, guid: fc22a31f8e3c099479c5c66750466585, type: 3}
+  m_PrefabInstance: {fileID: 144624307}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &222817226
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1753,6 +1758,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6223286847234520685, guid: 2169fa7af792f429cbfdb2146a9d9431, type: 3}
+      propertyPath: grindParticles
+      value: 
+      objectReference: {fileID: 144624308}
     - target: {fileID: 7760741278451484484, guid: 2169fa7af792f429cbfdb2146a9d9431, type: 3}
       propertyPath: m_RootOrder
       value: 3
