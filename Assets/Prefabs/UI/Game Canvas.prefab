@@ -1244,8 +1244,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4280075491
+  m_fontColor: {r: 0.8901961, g: 0.76862746, b: 0.10980392, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1360,12 +1360,12 @@ MonoBehaviour:
     queueOnLevel0: 1
     queueOnLevel1: 1
     queueOnLevel2: 1
-    instructionText: type <color=#E3C41C>push</color> to gain speed
+    instructionText: type <color=#FFFFFF>push</color> to gain speed
   - instructionName: ollie
     queueOnLevel0: 1
     queueOnLevel1: 1
     queueOnLevel2: 1
-    instructionText: type <color=#E3C41C>ollie</color> to get air
+    instructionText: type <color=#FFFFFF>ollie</color> to get air
   - instructionName: trick
     queueOnLevel0: 1
     queueOnLevel1: 1
@@ -1380,12 +1380,12 @@ MonoBehaviour:
     queueOnLevel0: 1
     queueOnLevel1: 1
     queueOnLevel2: 1
-    instructionText: type <color=#E3C41C>grab</color> in midair for a boost
+    instructionText: type <color=#FFFFFF>grab</color> in midair for a boost
   - instructionName: drop
     queueOnLevel0: 1
     queueOnLevel1: 1
     queueOnLevel2: 1
-    instructionText: type <color=#E3C41C>drop</color> to land sooner
+    instructionText: type <color=#FFFFFF>drop</color> to land sooner
   - instructionName: ramp_launch
     queueOnLevel0: 0
     queueOnLevel1: 1
