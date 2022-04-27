@@ -11,7 +11,6 @@ public class Instructions : MonoBehaviour {
     // public variables
     public TextMeshProUGUI instructionText;
     public float timeToFadeAway;
-    public float timeoutTime;
     public List<Instruction> allInstructions = new List<Instruction>();
 
     // private state
@@ -24,7 +23,6 @@ public class Instructions : MonoBehaviour {
     }
     private DisplayState state = DisplayState.None;
     private float fadeTimer;
-    private float activeTimer;
 
     private void Awake() {
         if (Instance != null) {
@@ -51,7 +49,7 @@ public class Instructions : MonoBehaviour {
 
             // decide whether or not to queue
             bool alreadyCompleted = PlayerPrefs.GetInt(playerPrefsKey, 0) == 1;
-            bool queueOnThisScene = (instruction.queueOnLevel0 && sceneName == "Level0") ||
+            bool queueOnThisScene = (instruction.queueOnLevel0 && (sceneName == "Level0" || sceneName == "Infinite")) ||
                                     (instruction.queueOnLevel1 && sceneName == "Level1") ||
                                     (instruction.queueOnLevel2 && sceneName == "Level2");
             if (!alreadyCompleted && queueOnThisScene) {
@@ -94,10 +92,7 @@ public class Instructions : MonoBehaviour {
             }
         }
         else if(state == DisplayState.Active) {
-            activeTimer += Time.unscaledDeltaTime;
-            if(activeTimer >= timeoutTime) {
-                FinishInstruction(currentInstruction.instructionName);
-            }
+            
         }
     }
 
@@ -120,7 +115,6 @@ public class Instructions : MonoBehaviour {
         // set state
         state = DisplayState.Active;
         fadeTimer = timeToFadeAway;
-        activeTimer = 0;
     }
 
     public void QueueInstruction(string instructionName)

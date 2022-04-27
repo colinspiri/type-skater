@@ -1355,7 +1355,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   instructionText: {fileID: 2124713896668606207}
   timeToFadeAway: 2
-  timeoutTime: 50
   allInstructions:
   - instructionName: push
     queueOnLevel0: 1
@@ -2020,6 +2019,7 @@ MonoBehaviour:
   - {fileID: 1110688572206153380}
   - {fileID: 9185238080452091855}
   - {fileID: 0}
+  - {fileID: 4857574775831049468}
   pauseMenu: {fileID: 3268096255500406545}
 --- !u!1 &6096960407831325064
 GameObject:
