@@ -140,6 +140,14 @@ public class Score : MonoBehaviour {
         TextMeshProUGUI text = completedTrickText.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         text.text = word.trickScore > 0 ? word.text + " " + score : word.text;
         text.color = completedTrickTextColor;
+        
+        // game feel on tricks
+        if (word.trickScore > 0) {
+            // screen shake
+            StartCoroutine(CameraShake.Instance.Shake(0.05f));
+            // player flash white
+            PlayerAnimator.Instance.Flash();
+        }
     }
 
     private void AddScore(int addition) {

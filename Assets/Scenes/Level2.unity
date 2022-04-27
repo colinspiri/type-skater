@@ -294,7 +294,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6314349627910658733, guid: de0d4f345ffa840be961759f454e2622, type: 3}
       propertyPath: m_text
-      value: level2
+      value: rails
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de0d4f345ffa840be961759f454e2622, type: 3}
