@@ -14,6 +14,7 @@ public class PlayerAnimator : MonoBehaviour {
     // components
     private SpriteRenderer sprite;
     public ParticleSystem trickParticles;
+    public ParticleSystem pushParticles;
 
     private void Awake() {
         Instance = this;
@@ -30,6 +31,10 @@ public class PlayerAnimator : MonoBehaviour {
     void Update()
     {
         
+    }
+
+    public void PushParticles() {
+        pushParticles.Play();
     }
 
     public void Flash() {

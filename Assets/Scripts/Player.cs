@@ -170,8 +170,8 @@ public class Player : MonoBehaviour
             rb.AddForce(new Vector2(pushForce, 0));
         }
         if (currentSpeed == Speed.Stopped) currentSpeed = Speed.Slow;
-        // var particles = Instantiate(pushParticles);
-        // particles.transform.position = transform.position;
+        
+        PlayerAnimator.Instance.PushParticles();
     }
 
     public void Jump(Speed jumpType = Speed.Stopped)
