@@ -7,30 +7,38 @@ using UnityEngine.Events;
 public class TypingManager : MonoBehaviour {
     // components
     public static TypingManager Instance;
-    public TextMeshProUGUI displayText;
+    [SerializeField] private TextMeshProUGUI displayText;
     
     // input
-    private List<TypedWord> _wordList = new List<TypedWord>();
+    private List<Word> _wordList = new List<Word>();
+    // only for testing
+    [SerializeField] private List<Word> defaultWordList = new List<Word>();
 
     // state
     private string _typedText;
     private int _correctLength;
     private bool _typedAllCorrect => _correctLength == _typedText.Length;
-    private List<TypedWord> _possibleWords = new List<TypedWord>();
+    private List<Word> _possibleWords = new List<Word>();
+    public List<Word> PossibleWords => _possibleWords;
     
     // callbacks
-    public delegate void OnCompleteWord(TypedWord word);
+    public delegate void OnCompleteWord(Word word);
     public OnCompleteWord onCompleteWord;
+
+    public UnityEvent onType;
+    public UnityEvent onTypeCorrect;
+    public UnityEvent onTypeWrong;
 
     private void Awake() {
         Instance = this;
     }
 
     private void Start() {
+        if(defaultWordList.Count != 0) SetWordList(defaultWordList);
         Clear();
     }
 
-    public void SetWordList(List<TypedWord> wordList) {
+    public void SetWordList(List<Word> wordList) {
         _wordList = wordList;
         Clear();
     }
@@ -81,7 +89,7 @@ public class TypingManager : MonoBehaviour {
             _typedText += inputChar;
             checkWords = true;
             
-            SoundManager.Instance.PlayTypingSound();
+            if(SoundManager.Instance) SoundManager.Instance.PlayTypingSound();
         }
 
         if (checkWords) {
@@ -98,11 +106,9 @@ public class TypingManager : MonoBehaviour {
             if (word.Equals(_typedText)) {
                 word.Complete();
                 lastCharIsCorrect = true;
-
-                onCompleteWord?.Invoke(word);
-
-                // clear 
                 Clear();
+                
+                onCompleteWord?.Invoke(word);
                 break;
             }
             
@@ -126,13 +132,12 @@ public class TypingManager : MonoBehaviour {
         }
 
         if (lastCharIsCorrect) {
-            // on type correct char
-            // Debug.Log("correct char");
+            onTypeCorrect?.Invoke();
         }
         else {
-            // on type wrong char
-            // Debug.Log("wrong char");
+            onTypeWrong?.Invoke();
         }
+        onType?.Invoke();
     }
 
     private void UpdateDisplay() {
@@ -142,6 +147,7 @@ public class TypingManager : MonoBehaviour {
         }
 
         displayText.text = "";
+        // displayText.text += _correctLength + " ";
 
         if (_typedAllCorrect) {
             displayText.text += _typedText;

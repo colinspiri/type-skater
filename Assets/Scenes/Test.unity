@@ -286,11 +286,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cfaf9a2d9554d5686df2a2415b6c1f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _availableWords:
-  - {fileID: 11400000, guid: 7f79ac7d11c769949b57b6bb2ffd0a84, type: 2}
-  - {fileID: 11400000, guid: 3c84d6ccba29d6b40a156364d7ac3428, type: 2}
-  - {fileID: 11400000, guid: e701eb96bb22c2d428feee8eeca43cd7, type: 2}
   displayText: {fileID: 603549162}
+  defaultWordList:
+  - {fileID: 11400000, guid: c5e35bc6afe7a7e40a263dc4d2dffd48, type: 2}
+  - {fileID: 11400000, guid: 656c9421e7a1ed9428608ad22006836b, type: 2}
+  - {fileID: 11400000, guid: c7f6ca7b900d9ab4ba86e9a788129510, type: 2}
+  - {fileID: 11400000, guid: 216ca52a0d818314c9b42b763fd65988, type: 2}
+  - {fileID: 11400000, guid: cadec3e27c574d4449fa338345babeb3, type: 2}
+  - {fileID: 11400000, guid: f9faa9324392ba444bd838ed489fe7af, type: 2}
+  - {fileID: 11400000, guid: 4a972428ecff8944986130c54593e169, type: 2}
+  - {fileID: 11400000, guid: 206b14f22e8940642bf24dbf90b734dd, type: 2}
+  - {fileID: 11400000, guid: ee32a3320c32a014fa0923ebca7a3e77, type: 2}
+  - {fileID: 11400000, guid: d223870856b786d4c9bf9dcd8dad046f, type: 2}
+  - {fileID: 11400000, guid: 18702599ebc9edb4da5f3d587865159a, type: 2}
+  - {fileID: 11400000, guid: c63c66615bcaa844f8a1eec8ef56c268, type: 2}
+  - {fileID: 11400000, guid: 3c78da6426544fa4ba8f7309359c0e74, type: 2}
+  - {fileID: 11400000, guid: 8abe3ddcf88edda4aa3dddd44f5e6e7d, type: 2}
+  - {fileID: 11400000, guid: 4a2d3e3e41df869498075c9099db7b74, type: 2}
+  - {fileID: 11400000, guid: 05728a00f145cff43aa50e34be6be74a, type: 2}
+  - {fileID: 11400000, guid: 53ea22df6072ae84895cbe5cdcc5693c, type: 2}
+  - {fileID: 11400000, guid: fa3dc1b73ab89a140a326b141dfac96a, type: 2}
+  - {fileID: 11400000, guid: 3c4d72cb4e6450c4aa253c4b9e6a1f0d, type: 2}
+  - {fileID: 11400000, guid: 53b7b4927ec332c46b23398aa90582e7, type: 2}
+  - {fileID: 11400000, guid: 5b6c7f805d18d9743950590312f90d90, type: 2}
+  - {fileID: 11400000, guid: bf782546c70a29b47b64cffb9f505e4c, type: 2}
+  - {fileID: 11400000, guid: 8c6be64e34ea7424fb280dd35d37b170, type: 2}
+  - {fileID: 11400000, guid: 4e4852705aa19e248a89a60e071d3689, type: 2}
+  - {fileID: 11400000, guid: 77b72dab2c20d7e42b1b4b89beacd386, type: 2}
+  - {fileID: 11400000, guid: 4333fc8142a078f46b61b7dc5f75923d, type: 2}
+  - {fileID: 11400000, guid: 0f87791d967ca7d48b6c6f984524a18e, type: 2}
+  - {fileID: 11400000, guid: 71b07e94479edcb479cc82af32378f01, type: 2}
+  - {fileID: 11400000, guid: bc792a6b6de9b98408e6f3adf5bb25dd, type: 2}
+  onType:
+    m_PersistentCalls:
+      m_Calls: []
+  onTypeCorrect:
+    m_PersistentCalls:
+      m_Calls: []
+  onTypeWrong:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &917682938
 Transform:
   m_ObjectHideFlags: 0
@@ -423,7 +458,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
 --- !u!114 &1431810713
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,43 +1,42 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class TrickSuggestion : MonoBehaviour
 {
-    // private state
-    private Dictionary<Trick, int> trickFrequency;
+    // components
+    public static TrickSuggestion Instance;
     
-    // component stuff
-    public TextMeshProUGUI suggestionText;
+    // private state
+    private Dictionary<Trick, int> _trickFrequency;
+    [HideInInspector] public string suggestedText;
+
+    private void Awake() {
+        Instance = this;
+    }
 
     // Start is called before the first frame update
     void Start() {
-        trickFrequency = new Dictionary<Trick, int>();
+        _trickFrequency = new Dictionary<Trick, int>();
         foreach (var word in TrickManager.Instance.allTricks) {
             if (word.Text == "push" || word.Text == "ollie" || word.Text == "grab" || word.Text == "drop") continue;
-            if (word.trickScore > 0) trickFrequency[word] = 0;
+            if (word.trickScore > 0) _trickFrequency[word] = 0;
         }
 
-        suggestionText.text = "";
+        suggestedText = "";
 
         // add callbacks
         TrickManager.Instance.onCompleteTrick += CountTrick;
-        Player.Instance.onStateChange += SuggestTrick;
     }
 
-    private void SuggestTrick(Player.State state) {
-        if (state == Player.State.OnGround || state == Player.State.OnRamp) {
-            return;
-        }
-
+    public string SuggestTrick(Player.State state, List<Word> wordList = null) {
         // get a list of the least used words
         int minValue = Int32.MaxValue;
         List<string> leastUsedWords = new List<string>();
-        foreach (var pair in trickFrequency) {
+        foreach (var pair in _trickFrequency) {
             if (!pair.Key.availableInStates.Contains(state)) continue;
+            if (wordList != null && !wordList.Contains(pair.Key)) continue;
             
             if (pair.Value < minValue) {
                 minValue = pair.Value;
@@ -49,11 +48,16 @@ public class TrickSuggestion : MonoBehaviour
             }
         }
         
-        // select a random word
-        int randomIndex = Random.Range(0, leastUsedWords.Count);
-        string suggestedWord = leastUsedWords[randomIndex];
-        // display suggested word
-        suggestionText.text = suggestedWord;
+        // select the word with the most points
+        if (leastUsedWords.Count > 0) {
+            if (!leastUsedWords.Contains(suggestedText)) {
+                int randomIndex = Random.Range(0, leastUsedWords.Count);
+                suggestedText = leastUsedWords[randomIndex];
+            }
+        }
+        else suggestedText = "";
+        
+        return suggestedText;
     }
 
     private void CountTrick(Trick trick) {
@@ -61,11 +65,11 @@ public class TrickSuggestion : MonoBehaviour
         if (trick.Text.Equals("push") || trick.Text.Equals("ollie") || trick.Text.Equals("grab") || trick.Text.Equals("drop")) return;
 
         // increment frequency
-        trickFrequency[trick]++;
+        _trickFrequency[trick]++;
 
         // if word is suggested, clear it
-        if (trick.Text == suggestionText.text) {
-            suggestionText.text = "";
+        if (trick.Text == suggestedText) {
+            suggestedText = "";
         }
     }
 }

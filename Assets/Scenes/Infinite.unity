@@ -779,6 +779,10 @@ PrefabInstance:
       propertyPath: m_text
       value: infinite
       objectReference: {fileID: 0}
+    - target: {fileID: 8691455883311666413, guid: de0d4f345ffa840be961759f454e2622, type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 55
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de0d4f345ffa840be961759f454e2622, type: 3}
 --- !u!114 &554326969 stripped
@@ -893,6 +897,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayText: {fileID: 1986006997}
+  onType:
+    m_PersistentCalls:
+      m_Calls: []
+  onTypeCorrect:
+    m_PersistentCalls:
+      m_Calls: []
+  onTypeWrong:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &785817086
 Transform:
   m_ObjectHideFlags: 0

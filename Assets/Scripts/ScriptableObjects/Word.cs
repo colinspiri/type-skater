@@ -2,7 +2,7 @@
 using UnityEngine.Serialization;
 
 [CreateAssetMenu]
-public class TypedWord : ScriptableObject {
+public class Word : ScriptableObject {
     [FormerlySerializedAs("_wordText")] 
     [SerializeField] private string wordText;
     public string Text => wordText;
@@ -31,9 +31,7 @@ public class TypedWord : ScriptableObject {
         return wordText.Equals(text);
     }
 
-    public virtual void Complete() {
-        Debug.Log("Completed " + wordText);
-    }
+    public virtual void Complete() { }
 
     public override string ToString() {
         return wordText;

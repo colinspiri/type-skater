@@ -1,12 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.SceneManagement;
-using UnityEngine.Timeline;
-using Random = UnityEngine.Random;
 
 public class TrickManager : MonoBehaviour {
     public static TrickManager Instance;
@@ -21,8 +15,8 @@ public class TrickManager : MonoBehaviour {
     public List<Trick> allTricks;
     
     // state
-    private List<TypedWord> availableTricks = new List<TypedWord>();
-    
+    private List<Word> availableTricks = new List<Word>();
+
     // UI
     // public GameObject errorTextPrefab;
     
@@ -66,16 +60,9 @@ public class TrickManager : MonoBehaviour {
                 onCompleteTrick?.Invoke(trick);
             }
         };
-
-        // Player.Instance.onWipeOut += ClearCurrentTyping;
     }
 
-    // Update is called once per frame
-    void Update() {
-        // somewhere else, make predictive text choose best of possible words (either the suggested word, or the one that would get most points)
-    }
-
-    public void UpdateAvailableTricks(Player.State state) {
+    private void UpdateAvailableTricks(Player.State state) {
         availableTricks.Clear();
         foreach (var trick in allTricks) {
             if (trick.availableInStates.Contains(state)) {
@@ -85,7 +72,7 @@ public class TrickManager : MonoBehaviour {
         TypingManager.Instance.SetWordList(availableTricks);
     }
 
-    public List<TypedWord> GetAvailableTricks() {
+    public List<Word> GetAvailableTricks() {
         return availableTricks;
     }
 }

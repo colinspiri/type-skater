@@ -1,0 +1,3 @@
+﻿THINGS TO IMPROVE
+- PredictiveText.cs: instead of passing player state by callback, access player state in trick suggestion using SO
+- 

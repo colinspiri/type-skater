@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [CreateAssetMenu]
-public class Trick : TypedWord {
+public class Trick : Word {
     [Header("Trick Fields")] 
     public int trickScore;
     public List<Player.State> availableInStates;
