@@ -2,22 +2,46 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TypingManager : MonoBehaviour {
-    // constants
-    public List<TypedWord> _availableWords = new List<TypedWord>();
+    // components
+    public static TypingManager Instance;
+    public TextMeshProUGUI displayText;
+    
+    // input
+    private List<TypedWord> _wordList = new List<TypedWord>();
 
     // state
     private string _typedText;
     private int _correctLength;
     private bool _typedAllCorrect => _correctLength == _typedText.Length;
     private List<TypedWord> _possibleWords = new List<TypedWord>();
+    
+    // callbacks
+    public delegate void OnCompleteWord(TypedWord word);
+    public OnCompleteWord onCompleteWord;
 
-    // components
-    public TextMeshProUGUI displayText;
+    private void Awake() {
+        Instance = this;
+    }
 
     private void Start() {
         Clear();
+    }
+
+    public void SetWordList(List<TypedWord> wordList) {
+        _wordList = wordList;
+        Clear();
+    }
+
+    public bool CurrentlyTyping() {
+        return _typedText != "";
+    }
+    
+    public void Clear() {
+        _typedText = "";
+        _correctLength = 0;    
     }
 
     private void Update() {
@@ -56,7 +80,8 @@ public class TypingManager : MonoBehaviour {
             char inputChar = input[0];
             _typedText += inputChar;
             checkWords = true;
-            // onTyping?.Invoke(); each time a new character is typed
+            
+            SoundManager.Instance.PlayTypingSound();
         }
 
         if (checkWords) {
@@ -69,12 +94,13 @@ public class TypingManager : MonoBehaviour {
         _possibleWords.Clear();
         
         // loop through all available words and check if input text matches
-        foreach (var word in _availableWords) {
+        foreach (var word in _wordList) {
             if (word.Equals(_typedText)) {
-                // on complete word
-                lastCharIsCorrect = true;
                 word.Complete();
-                
+                lastCharIsCorrect = true;
+
+                onCompleteWord?.Invoke(word);
+
                 // clear 
                 Clear();
                 break;
@@ -115,7 +141,7 @@ public class TypingManager : MonoBehaviour {
             return;
         }
 
-        displayText.text = _correctLength.ToString() + "\t";
+        displayText.text = "";
 
         if (_typedAllCorrect) {
             displayText.text += _typedText;
@@ -137,8 +163,5 @@ public class TypingManager : MonoBehaviour {
         }
     }
     
-    private void Clear() {
-        _typedText = "";
-        _correctLength = 0;    
-    }
+   
 }

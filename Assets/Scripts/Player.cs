@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
         // safe
         if (state == State.OnGround || state == State.OnRamp) SetSafe(true);
         else {
-            SetSafe(!TrickManager.Instance.IsCurrentlyTyping());
+            SetSafe(!TypingManager.Instance.CurrentlyTyping());
         }
 
         // set current speed state
@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
                 currentSpeed = Speed.Slow;
                 if(speed < slowSpeed) rb.velocity = new Vector2(slowSpeed, rb.velocity.y);
             }
-            TrickManager.Instance.UpdateAvailableWords(state);
+            // TrickManager.Instance.UpdateAvailableTricks(state);
         }
         // trail color
         if (currentSpeed == Speed.Slow || currentSpeed == Speed.Stopped) {

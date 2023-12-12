@@ -111,7 +111,7 @@ public class SoundManager : MonoBehaviour {
         }
 
         if (TrickManager.Instance != null) {
-            TrickManager.Instance.onCompleteWord += word => {
+            TrickManager.Instance.onCompleteTrick += word => {
                 if (word.Equals("push")) {
                     push.Play();
                 }

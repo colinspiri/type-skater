@@ -8,24 +8,23 @@ using Random = UnityEngine.Random;
 public class TrickSuggestion : MonoBehaviour
 {
     // private state
-    private Dictionary<Word, int> trickFrequency;
+    private Dictionary<Trick, int> trickFrequency;
     
     // component stuff
     public TextMeshProUGUI suggestionText;
 
     // Start is called before the first frame update
     void Start() {
-        trickFrequency = new Dictionary<Word, int>();
-        foreach (var word in TrickManager.Instance.allWords) {
-            if (word.text == "push" || word.text == "ollie" || word.text == "grab" || word.text == "drop") continue;
+        trickFrequency = new Dictionary<Trick, int>();
+        foreach (var word in TrickManager.Instance.allTricks) {
+            if (word.Text == "push" || word.Text == "ollie" || word.Text == "grab" || word.Text == "drop") continue;
             if (word.trickScore > 0) trickFrequency[word] = 0;
         }
 
         suggestionText.text = "";
 
         // add callbacks
-        TrickManager.Instance.onCompleteWord += CountWord;
-        TrickManager.Instance.onTypingError.AddListener(() => SuggestTrick(Player.Instance.state));
+        TrickManager.Instance.onCompleteTrick += CountTrick;
         Player.Instance.onStateChange += SuggestTrick;
     }
 
@@ -43,10 +42,10 @@ public class TrickSuggestion : MonoBehaviour
             if (pair.Value < minValue) {
                 minValue = pair.Value;
                 leastUsedWords.Clear();
-                leastUsedWords.Add(pair.Key.text);
+                leastUsedWords.Add(pair.Key.Text);
             }
             else if (pair.Value == minValue) {
-                leastUsedWords.Add(pair.Key.text);
+                leastUsedWords.Add(pair.Key.Text);
             }
         }
         
@@ -57,15 +56,15 @@ public class TrickSuggestion : MonoBehaviour
         suggestionText.text = suggestedWord;
     }
 
-    private void CountWord(Word word) {
-        // ignore non-tricks
-        if (word.text.Equals("push") || word.text.Equals("ollie") || word.text.Equals("grab") || word.text.Equals("drop")) return;
+    private void CountTrick(Trick trick) {
+        // ignore tricks with no score
+        if (trick.Text.Equals("push") || trick.Text.Equals("ollie") || trick.Text.Equals("grab") || trick.Text.Equals("drop")) return;
 
         // increment frequency
-        trickFrequency[word]++;
+        trickFrequency[trick]++;
 
         // if word is suggested, clear it
-        if (word.text == suggestionText.text) {
+        if (trick.Text == suggestionText.text) {
             suggestionText.text = "";
         }
     }

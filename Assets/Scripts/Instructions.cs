@@ -60,13 +60,13 @@ public class Instructions : MonoBehaviour {
         }
 
         // set finish conditions
-        TrickManager.Instance.onCompleteWord += word => {
-            if(word.text == "push") FinishInstruction("push");
-            if(word.text == "ollie") FinishInstruction("ollie");
+        TrickManager.Instance.onCompleteTrick += word => {
+            if(word.Text == "push") FinishInstruction("push");
+            if(word.Text == "ollie") FinishInstruction("ollie");
             if(word.trickScore > 0) FinishInstruction("trick");
             if(word.trickScore > 0 && Score.Instance.GetUnsecuredScore() > 0) FinishInstruction("multiple");
-            if(word.text == "grab") FinishInstruction("grab");
-            if(word.text == "drop") FinishInstruction("drop");
+            if(word.Text == "grab") FinishInstruction("grab");
+            if(word.Text == "drop") FinishInstruction("drop");
             if(word.availableInStates.Contains(Player.State.OnRail)) FinishInstruction("rail_trick");
         };
     }

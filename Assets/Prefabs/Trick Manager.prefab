@@ -46,92 +46,15 @@ MonoBehaviour:
   typingText: {fileID: 0}
   predictiveText: {fileID: 0}
   completedTextPrefab: {fileID: 2434471693609180520, guid: 82fc9180d8d6246ba888b3936a999fe5, type: 3}
-  allWords:
-  - text: push
-    trickScore: 0
-    availableInStates: 01000000
-  - text: ollie
-    trickScore: 0
-    availableInStates: 010000000200000003000000
-  - text: grab
-    trickScore: 1
-    availableInStates: 00000000
-  - text: drop
-    trickScore: 1
-    availableInStates: 00000000
-  - text: fakie
-    trickScore: 1
-    availableInStates: 00000000
-  - text: switch
-    trickScore: 1
-    availableInStates: 00000000
-  - text: kickflip
-    trickScore: 2
-    availableInStates: 00000000
-  - text: heelflip
-    trickScore: 2
-    availableInStates: 00000000
-  - text: hardflip
-    trickScore: 2
-    availableInStates: 00000000
-  - text: impossible
-    trickScore: 3
-    availableInStates: 00000000
-  - text: 180
-    trickScore: 3
-    availableInStates: 00000000
-  - text: 360
-    trickScore: 3
-    availableInStates: 00000000
-  - text: mo flip
-    trickScore: 3
-    availableInStates: 00000000
-  - text: merlin twist
-    trickScore: 4
-    availableInStates: 00000000
-  - text: salad
-    trickScore: 2
-    availableInStates: 02000000
-  - text: smith
-    trickScore: 2
-    availableInStates: 02000000
-  - text: feeble
-    trickScore: 2
-    availableInStates: 02000000
-  - text: crooked
-    trickScore: 3
-    availableInStates: 02000000
-  - text: varial flip
-    trickScore: 4
-    availableInStates: 00000000
-  - text: boardslide
-    trickScore: 4
-    availableInStates: 02000000
-  - text: lipslide
-    trickScore: 4
-    availableInStates: 02000000
-  - text: 5-0
-    trickScore: 5
-    availableInStates: 02000000
-  - text: manhattan flip
-    trickScore: 5
-    availableInStates: 00000000
-  - text: backside 180
-    trickScore: 5
-    availableInStates: 00000000
-  - text: over crook
-    trickScore: 5
-    availableInStates: 02000000
-  - text: pop shove-it
-    trickScore: 7
-    availableInStates: 00000000
-  - text: front-foot spin
-    trickScore: 7
-    availableInStates: 00000000
-  - text: kickflip 50-50
-    trickScore: 7
-    availableInStates: 02000000
-  - text: backside 5-0
-    trickScore: 7
-    availableInStates: 02000000
+  allTricks:
+  - {fileID: 11400000, guid: 77b72dab2c20d7e42b1b4b89beacd386, type: 2}
+  - {fileID: 11400000, guid: bf782546c70a29b47b64cffb9f505e4c, type: 2}
+  - {fileID: 11400000, guid: 206b14f22e8940642bf24dbf90b734dd, type: 2}
+  - {fileID: 11400000, guid: c63c66615bcaa844f8a1eec8ef56c268, type: 2}
+  - {fileID: 11400000, guid: 53ea22df6072ae84895cbe5cdcc5693c, type: 2}
+  - {fileID: 11400000, guid: 71b07e94479edcb479cc82af32378f01, type: 2}
+  - {fileID: 11400000, guid: 4333fc8142a078f46b61b7dc5f75923d, type: 2}
   errorTextPrefab: {fileID: 7186551362841254048, guid: c857f5c6a8269459abc9be00a622fb97, type: 3}
+  onTypingError:
+    m_PersistentCalls:
+      m_Calls: []

@@ -25,18 +25,19 @@ public class TrickList : MonoBehaviour
     private void Update() {
         trickListText.text = "";
         bool insertExtraLine = false;
-        foreach (Word w in TrickManager.Instance.GetAvailableWords()) {
+        foreach (var typedWord in TrickManager.Instance.GetAvailableTricks()) {
+            var trick = (Trick)typedWord;
             if (SceneManager.GetActiveScene().name == "Level0") {
-                if (w.text == "fakie" && !fakieEnabled) continue;
-                if (w.text == "grab" && !grabEnabled) continue;
-                if (w.text == "drop" && !dropEnabled) continue;
+                if (trick.Text == "fakie" && !fakieEnabled) continue;
+                if (trick.Text == "grab" && !grabEnabled) continue;
+                if (trick.Text == "drop" && !dropEnabled) continue;
             }
-            bool lineAfter = w.text == "grab" || w.text == "drop" || w.text == "ollie";
+            bool lineAfter = trick.Text == "grab" || trick.Text == "drop" || trick.Text == "ollie";
             if (insertExtraLine && !lineAfter) {
                 trickListText.text += '\n';
                 insertExtraLine = false;
             }
-            trickListText.text += w.text + '\n';
+            trickListText.text += trick.Text + '\n';
             if (lineAfter) insertExtraLine = true;
         }
     }
