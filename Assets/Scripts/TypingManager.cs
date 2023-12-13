@@ -70,8 +70,11 @@ public class TypingManager : MonoBehaviour {
             if (_typedText.Length > 1) {
                 if (_typedAllCorrect) {
                     _correctLength--;
+                    _typedText = _typedText.Substring(0, _typedText.Length - 1);
                 }
-                _typedText = _typedText.Substring(0, _typedText.Length - 1);
+                else {
+                    _typedText = _typedText.Substring(0, _correctLength);
+                }
 
                 checkWords = true;
             }
@@ -164,9 +167,9 @@ public class TypingManager : MonoBehaviour {
             displayText.text += "</color>";
         }
 
-        foreach (var possibleWord in _possibleWords) {
+        /*foreach (var possibleWord in _possibleWords) {
             displayText.text += "\n" + possibleWord;
-        }
+        }*/
     }
     
    

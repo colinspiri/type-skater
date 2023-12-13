@@ -9874,15 +9874,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dafa1cec193f4f95afe6afdc2037ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slowSpeed: 3
+  slowSpeed: 2
   mediumSpeed: 5
-  fastSpeed: 8
+  fastSpeed: 7
   maxSpeed: 10
   pushForce: 130
   slowJumpForce: 225
   mediumJumpForce: 250
   fastJumpForce: 300
-  midairTimeScale: 0.5
+  midairTimeScale: 0.4
   unsafeRotationZ: 27
   dropForce: 150
   grabJumpVelocity: 3
@@ -9891,7 +9891,7 @@ MonoBehaviour:
   rampJump: 1
   railSpeed: 2
   railJump: 1
-  railTimeScale: 0.5
+  railTimeScale: 0.6
   state: 1
   currentSpeed: 0
   trail: {fileID: 7760741279925662503}

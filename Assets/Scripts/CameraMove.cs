@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour {
     public GameObject objectToFollow;
-    private float followSpeed = 5f;
+    [SerializeField] private float followSpeed = 5f;
 
     private Vector3 offset;
 
@@ -34,22 +34,22 @@ public class CameraMove : MonoBehaviour {
         if (panningOverLevel) {
             if (direction == -1) {
                 if (panVelocity > -followSpeed) {
-                    panVelocity -= panAcceleration * Time.deltaTime;
+                    panVelocity -= panAcceleration * Time.unscaledDeltaTime;
                 }
-                transform.Translate(panVelocity * Time.deltaTime, 0, 0);
+                transform.Translate(panVelocity * Time.unscaledDeltaTime, 0, 0);
                 if (transform.position.x < levelStartX) direction = 1;
             }
             else if (direction == 1) {
                 if (panVelocity < followSpeed) {
-                    panVelocity += panAcceleration * Time.deltaTime;
+                    panVelocity += panAcceleration * Time.unscaledDeltaTime;
                 }
-                transform.Translate(panVelocity * Time.deltaTime, 0, 0 );
+                transform.Translate(panVelocity * Time.unscaledDeltaTime, 0, 0 );
                 if (transform.position.x > levelEndX) direction = -1;
             }
         }
         else {
             // following player
-            float x = Mathf.Lerp(transform.position.x, objectToFollow.transform.position.x + offset.x, followSpeed * Time.deltaTime);
+            float x = Mathf.Lerp(transform.position.x, objectToFollow.transform.position.x + offset.x, followSpeed * Time.unscaledDeltaTime);
             transform.position = new Vector3(x, transform.position.y, transform.position.z);
         }
     }

@@ -212,7 +212,7 @@ public class Score : MonoBehaviour {
         // disable other objects
         Player.Instance.SetSpeed(Player.Speed.Slow);
         Player.Instance.currentSpeed = Player.Speed.Stopped;
-        Time.timeScale = 1.0f;
+        TimeManager.Instance.SetTimeScale(1);
         foreach (GameObject o in objectsToDisable) {
             o.SetActive(false);
         }

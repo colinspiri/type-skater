@@ -40,7 +40,7 @@ public class PauseMenu : MonoBehaviour {
         pauseMenu.SetActive(true);
         optionsMenu.SetActive(false);
         previousTimeScale = Time.timeScale;
-        Time.timeScale = 0f;
+        TimeManager.Instance.SetTimeScale(0);
         
         paused = true;
     }
@@ -51,8 +51,8 @@ public class PauseMenu : MonoBehaviour {
         }
         pauseMenu.SetActive(false);
         optionsMenu.SetActive(false);
-        Time.timeScale = previousTimeScale;
-        
+        TimeManager.Instance.SetTimeScale(previousTimeScale);
+
         paused = false;
     }
 
