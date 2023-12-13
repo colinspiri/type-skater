@@ -138,6 +138,7 @@ public class TypingManager : MonoBehaviour {
             onTypeCorrect?.Invoke();
         }
         else {
+            if(SoundManager.Instance) SoundManager.Instance.PlayTypingWrongSound();
             onTypeWrong?.Invoke();
         }
         onType?.Invoke();

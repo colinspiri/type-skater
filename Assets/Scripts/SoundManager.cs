@@ -36,6 +36,7 @@ public class SoundManager : MonoBehaviour {
     public AudioSource scratchDescending;
 
     public AudioSource key;
+    public AudioSource keyTwang;
 
     private void Awake() {
         if (Instance != null) {
@@ -141,6 +142,9 @@ public class SoundManager : MonoBehaviour {
 
     public void PlayTypingSound() {
         key.Play();
+    }
+    public void PlayTypingWrongSound() {
+        keyTwang.Play();
     }
 
     public void PlayTrickSound() {
