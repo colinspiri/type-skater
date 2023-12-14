@@ -35,6 +35,11 @@ public class TrickManager : MonoBehaviour {
         Player.Instance.onStateChange += UpdateAvailableTricks;
         UpdateAvailableTricks(Player.Instance.state);
 
+        TypingManager.Instance.onType.AddListener(() => {
+            if (Player.Instance.state == Player.State.Midair || Player.Instance.state == Player.State.OnRail) {
+                TimeManager.Instance.RefreshAirTime();
+            }
+        });
         TypingManager.Instance.onCompleteWord += word => {
             // animate completed text
             TextMeshProUGUI completedText = Instantiate(completedTextPrefab, completedTextStartTransform.transform.parent, false).GetComponent<TextMeshProUGUI>();

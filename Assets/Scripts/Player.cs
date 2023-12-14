@@ -147,16 +147,17 @@ public class Player : MonoBehaviour
     private void ChangeState(State newState) {
         state = newState;
         if (state == State.Midair) {
-            TimeManager.Instance.SetTimeScale(midairTimeScale);
+            // TimeManager.Instance.SetTimeScale(midairTimeScale);
+            TimeManager.Instance.RefreshAirTime();
         }
         else if (state == State.OnGround) {
-            TimeManager.Instance.SetTimeScale(1);
+            TimeManager.Instance.EndAirTime();
         }
         else if (state == State.OnRail) {
-            TimeManager.Instance.SetTimeScale(railTimeScale);
+            // TimeManager.Instance.SetTimeScale(railTimeScale);
         }
         else if (state == State.OnRamp) {
-            TimeManager.Instance.SetTimeScale(1);
+            TimeManager.Instance.EndAirTime();
         }
         onStateChange?.Invoke(state);
     }
@@ -189,7 +190,7 @@ public class Player : MonoBehaviour
             Speed.Fast => fastJumpForce,
             _ => 0
         };
-        rb.AddForce(new Vector2(0, jumpForce / midairTimeScale));
+        rb.AddForce(new Vector2(0, jumpForce / TimeManager.Instance.midairTimeScale));
         // set speed
         float newSpeed = currentSpeed switch {
             Speed.Slow => mediumSpeed,
