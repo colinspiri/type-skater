@@ -82,7 +82,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &3783369161292865246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
 --- !u!1 &3783369161505753086
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,8 +167,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: trick
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5fc21c1703c7f4f118488b9f551a416f, type: 2}
-  m_sharedMaterial: {fileID: 91488236501625513, guid: 5fc21c1703c7f4f118488b9f551a416f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f15109d64103bc447896413c392a766f, type: 2}
+  m_sharedMaterial: {fileID: -9158010710015612590, guid: f15109d64103bc447896413c392a766f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
