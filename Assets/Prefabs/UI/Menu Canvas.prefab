@@ -202,7 +202,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: basics
+  m_text: playground
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f15109d64103bc447896413c392a766f, type: 2}
   m_sharedMaterial: {fileID: -9158010710015612590, guid: f15109d64103bc447896413c392a766f, type: 2}
@@ -4104,7 +4104,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ramps
+  m_text: wedges
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f15109d64103bc447896413c392a766f, type: 2}
   m_sharedMaterial: {fileID: -9158010710015612590, guid: f15109d64103bc447896413c392a766f, type: 2}

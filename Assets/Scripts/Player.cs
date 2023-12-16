@@ -148,7 +148,7 @@ public class Player : MonoBehaviour
         state = newState;
         if (state == State.Midair) {
             // TimeManager.Instance.SetTimeScale(midairTimeScale);
-            TimeManager.Instance.RefreshAirTime();
+            TimeManager.Instance.StartAirTimeByJump();
         }
         else if (state == State.OnGround) {
             TimeManager.Instance.EndAirTime();

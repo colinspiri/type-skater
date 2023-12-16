@@ -102,6 +102,7 @@ public class TypingManager : MonoBehaviour {
 
     private void CheckForWords() {
         bool lastCharIsCorrect = false;
+        Word wordCompleted = null;
         _possibleWords.Clear();
         
         // loop through all available words and check if input text matches
@@ -110,8 +111,8 @@ public class TypingManager : MonoBehaviour {
                 word.Complete();
                 lastCharIsCorrect = true;
                 Clear();
-                
-                onCompleteWord?.Invoke(word);
+
+                wordCompleted = word;
                 break;
             }
             
@@ -133,7 +134,8 @@ public class TypingManager : MonoBehaviour {
                 _possibleWords.Add(word);
             }
         }
-
+        
+        onType?.Invoke();
         if (lastCharIsCorrect) {
             onTypeCorrect?.Invoke();
         }
@@ -141,7 +143,8 @@ public class TypingManager : MonoBehaviour {
             if(SoundManager.Instance) SoundManager.Instance.PlayTypingWrongSound();
             onTypeWrong?.Invoke();
         }
-        onType?.Invoke();
+        
+        if(wordCompleted) onCompleteWord?.Invoke(wordCompleted);
     }
 
     private void UpdateDisplay() {

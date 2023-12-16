@@ -44,6 +44,7 @@ public class SoundManager : MonoBehaviour {
             return;
         }
         Instance = this;
+        transform.parent = null;
         DontDestroyOnLoad(this);
     }
 

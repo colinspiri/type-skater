@@ -72,36 +72,38 @@ public class Skateboard : MonoBehaviour
     {
         player = Player.Instance;
 
-        TrickManager.Instance.onCompleteTrick += word => {
-            if (word.Equals("kickflip"))
-            {
-                SetAnimation(Animation.Kickflip);
-            }
-            else if (word.Equals("heelflip"))
-            {
-                SetAnimation(Animation.Kickflip);
-            }
-            else if (word.Equals("varial flip"))
-            {
-                SetAnimation(Animation.Kickflip);
-            }
-            else if (word.Equals("pop shove-it"))
-            {
-                SetAnimation(Animation.OneEighty);
-            }
-            else if (word.Equals("backside 180"))
-            {
-                SetAnimation(Animation.OneEighty);
-            }
-            else if (word.Equals("180"))
-            {
-                SetAnimation(Animation.OneEighty);
-            }
-            else if (word.Equals("360"))
-            {
-                SetAnimation(Animation.ThreeSixty);
-            }
-        };
+        if (TrickManager.Instance) {
+            TrickManager.Instance.onCompleteTrick += word => {
+                if (word.Equals("kickflip"))
+                {
+                    SetAnimation(Animation.Kickflip);
+                }
+                else if (word.Equals("heelflip"))
+                {
+                    SetAnimation(Animation.Kickflip);
+                }
+                else if (word.Equals("varial flip"))
+                {
+                    SetAnimation(Animation.Kickflip);
+                }
+                else if (word.Equals("pop shove-it"))
+                {
+                    SetAnimation(Animation.OneEighty);
+                }
+                else if (word.Equals("backside 180"))
+                {
+                    SetAnimation(Animation.OneEighty);
+                }
+                else if (word.Equals("180"))
+                {
+                    SetAnimation(Animation.OneEighty);
+                }
+                else if (word.Equals("360"))
+                {
+                    SetAnimation(Animation.ThreeSixty);
+                }
+            };
+        }
     }
 
 

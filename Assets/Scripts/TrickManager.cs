@@ -37,7 +37,7 @@ public class TrickManager : MonoBehaviour {
 
         TypingManager.Instance.onType.AddListener(() => {
             if (Player.Instance.state == Player.State.Midair || Player.Instance.state == Player.State.OnRail) {
-                TimeManager.Instance.RefreshAirTime();
+                TimeManager.Instance.StartAirTimeByTrick();
             }
         });
         TypingManager.Instance.onCompleteWord += word => {
@@ -51,6 +51,7 @@ public class TrickManager : MonoBehaviour {
                 else if (trick.Text.Equals("drop")) {
                     Player.Instance.Drop();
                     availableTricks.Remove(word);
+                    TimeManager.Instance.EndAirTime();
                 }
                 else if (trick.Text.Equals("grab")) {
                     Player.Instance.Grab();
