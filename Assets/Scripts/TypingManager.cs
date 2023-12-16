@@ -92,7 +92,7 @@ public class TypingManager : MonoBehaviour {
             _typedText += inputChar;
             checkWords = true;
             
-            if(SoundManager.Instance) SoundManager.Instance.PlayTypingSound();
+            if(AudioManager.Instance) AudioManager.Instance.PlayTypingSound();
         }
 
         if (checkWords) {
@@ -140,7 +140,7 @@ public class TypingManager : MonoBehaviour {
             onTypeCorrect?.Invoke();
         }
         else {
-            if(SoundManager.Instance) SoundManager.Instance.PlayTypingWrongSound();
+            if(AudioManager.Instance) AudioManager.Instance.PlayTypingWrongSound();
             onTypeWrong?.Invoke();
         }
         

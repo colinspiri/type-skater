@@ -77,7 +77,7 @@ public class TypingMenu : MonoBehaviour {
             MenuOption option = menuOptions[i];
             // if the current input matches a word
             if (option.ContinueText(c)) {
-                SoundManager.Instance.PlayTypingSound();
+                AudioManager.Instance.PlayTypingSound();
                 if (typedOption == -1) {
                     typedOption = i;
                 }

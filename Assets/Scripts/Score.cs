@@ -175,7 +175,7 @@ public class Score : MonoBehaviour {
             multiplier += multiplierIncrement;
             multiplierText.text = "x" + multiplier.ToString("F1");
             
-            SoundManager.Instance.PlayTrickSound();
+            AudioManager.Instance.PlayTrickSound();
             
             var flyingScoreText = Instantiate(flyingScorePrefab, unsecuredScoreText.transform, false)
                 .GetComponent<TextMeshProUGUI>();

@@ -7,8 +7,8 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
-public class SoundManager : MonoBehaviour {
-    public static SoundManager Instance;
+public class AudioManager : MonoBehaviour {
+    public static AudioManager Instance;
     
     public AudioMixer mixer;
     

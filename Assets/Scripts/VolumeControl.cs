@@ -14,7 +14,7 @@ public class VolumeControl : MonoBehaviour {
     private void Awake() {
         slider = GetComponent<Slider>();
         slider.onValueChanged.AddListener(value => {
-            SoundManager.Instance.SetVolume(volumeParameter, value);
+            AudioManager.Instance.SetVolume(volumeParameter, value);
         });
     }
 

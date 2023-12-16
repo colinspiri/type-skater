@@ -137,10 +137,10 @@ public class Player : MonoBehaviour
         safe = value;
         animator.SetBool("safe", state == State.Midair ? safe : true);
         if (safe) {
-            SoundManager.Instance.PlaySafeSound();
+            AudioManager.Instance.PlaySafeSound();
         }
         else {
-            SoundManager.Instance.PlayUnsafeSound();
+            AudioManager.Instance.PlayUnsafeSound();
         }
     }
 
