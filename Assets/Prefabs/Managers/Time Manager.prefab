@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0b2559ce6c24ea4add347475579965d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  midairTimeScale: 0.2
-  airTimeOnTrick: 1
+  midairTimeScale: 0.3
+  airTimeOnTrick: 1.5
   airTimeOnJump: 0.25
-  revertTime: 0.4
+  revertTime: 0.25

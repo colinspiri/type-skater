@@ -54,7 +54,6 @@ public class TimeManager : MonoBehaviour {
         _maxAirTime = airTimeOnJump + revertTime;
         _currentAirTimeLeft = _maxAirTime;
     }
-
     public void EndAirTime() {
         SetTimeScale(1);
         _currentAirTimeLeft = 0;
