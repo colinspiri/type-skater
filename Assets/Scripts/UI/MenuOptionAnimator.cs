@@ -1,8 +1,8 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Selectable))]
@@ -15,7 +15,7 @@ public class MenuOptionAnimator : MonoBehaviour {
     [Header("Selectable")]
     private Selectable _selectable;
     public GameObject selectionBox;
-    public TextMeshProUGUI text;
+    public List<TextMeshProUGUI> texts;
     [Header("Toggle")] 
     public Toggle toggle;
     public GameObject whenOn;
@@ -29,8 +29,8 @@ public class MenuOptionAnimator : MonoBehaviour {
     }
 
     private void Start() {
-        if (text != null) {
-            _normalTextColor = text.color;
+        if (texts != null && texts.Count > 0) {
+            _normalTextColor = texts[0].color;
         }
 
         if (toggle != null) {
@@ -58,8 +58,10 @@ public class MenuOptionAnimator : MonoBehaviour {
         if (selectionBox != null) {
             selectionBox.SetActive(false);
         }
-        if (text != null) {
-            text.DOColor(_normalTextColor, uiConstants.selectTime).SetUpdate(true);
+        if (texts != null) {
+            foreach (var text in texts) {
+                text.DOColor(_normalTextColor, uiConstants.selectTime).SetUpdate(true);
+            }
         }
     }
 
@@ -67,10 +69,12 @@ public class MenuOptionAnimator : MonoBehaviour {
         if (selectionBox != null) {
             selectionBox.SetActive(true);
         }
-        if (text != null) {
-            text.DOColor(uiConstants.selectedColor, uiConstants.selectTime).SetUpdate(true);
+        if (texts != null) {
+            foreach (var text in texts) {
+                text.DOColor(uiConstants.selectedColor, uiConstants.selectTime).SetUpdate(true);
+            }
         }
-        // if(AudioManager.Instance) AudioManager.Instance.PlaySelectSound();
+        PlaySelectSound();
     }
 
     public void PlaySubmitAnimation()
@@ -79,15 +83,15 @@ public class MenuOptionAnimator : MonoBehaviour {
     }
 
     public void PlaySelectSound() {
-        if(AudioManager.Instance) AudioManager.Instance.PlayTypingSound();
+        if(AudioManager.Instance) AudioManager.Instance.PlaySelectSound();
     }
 
     public void PlaySubmitSound()
     {
-        if(AudioManager.Instance) AudioManager.Instance.PlayTrickSound();
+        if(AudioManager.Instance) AudioManager.Instance.PlaySubmitSound();
     }
     public void PlayBackSound()
     {
-        if(AudioManager.Instance) AudioManager.Instance.PlayTypingWrongSound();
+        if(AudioManager.Instance) AudioManager.Instance.PlayBackSound();
     }
 }

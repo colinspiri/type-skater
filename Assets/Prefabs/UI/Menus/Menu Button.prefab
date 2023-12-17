@@ -211,7 +211,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiConstants: {fileID: 11400000, guid: 384f02308a8340f4dabcb2bb5e26d34f, type: 2}
   selectionBox: {fileID: 0}
-  text: {fileID: 5782439873993075002}
+  texts:
+  - {fileID: 5782439873993075002}
   toggle: {fileID: 0}
   whenOn: {fileID: 0}
   whenOff: {fileID: 0}

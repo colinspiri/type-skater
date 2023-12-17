@@ -161,4 +161,16 @@ public class AudioManager : MonoBehaviour {
         PlayerPrefs.SetFloat(mixerParameter, value);
     }
 
+    public void PlaySelectSound() {
+        PlayTypingSound();
+    }
+
+    public void PlaySubmitSound() {
+        PlayTrickSound();
+    }
+
+    public void PlayBackSound() {
+        PlayTypingWrongSound();
+    }
+
 }

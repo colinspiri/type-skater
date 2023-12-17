@@ -15,9 +15,15 @@ MonoBehaviour:
   mainMenuScene:
     sceneAsset: {fileID: 102900000, guid: eafb65075482d4fafbd8430dc65ac404, type: 3}
     scenePath: Assets/Scenes/Menu.unity
-  gameScene:
-    sceneAsset: {fileID: 0}
-    scenePath: 
-  loadingScene:
-    sceneAsset: {fileID: 0}
-    scenePath: 
+  level0:
+    sceneAsset: {fileID: 102900000, guid: c94224d3f69474f45af11c91d38c1388, type: 3}
+    scenePath: Assets/Scenes/Level0.unity
+  level1:
+    sceneAsset: {fileID: 102900000, guid: 478e91ef9771f49b5ba324ad09402211, type: 3}
+    scenePath: Assets/Scenes/Level1.unity
+  level2:
+    sceneAsset: {fileID: 102900000, guid: 3e0394f4b1c5b4ebd917b2a7d9b9dbda, type: 3}
+    scenePath: Assets/Scenes/Level2.unity
+  infinite:
+    sceneAsset: {fileID: 102900000, guid: 2cda990e2423bbf4892e6590ba056729, type: 3}
+    scenePath: Assets/Scenes/Infinite.unity

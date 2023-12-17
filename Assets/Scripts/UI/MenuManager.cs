@@ -46,7 +46,7 @@ public class MenuManager : MonoBehaviour
         {
             BackToPreviousMenuScreen();
 
-            if (AudioManager.Instance) AudioManager.Instance.PlaySliderSFX(); // TODO: play back sound
+            if (AudioManager.Instance) AudioManager.Instance.PlayBackSound();
         }
 
         if (Input.anyKeyDown) {
