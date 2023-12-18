@@ -6,8 +6,6 @@ public class Word : ScriptableObject {
     [FormerlySerializedAs("_wordText")] 
     [SerializeField] private string wordText;
     public string Text => wordText;
-    
-    // public GameEvent onComplete
 
     public int StartsWith(string substring) {
         int correctLength = 0;
@@ -25,6 +23,10 @@ public class Word : ScriptableObject {
         }
 
         return correctLength;
+    }
+
+    public void SetText(string value) {
+        wordText = value;
     }
 
     public bool Equals(string text) {

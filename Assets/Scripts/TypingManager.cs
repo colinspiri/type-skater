@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class TypingManager : MonoBehaviour {
     // components
@@ -15,7 +16,9 @@ public class TypingManager : MonoBehaviour {
     [SerializeField] private List<Word> defaultWordList = new List<Word>();
 
     // state
+    private bool _clearOnWrongChar;
     private string _typedText;
+    public string TypedText => _typedText;
     private int _correctLength;
     private bool TypedAllCorrect => _correctLength == _typedText.Length;
     public List<Word> PossibleWords { get; } = new List<Word>();
@@ -33,9 +36,20 @@ public class TypingManager : MonoBehaviour {
         Clear();
     }
 
-    public void SetWordList(List<Word> wordList) {
-        _wordList = wordList;
+    public void ClearWordList() {
+        _wordList.Clear();
         Clear();
+    }
+    public void SetWordList(List<Word> wordList) {
+        _wordList = new List<Word>(wordList);
+        /*Debug.Log("word list is now " + wordList.Count + ":");
+        foreach (var word in wordList) {
+            Debug.Log(word);
+        }*/
+        Clear();
+    }
+    public void SetClearOnWrongChar(bool value) {
+        _clearOnWrongChar = value;
     }
 
     public bool CurrentlyTyping() {
@@ -81,13 +95,14 @@ public class TypingManager : MonoBehaviour {
 
             // on backspace
         }
+        /*else if (Input.GetKeyDown(KeyCode.Return)) {
+            // ignore these keycodes
+        }*/
         // new char typed
         else {
             char inputChar = input[0];
             _typedText += inputChar;
             checkWords = true;
-            
-            if(AudioManager.Instance) AudioManager.Instance.PlayTypingSound();
         }
 
         if (checkWords) {
@@ -98,17 +113,36 @@ public class TypingManager : MonoBehaviour {
     private void CheckForWords() {
         bool lastCharIsCorrect = false;
         Word wordCompleted = null;
+        int minWordLength = int.MaxValue;
+        foreach (var possibleWord in PossibleWords) {
+            if (possibleWord.Text.Length < minWordLength) minWordLength = possibleWord.Text.Length;
+        }
         PossibleWords.Clear();
         
+        lastCharIsCorrect = UpdatePossibleWords(ref wordCompleted);
+
+        if (_clearOnWrongChar && lastCharIsCorrect == false) {
+            Clear();
+            _typedText += Input.inputString[0];
+            lastCharIsCorrect = UpdatePossibleWords(ref wordCompleted);
+        }
+        
+        OnTypeChar?.Invoke(lastCharIsCorrect);
+        // if(!lastCharIsCorrect && AudioManager.Instance) AudioManager.Instance.PlayTypingWrongSound();
+
+        if(wordCompleted) OnTypeWord?.Invoke(wordCompleted);
+    }
+
+    private bool UpdatePossibleWords(ref Word wordCompleted) {
         // loop through all available words and check if input text matches
+        bool lastCharIsCorrect = false;
         foreach (var word in _wordList) {
             if (word.Equals(_typedText)) {
                 word.Complete();
-                lastCharIsCorrect = true;
                 Clear();
 
                 wordCompleted = word;
-                break;
+                return true;
             }
             
             int correctLength = word.StartsWith(_typedText);
@@ -129,13 +163,8 @@ public class TypingManager : MonoBehaviour {
                 PossibleWords.Add(word);
             }
         }
-        
-        OnTypeChar?.Invoke(lastCharIsCorrect);
-        if(lastCharIsCorrect && AudioManager.Instance) AudioManager.Instance.PlayTypingWrongSound();
-
-        if(wordCompleted) OnTypeWord?.Invoke(wordCompleted);
+        return lastCharIsCorrect;
     }
-
     private void UpdateDisplay() {
         if (_typedText.Length == 0) {
             displayText.text = "";

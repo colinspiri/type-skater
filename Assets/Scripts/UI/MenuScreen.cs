@@ -1,20 +1,36 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class MenuScreen : MonoBehaviour {
     // components
+    public UIConstants uiConstants;
     public RectTransform rectTransform;
     public EventSystem eventSystem;
     public CanvasGroup canvasGroup;
+    public List<MenuOptionAnimator> typingMenuOptions;
 
     // constants
-    public UIConstants uiConstants;
-    public Selectable defaultButton;
-    private Selectable _lastButton = null;
+    [FormerlySerializedAs("defaultButton")] public Selectable defaultSelectable;
+    private Selectable _lastSelected = null;
+    
+    // state 
+    private List<Word> _wordList;
+    private Dictionary<string, MenuOptionAnimator> _menuOptionsByWord;
+
+    private void Initialize() {
+        _wordList = new List<Word>();
+        _menuOptionsByWord = new Dictionary<string, MenuOptionAnimator>();
+        foreach (var menuOptionAnimator in typingMenuOptions) {
+            _wordList.Add(menuOptionAnimator.typingWord);
+            _menuOptionsByWord[menuOptionAnimator.typingText.text] = menuOptionAnimator;
+        }
+    }
 
     public void StartOffscreen() {
         rectTransform.anchoredPosition = new Vector2(uiConstants.offscreenDistance, 0);
@@ -56,6 +72,7 @@ public class MenuScreen : MonoBehaviour {
     private void OnDisable() {
         rectTransform.DOKill();
         canvasGroup.DOKill();
+        DisableFunctionality();
     }
 
     private void EnableFunctionality() {
@@ -65,6 +82,43 @@ public class MenuScreen : MonoBehaviour {
         canvasGroup.blocksRaycasts = true;
         
         SelectButton(true);
+        
+        // set word list of typing manager & add callbacks
+        if(_wordList == null) Initialize();
+        TypingManager.Instance.SetWordList(_wordList);
+        TypingManager.Instance.SetClearOnWrongChar(true);
+        TypingManager.OnTypeChar += OnTypeChar;
+        TypingManager.OnTypeWord += OnTypeWord;
+    }
+
+    private void OnTypeChar(bool charIsCorrect) {
+        if (charIsCorrect) {
+            if(AudioManager.Instance) AudioManager.Instance.PlayTypingSound();
+            
+            // check possible words
+            foreach (var possibleWord in TypingManager.Instance.PossibleWords) {
+                foreach (var pair in _menuOptionsByWord) {
+                    if (possibleWord.Equals(pair.Key)) {
+                        pair.Value.Selectable.Select();
+                        pair.Value.UpdateTypingHighlight(TypingManager.Instance.TypedText);
+                        return;
+                    }
+                }
+            }
+        }
+        if(AudioManager.Instance) AudioManager.Instance.PlayTypingWrongSound();
+
+        // if nothing matches, deselect current selectable
+        eventSystem.SetSelectedGameObject(null);
+    }
+    private void OnTypeWord(Word word) {
+        // submit on menu option 
+        foreach (var pair in _menuOptionsByWord) {
+            if (word.Equals(pair.Key)) {
+                pair.Value.Submit();
+                return;
+            }
+        }
     }
 
     private void DisableFunctionality() {
@@ -74,6 +128,12 @@ public class MenuScreen : MonoBehaviour {
         canvasGroup.blocksRaycasts = false;
         
         UpdateLastButton();
+        
+        // remove word list of typing manager
+        TypingManager.Instance.ClearWordList();
+        TypingManager.Instance.SetClearOnWrongChar(false);
+        TypingManager.OnTypeChar -= OnTypeChar;
+        TypingManager.OnTypeWord -= OnTypeWord;
     }
     
     public void CheckSelectable()
@@ -89,32 +149,32 @@ public class MenuScreen : MonoBehaviour {
             return;
         }
         
-        if (_lastButton)
+        if (_lastSelected)
         {
-            _lastButton.Select();
+            _lastSelected.Select();
         }
-        else if (defaultButton)
+        else if (defaultSelectable)
         {
-            defaultButton.Select();
+            defaultSelectable.Select();
         }
     }
 
     private IEnumerator SelectButtonCoroutine() {
         yield return null;
-        if (_lastButton)
+        if (_lastSelected)
         {
-            _lastButton.Select();
+            _lastSelected.Select();
         }
-        else if (defaultButton)
+        else if (defaultSelectable)
         {
-            defaultButton.Select();
+            defaultSelectable.Select();
         }
     }
 
     private void UpdateLastButton() {
         if (eventSystem.currentSelectedGameObject)
         {
-            _lastButton = eventSystem.currentSelectedGameObject.GetComponent<Selectable>();
+            _lastSelected = eventSystem.currentSelectedGameObject.GetComponent<Selectable>();
         }
     }
 }

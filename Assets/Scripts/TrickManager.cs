@@ -46,6 +46,13 @@ public class TrickManager : MonoBehaviour {
     }
 
     private void OnTypeChar(bool charIsCorrect) {
+        if (charIsCorrect) {
+            if(AudioManager.Instance) AudioManager.Instance.PlayTypingSound();
+        }
+        else {
+            if(AudioManager.Instance) AudioManager.Instance.PlayTypingWrongSound();
+        }
+        
         if (Player.Instance.state == Player.State.Midair || Player.Instance.state == Player.State.OnRail) {
             TimeManager.Instance.StartAirTimeByTrick();
         }

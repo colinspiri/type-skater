@@ -150,10 +150,6 @@ public class AudioManager : MonoBehaviour {
         trick.Play();
     }
 
-    public void PlaySliderSFX() {
-        jump.Play();
-    }
-
     public void SetVolume(string mixerParameter, float value) {
         mixer.SetFloat(mixerParameter, Mathf.Log10(value) * 20f);
         PlayerPrefs.SetFloat(mixerParameter, value);
@@ -168,7 +164,8 @@ public class AudioManager : MonoBehaviour {
     }
 
     public void PlayBackSound() {
-        PlayTypingWrongSound();
+        PlayTrickSound();
+        PlayUnsafeSound();
     }
 
 }

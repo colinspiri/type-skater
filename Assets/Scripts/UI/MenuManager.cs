@@ -49,7 +49,10 @@ public class MenuManager : MonoBehaviour
             if (AudioManager.Instance) AudioManager.Instance.PlayBackSound();
         }
 
-        if (Input.anyKeyDown) {
+        if (Input.GetKeyDown(KeyCode.UpArrow) ||
+            Input.GetKeyDown(KeyCode.DownArrow) ||
+            Input.GetKeyDown(KeyCode.LeftArrow) ||
+            Input.GetKeyDown(KeyCode.RightArrow)) {
             if(_menuScreenStack.Count > 0) _menuScreenStack[_menuScreenStack.Count - 1].CheckSelectable();
         }
     }

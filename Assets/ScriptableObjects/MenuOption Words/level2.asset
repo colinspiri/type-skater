@@ -9,11 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4a179bb9b3a4fbab4ef9f18eef43901, type: 3}
-  m_Name: UIConstants
+  m_Script: {fileID: 11500000, guid: 89993dd286e5414a87d55645f1690107, type: 3}
+  m_Name: level2
   m_EditorClassIdentifier: 
-  selectTime: 0.2
-  selectedColor: {r: 0.8901961, g: 0.76862746, b: 0.10980392, a: 1}
-  offscreenDistance: 600
-  menuScreenTransitionTime: 0.3
-  sliderValueChange: 0.2
+  wordText: level0

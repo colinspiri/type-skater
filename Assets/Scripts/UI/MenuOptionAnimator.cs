@@ -11,21 +11,33 @@ public class MenuOptionAnimator : MonoBehaviour {
     public UIConstants uiConstants;
     [Space]
     
-    // components
+    [Header("Typing")]
+    public TextMeshProUGUI typingText;
+    public TextMeshProUGUI typingHighlightText;
+    public Word typingWord;
+    
     [Header("Selectable")]
     private Selectable _selectable;
+    public Selectable Selectable => _selectable;
     public GameObject selectionBox;
     public List<TextMeshProUGUI> texts;
-    [Header("Toggle")] 
+    [Space]
+    
+    [Header("Toggle")]
     public Toggle toggle;
     public GameObject whenOn;
     public GameObject whenOff;
+    [Space] 
     
+    [Header("Slider")] 
+    public Slider slider;
+
     // state
     private Color _normalTextColor;
 
     private void Awake() {
         _selectable = GetComponent<Selectable>();
+        if (typingWord && typingText) typingWord.SetText(typingText.text);
     }
 
     private void Start() {
@@ -47,7 +59,14 @@ public class MenuOptionAnimator : MonoBehaviour {
     }
 
     public void Submit() {
-        ExecuteEvents.Execute(_selectable.gameObject, new BaseEventData(EventSystem.current), ExecuteEvents.submitHandler);
+        if (slider) {
+            float newValue = slider.value + uiConstants.sliderValueChange;
+            newValue %= slider.maxValue;
+            slider.value = newValue;
+        }
+        else {
+            ExecuteEvents.Execute(_selectable.gameObject, new BaseEventData(EventSystem.current), ExecuteEvents.submitHandler);
+        }
     }
     
     public void Deselect() {
@@ -63,6 +82,9 @@ public class MenuOptionAnimator : MonoBehaviour {
                 text.DOColor(_normalTextColor, uiConstants.selectTime).SetUpdate(true);
             }
         }
+        if (typingHighlightText) {
+            typingHighlightText.text = "";
+        }
     }
 
     public void PlaySelectAnimation() {
@@ -74,12 +96,29 @@ public class MenuOptionAnimator : MonoBehaviour {
                 text.DOColor(uiConstants.selectedColor, uiConstants.selectTime).SetUpdate(true);
             }
         }
+        if (typingHighlightText && typingText) {
+            typingHighlightText.text = typingText.text;
+        }
+
         PlaySelectSound();
+    }
+
+    public void UpdateTypingHighlight(string typedText) {
+        if (typingText) {
+            typingText.DOKill();
+            typingText.color = _normalTextColor;
+        }
+        if (typingHighlightText) {
+            typingHighlightText.color = uiConstants.selectedColor;
+            typingHighlightText.text = typedText;
+        }
     }
 
     public void PlaySubmitAnimation()
     {
-        // to be implemented
+        if (typingHighlightText) {
+            typingHighlightText.text = "";
+        }
     }
 
     public void PlaySelectSound() {
