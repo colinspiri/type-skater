@@ -88,6 +88,8 @@ public class TrickManager : MonoBehaviour {
     }
 
     private void UpdateAvailableTricks(Player.State state) {
+        if (GameManager.Instance.GameIsOver) return;
+        
         availableTricks.Clear();
         foreach (var trick in allTricks) {
             if (trick.availableInStates.Contains(state)) {

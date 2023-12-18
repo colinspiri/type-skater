@@ -26,7 +26,7 @@ public class PauseMenuManager : MonoBehaviour {
     }
     
     private void Update() {
-        if (GameManager.Instance && GameManager.Instance.gameStopped) return;
+        if (GameManager.Instance && GameManager.Instance.GameStopped) return;
         
         if (Input.GetKeyDown(pauseButton)) {
             if (pauseMenu.activeSelf) ClosePauseMenu();
@@ -48,8 +48,7 @@ public class PauseMenuManager : MonoBehaviour {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        _gameStoppedBeforePause = GameManager.Instance.gameStopped;
-        if(!_gameStoppedBeforePause) Pause();
+        GameManager.Instance.Pause();
     }
 
     public void ClosePauseMenu() {
@@ -61,21 +60,11 @@ public class PauseMenuManager : MonoBehaviour {
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
-        GameManager.Instance.gameStopped = _gameStoppedBeforePause;
-        if(!GameManager.Instance.gameStopped) Resume();
-    }
-    
-    private void Pause(bool pauseAudio = true) {
-        GameManager.Instance.Pause(pauseAudio);
-    }
-
-    private void Resume(bool resumeAudio = true) {
-        GameManager.Instance.Resume(resumeAudio);
+        
+        GameManager.Instance.Resume();
     }
 
     private void OnGameOver() {
         ClosePauseMenu();
-        _gameIsOver = true;
     }
 }

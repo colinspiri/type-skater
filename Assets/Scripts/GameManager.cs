@@ -9,7 +9,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     // game state
-    public bool gameStopped;
+    private bool _gameStopped;
+    private bool _gameOver;
+    public bool GameStopped => _gameStopped;
+    public bool GameIsOver => _gameOver;
     
     // callbacks
     public event Action OnGameOver;
@@ -26,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     public void Pause(bool pauseAudio = true)
     {
-        gameStopped = true;
+        _gameStopped = true;
         TimeManager.Instance.PauseTime();
         if (pauseAudio) {
             AudioListener.pause = true;
@@ -35,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     public void Resume(bool resumeAudio = true)
     {
-        gameStopped = false;
+        _gameStopped = false;
         TimeManager.Instance.ResumeTime();
         if (resumeAudio) {
             AudioListener.pause = false;
@@ -44,12 +47,13 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        if (gameStopped) return;
-
-        Player.Instance.onWipeOut -= GameOver;
-
-        gameStopped = true;
+        if (_gameOver) return;
+        
+        _gameStopped = true;
+        _gameOver = true;
+        
         TimeManager.Instance.EndAirTime();
+        TypingManager.Instance.ClearWordList();
 
         OnGameOver?.Invoke();
         if(gameOverEvent) gameOverEvent.Raise();

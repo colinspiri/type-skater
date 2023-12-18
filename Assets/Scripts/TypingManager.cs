@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 public class TypingManager : MonoBehaviour {
     // components
@@ -42,10 +40,6 @@ public class TypingManager : MonoBehaviour {
     }
     public void SetWordList(List<Word> wordList) {
         _wordList = new List<Word>(wordList);
-        /*Debug.Log("word list is now " + wordList.Count + ":");
-        foreach (var word in wordList) {
-            Debug.Log(word);
-        }*/
         Clear();
     }
     public void SetClearOnWrongChar(bool value) {

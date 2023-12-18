@@ -85,6 +85,7 @@ public class MenuScreen : MonoBehaviour {
         
         // set word list of typing manager & add callbacks
         if(_wordList == null) Initialize();
+        Debug.Log(name + " setting word list");
         TypingManager.Instance.SetWordList(_wordList);
         TypingManager.Instance.SetClearOnWrongChar(true);
         TypingManager.OnTypeChar += OnTypeChar;
