@@ -45,7 +45,7 @@ public class TrickSuggestion : MonoBehaviour
             }
         }
         
-        // select the word with the most points
+        // pick random word
         if (leastUsedWords.Count > 0) {
             if (!leastUsedWords.Contains(suggestedText)) {
                 int randomIndex = Random.Range(0, leastUsedWords.Count);

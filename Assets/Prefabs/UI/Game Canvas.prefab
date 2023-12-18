@@ -854,6 +854,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   predictiveText: {fileID: 5050352322666136732}
+  pushSuggestionTime: 3
+  ollieSuggestionTime: 6
 --- !u!1 &6088278267917446627
 GameObject:
   m_ObjectHideFlags: 0
