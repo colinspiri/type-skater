@@ -167,4 +167,10 @@ public class AudioManager : MonoBehaviour {
         PlayUnsafeSound();
     }
 
+    public void PauseAudio() {
+        rolling.Stop();
+    }
+    public void ResumeAudio() {
+        
+    }
 }

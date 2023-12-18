@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
         _gameStopped = true;
         TimeManager.Instance.PauseTime();
         if (pauseAudio) {
-            AudioListener.pause = true;
+            AudioManager.Instance.PauseAudio();
         }
     }
 
@@ -40,8 +40,9 @@ public class GameManager : MonoBehaviour
     {
         _gameStopped = false;
         TimeManager.Instance.ResumeTime();
+        TrickManager.Instance.Bind();
         if (resumeAudio) {
-            AudioListener.pause = false;
+            AudioManager.Instance.ResumeAudio();
         }
     }
 

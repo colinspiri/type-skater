@@ -52,7 +52,7 @@ public class TypingManager : MonoBehaviour {
     
     public void Clear() {
         _typedText = "";
-        _correctLength = 0;    
+        _correctLength = 0;
     }
 
     private void Update() {

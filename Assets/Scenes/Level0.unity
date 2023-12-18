@@ -1642,5 +1642,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: --BASEGAME--
       objectReference: {fileID: 0}
+    - target: {fileID: 4904297575016812777, guid: f25df97b30e4af9448c1a86f7b5c79f7, type: 3}
+      propertyPath: m_text
+      value: playground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f25df97b30e4af9448c1a86f7b5c79f7, type: 3}

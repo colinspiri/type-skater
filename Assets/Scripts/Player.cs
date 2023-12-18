@@ -89,10 +89,12 @@ public class Player : MonoBehaviour
     }
 
     private void Update() {
-        // safe
-        if (state == State.OnGround || state == State.OnRamp) SetSafe(true);
-        else {
-            SetSafe(!TypingManager.Instance.CurrentlyTyping());
+        if (!GameManager.Instance.GameStopped) {
+            // safe
+            if (state == State.OnGround || state == State.OnRamp) SetSafe(true);
+            else {
+                SetSafe(!TypingManager.Instance.CurrentlyTyping());
+            }
         }
 
         // set current speed state

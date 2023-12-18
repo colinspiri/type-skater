@@ -33,6 +33,8 @@ public class PredictiveText : MonoBehaviour
     }
 
     private void Update() {
+        if (GameManager.Instance.GameStopped) return;
+        
         if (Player.Instance.state == Player.State.OnGround) {
             CountGroundTimers();
             if(!TypingManager.Instance.CurrentlyTyping()) CheckGroundSuggestions();

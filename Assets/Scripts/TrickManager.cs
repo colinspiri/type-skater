@@ -42,6 +42,10 @@ public class TrickManager : MonoBehaviour {
         TypingManager.OnTypeWord -= OnTypeWordCallback;
     }
 
+    public void Bind() {
+        UpdateAvailableTricks(Player.Instance.state);
+    }
+
     private void OnTypeCharCallback(bool charIsCorrect) {
         if (GameManager.Instance.GameStopped) return;
         
@@ -91,6 +95,7 @@ public class TrickManager : MonoBehaviour {
     }
 
     private void UpdateAvailableTricks(Player.State state) {
+        if (GameManager.Instance == null || TypingManager.Instance == null) return;
         if (GameManager.Instance.GameIsOver) return;
         
         availableTricks.Clear();
