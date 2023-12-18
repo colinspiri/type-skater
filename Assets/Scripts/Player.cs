@@ -80,8 +80,9 @@ public class Player : MonoBehaviour
     }
 
     private void Start() {
-        if (Score.Instance != null) {
-            Score.Instance.onGameOver += () => {
+        if (GameManager.Instance != null) {
+            GameManager.Instance.OnGameOver += () => {
+                SetSpeed(Speed.Slow);
                 currentSpeed = Speed.Stopped;
             };
         }

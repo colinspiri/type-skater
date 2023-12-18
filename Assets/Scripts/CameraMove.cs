@@ -21,8 +21,8 @@ public class CameraMove : MonoBehaviour {
         offset = transform.position - objectToFollow.transform.position;
         levelStartX = transform.position.x;
 
-        if (Score.Instance != null) {
-            Score.Instance.onGameOver += () => {
+        if (GameManager.Instance != null) {
+            GameManager.Instance.OnGameOver += () => {
                 levelEndX = Player.Instance.transform.position.x;
                 panningOverLevel = true;
             };

@@ -1,8 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
-using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -52,7 +47,11 @@ public class AudioManager : MonoBehaviour {
         SetVolume("MasterVolume", PlayerPrefs.GetFloat("MasterVolume", 0.4f));
         SetVolume("MusicVolume", PlayerPrefs.GetFloat("MusicVolume", 1f));
         SetVolume("SFXVolume", PlayerPrefs.GetFloat("SFXVolume", 1f));
-        
+
+        key.ignoreListenerPause = true;
+        trick.ignoreListenerPause = true;
+        scratchDescending.ignoreListenerPause = true;
+
         SceneManager.activeSceneChanged += (oldscene, newscene) => {
             AddCallbacks();
             rolling.Stop();

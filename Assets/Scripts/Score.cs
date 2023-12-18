@@ -15,7 +15,6 @@ public class Score : MonoBehaviour {
     private int unsecuredScore;
     private float multiplier;
     public float multiplierIncrement;
-    [HideInInspector] public int wipeouts;
     private List<string> staleTricks = new List<string>();
     public int maxStaleTricks;
     
@@ -38,15 +37,7 @@ public class Score : MonoBehaviour {
     private TextMeshProUGUI scoreText;
     public GameObject completedTrickTextPrefab;
     public Color completedTrickTextColor;
-
-    // pause menu + game over
-    public bool gameOverOnWipeOut;
-    public GameObject gameOverPrefab;
-    public List<GameObject> objectsToDisable;
-    public PauseMenu pauseMenu;
-    public delegate void OnGameOver();
-    public OnGameOver onGameOver;
-
+    
     private void Awake() {
         if (Instance == null) Instance = this;
         scoreText = GetComponent<TextMeshProUGUI>();
@@ -93,8 +84,8 @@ public class Score : MonoBehaviour {
                 unsecuredScoreText = null;
             }
         };
-        Player.Instance.onWipeOut += () => wipeouts++;
-        if (gameOverOnWipeOut) Player.Instance.onWipeOut += GameOver;
+
+        if (GameManager.Instance) GameManager.Instance.OnGameOver += OnGameOver;
     }
 
     private void SecureScore() {
@@ -188,10 +179,8 @@ public class Score : MonoBehaviour {
         return unsecuredScore;
     }
 
-    public void GameOver() {
-        // remove callback
-        if(gameOverOnWipeOut) Player.Instance.onWipeOut -= GameOver;
-        // secure unsecured store
+    private void OnGameOver() {
+        // secure unsecured score
         SecureScore();
         
         // compare with high score
@@ -200,24 +189,5 @@ public class Score : MonoBehaviour {
             highScore = score;
             PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + "HighScore", highScore);
         }
-
-        // display game over
-        TextMeshProUGUI gameOverText = Instantiate(gameOverPrefab, transform.parent, false).GetComponent<TextMeshProUGUI>();
-        gameOverText.text = "your score: " + score;
-        gameOverText.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "high score: " + highScore;
-        string wipedouttext = "wiped out " + wipeouts + " time";
-        if (wipeouts != 1) wipedouttext += "s";
-        gameOverText.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = wipedouttext;
-        gameOverText.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "";
-        // disable other objects
-        Player.Instance.SetSpeed(Player.Speed.Slow);
-        Player.Instance.currentSpeed = Player.Speed.Stopped;
-        TimeManager.Instance.SetTimeScale(1);
-        foreach (GameObject o in objectsToDisable) {
-            o.SetActive(false);
-        }
-        pauseMenu.enabled = false;
-        scoreText.enabled = false;
-        onGameOver?.Invoke();
     }
 }

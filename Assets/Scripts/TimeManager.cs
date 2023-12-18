@@ -7,11 +7,12 @@ public class TimeManager : MonoBehaviour {
     public float midairTimeScale;
     public float airTimeOnTrick;
     public float airTimeOnJump;
-    public float revertTime; // 0.5
+    public float revertTime;
     
     private float _fixedDeltaTime;
     private float _maxAirTime;
     private float _currentAirTimeLeft;
+    private float _previousTimeScale = 1;
 
     private void Awake() {
         if (Instance != null) {
@@ -24,6 +25,12 @@ public class TimeManager : MonoBehaviour {
     }
 
     private void Update() {
+        if (Time.timeScale == 0) return;
+        
+        UpdateAirTime();
+    }
+
+    private void UpdateAirTime() {
         if (_currentAirTimeLeft > 0) {
             _currentAirTimeLeft -= Time.unscaledDeltaTime;
 
@@ -57,5 +64,13 @@ public class TimeManager : MonoBehaviour {
     public void EndAirTime() {
         SetTimeScale(1);
         _currentAirTimeLeft = 0;
+    }
+
+    public void PauseTime() {
+        _previousTimeScale = Time.timeScale;
+        SetTimeScale(0);
+    }
+    public void ResumeTime() {
+        SetTimeScale(_previousTimeScale);
     }
 }
