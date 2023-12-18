@@ -82,8 +82,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9176336354af419f901bdc7a348b8534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverPrefab: {fileID: 142869858993317319, guid: dbd7e0bf9abca4aca8805151b180530f, type: 3}
-  gameStopped: 0
   gameOverEvent: {fileID: 11400000, guid: 35f17b25bb492a444b21158b4da5767f, type: 2}
 --- !u!1001 &1418215110507084166
 PrefabInstance:
@@ -1038,6 +1036,10 @@ PrefabInstance:
       propertyPath: grindParticles
       value: 
       objectReference: {fileID: 4612237537768414462}
+    - target: {fileID: 7760741278451484483, guid: 2169fa7af792f429cbfdb2146a9d9431, type: 3}
+      propertyPath: maxJumpInitialVelocity
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 7760741278451484484, guid: 2169fa7af792f429cbfdb2146a9d9431, type: 3}
       propertyPath: m_RootOrder
       value: 6

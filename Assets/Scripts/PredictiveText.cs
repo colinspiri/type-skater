@@ -47,10 +47,7 @@ public class PredictiveText : MonoBehaviour
     
     private void CountGroundTimers() {
         // push
-        if (Player.Instance.currentSpeed == Player.Speed.Slow || Player.Instance.currentSpeed == Player.Speed.Stopped) {
-            _timeWaitingForPush += Time.unscaledDeltaTime;
-        }
-        else _timeWaitingForPush = 0;
+        _timeWaitingForPush += Time.unscaledDeltaTime;
 
         // ollie
         _timeWaitingForOllie += Time.unscaledDeltaTime;

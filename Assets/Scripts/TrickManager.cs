@@ -77,12 +77,14 @@ public class TrickManager : MonoBehaviour {
             else if (trick.Text.Equals("ollie")) Player.Instance.Jump();
             else if (trick.Text.Equals("drop")) {
                 Player.Instance.Drop();
-                availableTricks.Remove(word);
                 TimeManager.Instance.EndAirTime();
+                availableTricks.Remove(word);
+                TypingManager.Instance.SetWordList(availableTricks);
             }
             else if (trick.Text.Equals("grab")) {
                 Player.Instance.Grab();
                 availableTricks.Remove(word);
+                TypingManager.Instance.SetWordList(availableTricks);
             }
 
             // if gains score

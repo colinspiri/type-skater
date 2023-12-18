@@ -9874,26 +9874,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dafa1cec193f4f95afe6afdc2037ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slowSpeed: 2
-  mediumSpeed: 5
-  fastSpeed: 7
-  maxSpeed: 10
-  pushForce: 130
-  slowJumpForce: 225
-  mediumJumpForce: 250
-  fastJumpForce: 300
-  midairTimeScale: 0.4
+  minSpeed: 1.5
+  maxSpeed: 6
+  midairSpeed: 3.5
+  landingSpeed: 3
+  pushSpeed: 6
+  minJumpInitialVelocity: 8
+  maxJumpInitialVelocity: 17
   unsafeRotationZ: 27
   dropForce: 150
-  grabJumpVelocity: 3
+  grabJumpVelocity: 4
   grabPushForce: 70
-  rampSpeed: 3
-  rampJump: 1
-  railSpeed: 2
-  railJump: 1
-  railTimeScale: 0.6
+  rampSpeed: 8
+  railSpeed: 8
   state: 1
-  currentSpeed: 0
   trail: {fileID: 7760741279925662503}
   slowTrailColor: {r: 1, g: 0.9764706, b: 0, a: 1}
   mediumTrailColor: {r: 1, g: 0.52179044, b: 0, a: 1}

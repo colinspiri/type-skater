@@ -127,7 +127,7 @@ public class AudioManager : MonoBehaviour {
             }
             else if(rolling.isPlaying) rolling.Stop();
             // adjust volume based on player speed
-            rolling.volume = Mathf.Lerp(0.01f, 0.5f, (player.GetSpeed() - player.slowSpeed) / 2*player.maxSpeed);
+            rolling.volume = Mathf.Lerp(0.01f, 0.5f, (player.GetSpeed() - player.minSpeed) / 2*player.maxSpeed);
         }
     }
 

@@ -11,41 +11,36 @@ public class Player : MonoBehaviour
     public static Player Instance;
     
     // public constants
-    [Header("Speed Constants")] 
-    public float slowSpeed;
-    public float mediumSpeed;
-    public float fastSpeed;
+    [Header("Speed Constants")]
+    public float minSpeed;
     public float maxSpeed;
-    public float pushForce;
+    public float midairSpeed;
+    public float landingSpeed;
+    public float pushSpeed;
 
     [Header("Jump Constants")] 
-    public float slowJumpForce;
-    public float mediumJumpForce;
-    public float fastJumpForce;
-    public float midairTimeScale;
+    public float minJumpInitialVelocity;
+    public float maxJumpInitialVelocity;
     public float unsafeRotationZ;
+    
+    [Header("Drop & Grab")]
     public float dropForce;
     public float grabJumpVelocity;
     public float grabPushForce;
 
-    [Header("Ramp Constants")] 
-    public Speed rampSpeed;
-    public Speed rampJump;
+    [Header("Ramp Constants")]
+    public float rampSpeed;
 
     [Header("Rail Constants")]
-    public Speed railSpeed;
-    public Speed railJump;
-    public float railTimeScale;
+    public float railSpeed;
 
     // private state
     public enum State { Midair, OnGround, OnRail, OnRamp, }
     [HideInInspector] public State state = State.OnGround;
-    public enum Speed { Stopped, Slow, Medium, Fast, }
-    public Speed currentSpeed = Speed.Stopped;
+    private bool _stopped;
+    private bool _safe;
     
-    private bool safe;
-    
-    // callbacks
+    // callbacks TODO - turn into Action events
     public delegate void OnJump();
     public OnJump onJump;
 
@@ -64,7 +59,7 @@ public class Player : MonoBehaviour
     // component stuff
     private Rigidbody2D rb;
     private Animator animator;
-    [Header("Component Constants")]
+    [Header("Component Constants")] // TODO: turn trail into separate script that references multiplier
     public TrailRenderer trail;
     public Color slowTrailColor;
     public Color mediumTrailColor;
@@ -80,10 +75,11 @@ public class Player : MonoBehaviour
     }
 
     private void Start() {
+        _stopped = true;
+        
         if (GameManager.Instance != null) {
             GameManager.Instance.OnGameOver += () => {
-                SetSpeed(Speed.Slow);
-                currentSpeed = Speed.Stopped;
+                _stopped = true;
             };
         }
     }
@@ -96,50 +92,41 @@ public class Player : MonoBehaviour
                 SetSafe(!TypingManager.Instance.CurrentlyTyping());
             }
         }
+        else SetSafe(true);
 
-        // set current speed state
-        if (state == State.OnRail) {
-            SetSpeed(railSpeed);
-        }
-        else if (state == State.OnRamp) {
-            SetSpeed(rampSpeed);
-        }
-        else if(state == State.OnGround) {
-            float speed = rb.velocity.x;
-            if (speed >= fastSpeed) {
-                currentSpeed = Speed.Fast;
-                if(speed > maxSpeed) rb.velocity = new Vector2(maxSpeed, rb.velocity.y);
+        // check max & min speed
+        if (state == State.OnGround) {
+            float currentSpeed = GetSpeed();
+            if (currentSpeed > maxSpeed) {
+                rb.velocity = new Vector2(maxSpeed, rb.velocity.y);
             }
-            else if (speed >= mediumSpeed) {
-                currentSpeed = Speed.Medium;
+            if (currentSpeed < minSpeed && !_stopped) {
+                rb.velocity = new Vector2(minSpeed, rb.velocity.y);
             }
-            else if (currentSpeed != Speed.Stopped) {
-                currentSpeed = Speed.Slow;
-                if(speed < slowSpeed) rb.velocity = new Vector2(slowSpeed, rb.velocity.y);
-            }
-            // TrickManager.Instance.UpdateAvailableTricks(state);
         }
+
         // trail color
-        if (currentSpeed == Speed.Slow || currentSpeed == Speed.Stopped) {
+        float t = Mathf.InverseLerp(minSpeed, maxSpeed, GetSpeed());
+        if (t <= 0.33) {
             trail.startColor = slowTrailColor;
             trail.endColor = slowTrailColor;
         }
-        else if (currentSpeed == Speed.Medium) {
+        else if (t <= 0.67) {
             trail.startColor = mediumTrailColor;
             trail.endColor = mediumTrailColor;
         }
-        else if (currentSpeed == Speed.Fast) {
+        else {
             trail.startColor = fastTrailColor;
             trail.endColor = fastTrailColor;
         }
     }
 
     private void SetSafe(bool value) {
-        if (safe == value) return;
+        if (_safe == value) return;
 
-        safe = value;
-        animator.SetBool("safe", state == State.Midair ? safe : true);
-        if (safe) {
+        _safe = value;
+        animator.SetBool("safe", state == State.Midair ? _safe : true);
+        if (_safe) {
             AudioManager.Instance.PlaySafeSound();
         }
         else {
@@ -150,17 +137,18 @@ public class Player : MonoBehaviour
     private void ChangeState(State newState) {
         state = newState;
         if (state == State.Midair) {
-            // TimeManager.Instance.SetTimeScale(midairTimeScale);
             TimeManager.Instance.StartAirTimeByJump();
         }
         else if (state == State.OnGround) {
             TimeManager.Instance.EndAirTime();
         }
         else if (state == State.OnRail) {
-            // TimeManager.Instance.SetTimeScale(railTimeScale);
+            TimeManager.Instance.StartAirTimeByJump();
+            SetSpeed(railSpeed);
         }
         else if (state == State.OnRamp) {
             TimeManager.Instance.EndAirTime();
+            SetSpeed(rampSpeed);
         }
         onStateChange?.Invoke(state);
     }
@@ -169,24 +157,27 @@ public class Player : MonoBehaviour
         return rb.velocity.x;
     }
 
-    public void Push()
-    {
-        if (rb.velocity.x < maxSpeed)
-        {
-            rb.AddForce(new Vector2(pushForce, 0));
-        }
-        if (currentSpeed == Speed.Stopped) currentSpeed = Speed.Slow;
+    public void Push() {
+        SetSpeed(pushSpeed);
+
+        _stopped = false;
         
         PlayerAnimator.Instance.PushParticles();
     }
 
-    public void Jump(Speed jumpType = Speed.Stopped)
+    public void Jump()
     {
         // only do callback if starting new jump
         bool newJump = state == State.OnGround || (state == State.OnRamp && !Score.Instance.scoreIsUnsecured);
         if(state == State.OnRail) Instructions.Instance.FinishInstruction("rail_ollie");
         
-        // use jump force based on speed
+        // determine initial jump vel
+        float t = Mathf.InverseLerp(minSpeed, maxSpeed, GetSpeed());
+        float jumpInitialVelocity = Mathf.Lerp(minJumpInitialVelocity, maxJumpInitialVelocity, t);
+
+        rb.velocity = new Vector2(midairSpeed, jumpInitialVelocity);
+        
+        /*// use jump force based on speed
         float jumpForce = (jumpType != Speed.Stopped ? jumpType : currentSpeed) switch {
             Speed.Slow => slowJumpForce,
             Speed.Medium => mediumJumpForce,
@@ -195,13 +186,7 @@ public class Player : MonoBehaviour
         };
         rb.AddForce(new Vector2(0, jumpForce / TimeManager.Instance.midairTimeScale));
         // set speed
-        float newSpeed = currentSpeed switch {
-            Speed.Slow => mediumSpeed,
-            Speed.Medium => mediumSpeed,
-            Speed.Fast => mediumSpeed,
-            _ => 0
-        };
-        rb.velocity = new Vector2(newSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(mediumSpeed, rb.velocity.y);*/
         
         
         // change state
@@ -223,34 +208,21 @@ public class Player : MonoBehaviour
         rb.AddForce(new Vector2(0, -1 * dropForce));
     }
 
-    public void SetSpeed(Speed speed) {
-        currentSpeed = speed;
-        float newSpeed = currentSpeed switch {
-            Speed.Stopped => 0,
-            Speed.Slow => Mathf.Lerp(slowSpeed, mediumSpeed, 0.5f),
-            Speed.Medium => Mathf.Lerp(mediumSpeed, fastSpeed, 0.5f),
-            Speed.Fast => Mathf.Lerp(fastSpeed, maxSpeed, 0.5f),
-            _ => -1
-        };
+    private void SetSpeed(float newSpeed) {
         rb.velocity = new Vector2(newSpeed, rb.velocity.y);
     }
 
     private void SafeLanding() {
-        // set speed
-        SetSpeed(Speed.Medium);
-        // callbacks
+        SetSpeed(landingSpeed);
         onSafeLanding?.Invoke(Score.Instance.GetUnsecuredScore());
     }
     private void UnsafeLanding() {
-        // wipe out
         WipeOut();
-        // callbacks
         onUnsafeLanding?.Invoke();
     }
 
     public void WipeOut() {
-        // slow
-        SetSpeed(Speed.Slow);
+        SetSpeed(minSpeed);
 
         // if player landed with unsecured score, screen shake magnitude is proportional to the score
         float magnitude = (Score.Instance.GetUnsecuredScore() > 0) ? (0.2f + Score.Instance.GetUnsecuredScore() * 0.1f) : 1f;
@@ -269,13 +241,13 @@ public class Player : MonoBehaviour
             ChangeState(State.OnGround);
             Skateboard.Instance.SetAnimation(Skateboard.Animation.None);
 
-            if(safe) SafeLanding();
+            if(_safe) SafeLanding();
             else UnsafeLanding();
         }
         
         // land on rail
         if (other.gameObject.CompareTag("Rail") && state != State.OnRail) {
-            if (safe) {
+            if (_safe) {
                 Skateboard.Instance.SetAnimation(Skateboard.Animation.None);
 
                 ChangeState(State.OnRail);
@@ -296,12 +268,12 @@ public class Player : MonoBehaviour
                 ChangeState(State.OnRamp);
             }
             // safe landing from midair
-            else if (state == State.Midair && safe) {
+            else if (state == State.Midair && _safe) {
                 ChangeState(State.OnRamp);
                 Instructions.Instance.FinishInstruction("ramp_land");
             }
             // unsafe landing from midair, bounce off
-            else if (state == State.Midair && !safe) {
+            else if (state == State.Midair && !_safe) {
                 other.gameObject.GetComponent<BoxCollider2D>().enabled = false;
                 WipeOut();
                 Grab();
@@ -314,11 +286,11 @@ public class Player : MonoBehaviour
         if (other.CompareTag("RailEnd") && state == State.OnRail) {
             // set to midair
             ChangeState(State.Midair);
-            Jump(railJump);
+            Jump();
         }
         // end of ramp
         if (other.CompareTag("RampEnd") && state == State.OnRamp) {
-            Jump(rampJump);
+            Jump();
             Instructions.Instance.FinishInstruction("ramp_launch");
         }
     }

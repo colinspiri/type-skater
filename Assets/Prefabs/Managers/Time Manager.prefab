@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   midairTimeScale: 0.3
-  airTimeOnTrick: 1.5
-  airTimeOnJump: 0.25
-  revertTime: 0.25
+  airTimeOnTrick: 0.8
+  airTimeOnJump: 0.2
+  revertTime: 0.3

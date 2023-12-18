@@ -56,19 +56,8 @@ public class Score : MonoBehaviour {
             scoreIsUnsecured = true;
             multiplierText = unsecuredScoreObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             // set multiplier based on player speed
-            if (Player.Instance.currentSpeed == Player.Speed.Fast) {
-                multiplier = 2.0f;
-                multiplierText.color = Player.Instance.fastTrailColor;
-            }
-            else if (Player.Instance.currentSpeed == Player.Speed.Medium) {
-                multiplier = 1.5f;
-                multiplierText.color = Player.Instance.mediumTrailColor;
-            }
-            else if (Player.Instance.currentSpeed == Player.Speed.Slow) {
-                multiplier = 1.0f;
-                multiplierText.color = Player.Instance.slowTrailColor;
-            }
-            else multiplier = 0;
+            multiplier = 1.0f;
+            multiplierText.color = Player.Instance.slowTrailColor;
             multiplierText.text = "x" + multiplier.ToString("F1");
         };
         Player.Instance.onSafeLanding += s => {
