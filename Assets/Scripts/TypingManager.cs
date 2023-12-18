@@ -70,7 +70,11 @@ public class TypingManager : MonoBehaviour {
         // backspace
         bool checkWords = false;
         if (Input.GetKeyDown(KeyCode.Backspace)) {
-            if (_typedText.Length > 1) {
+            if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) 
+            || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
+                Clear();
+            }
+            else if (_typedText.Length > 1) {
                 if (TypedAllCorrect) {
                     _correctLength--;
                     _typedText = _typedText.Substring(0, _typedText.Length - 1);
@@ -82,8 +86,7 @@ public class TypingManager : MonoBehaviour {
                 checkWords = true;
             }
             else if (_typedText.Length == 1) {
-                _typedText = "";
-                _correctLength = 0;
+                Clear();
                 PossibleWords.Clear();
             }
 
@@ -122,8 +125,6 @@ public class TypingManager : MonoBehaviour {
         }
         
         OnTypeChar?.Invoke(lastCharIsCorrect);
-        // if(!lastCharIsCorrect && AudioManager.Instance) AudioManager.Instance.PlayTypingWrongSound();
-
         if(wordCompleted) OnTypeWord?.Invoke(wordCompleted);
     }
 

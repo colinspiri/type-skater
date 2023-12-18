@@ -61,7 +61,7 @@ public class PauseMenuManager : MonoBehaviour {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         
-        GameManager.Instance.Resume();
+        if(!GameManager.Instance.GameIsOver) GameManager.Instance.Resume();
     }
 
     private void OnGameOver() {

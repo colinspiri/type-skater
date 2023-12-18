@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class PredictiveText : MonoBehaviour
 {
@@ -15,14 +12,11 @@ public class PredictiveText : MonoBehaviour
         predictiveText.text = "";
         
         Player.Instance.onStateChange += UpdatePredictiveText;
-        TrickManager.Instance.OnCompleteTrick += _ => UpdatePredictiveText(Player.Instance.state);
-    }
-
-    private void OnEnable() {
-        TypingManager.OnTypeChar += OnTypeChar;
-    }
-    private void OnDisable() {
-        TypingManager.OnTypeChar -= OnTypeChar;
+        TrickManager.Instance.OnTypeChar += OnTypeChar;
+        TrickManager.Instance.OnCompleteTrick += trick => {
+            TrickSuggestion.Instance.CountTrick(trick);
+            UpdatePredictiveText(Player.Instance.state);
+        };
     }
 
     private void OnTypeChar(bool charCorrect) {

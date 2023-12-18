@@ -7,21 +7,18 @@ public class TrickManager : MonoBehaviour {
     public static TrickManager Instance;
 
     // component stuff
-    private Animator playerAnimator;
+    private Animator _playerAnimator;
 
     // public constants
-    // public TextMeshProUGUI predictiveText;
     public GameObject completedTextStartTransform;
-    public GameObject completedTextPrefab;
+    public GameObject completedTextPrefab; // TODO: separate completed text to other script
     public List<Trick> allTricks;
 
     // state
     private List<Word> availableTricks = new List<Word>();
 
-    // UI
-    // public GameObject errorTextPrefab;
-
     // callbacks
+    public event Action<bool> OnTypeChar;
     public event Action<Trick> OnCompleteTrick;
 
     private void Awake() {
@@ -29,7 +26,7 @@ public class TrickManager : MonoBehaviour {
     }
 
     private void Start() {
-        playerAnimator = Player.Instance.GetComponent<Animator>();
+        _playerAnimator = Player.Instance.GetComponent<Animator>();
 
         Player.Instance.onStateChange += _ => TypingManager.Instance.Clear();
         Player.Instance.onStateChange += UpdateAvailableTricks;
@@ -37,15 +34,17 @@ public class TrickManager : MonoBehaviour {
     }
 
     private void OnEnable() {
-        TypingManager.OnTypeChar += OnTypeChar;
-        TypingManager.OnTypeWord += OnTypeWord;
+        TypingManager.OnTypeChar += OnTypeCharCallback;
+        TypingManager.OnTypeWord += OnTypeWordCallback;
     }
     private void OnDisable() {
-        TypingManager.OnTypeChar -= OnTypeChar;
-        TypingManager.OnTypeWord -= OnTypeWord;
+        TypingManager.OnTypeChar -= OnTypeCharCallback;
+        TypingManager.OnTypeWord -= OnTypeWordCallback;
     }
 
-    private void OnTypeChar(bool charIsCorrect) {
+    private void OnTypeCharCallback(bool charIsCorrect) {
+        if (GameManager.Instance.GameStopped) return;
+        
         if (charIsCorrect) {
             if(AudioManager.Instance) AudioManager.Instance.PlayTypingSound();
         }
@@ -56,9 +55,13 @@ public class TrickManager : MonoBehaviour {
         if (Player.Instance.state == Player.State.Midair || Player.Instance.state == Player.State.OnRail) {
             TimeManager.Instance.StartAirTimeByTrick();
         }
+        
+        OnTypeChar?.Invoke(charIsCorrect);
     }
 
-    private void OnTypeWord(Word word) {
+    private void OnTypeWordCallback(Word word) {
+        if (GameManager.Instance.GameStopped) return;
+        
         // animate completed text
         TextMeshProUGUI completedText =
             Instantiate(completedTextPrefab, completedTextStartTransform.transform.parent, false)
@@ -80,7 +83,7 @@ public class TrickManager : MonoBehaviour {
 
             // if gains score
             if (trick.trickScore > 0) {
-                playerAnimator.SetTrigger("trick");
+                _playerAnimator.SetTrigger("trick"); // TODO: move to Player as callback
             }
 
             OnCompleteTrick?.Invoke(trick);

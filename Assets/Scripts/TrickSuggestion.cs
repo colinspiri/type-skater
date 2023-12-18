@@ -25,9 +25,6 @@ public class TrickSuggestion : MonoBehaviour
         }
 
         suggestedText = "";
-
-        // add callbacks
-        TrickManager.Instance.OnCompleteTrick += CountTrick;
     }
 
     public string SuggestTrick(Player.State state, List<Word> wordList = null) {
@@ -60,7 +57,7 @@ public class TrickSuggestion : MonoBehaviour
         return suggestedText;
     }
 
-    private void CountTrick(Trick trick) {
+    public void CountTrick(Trick trick) {
         // ignore tricks with no score
         if (trick.Text.Equals("push") || trick.Text.Equals("ollie") || trick.Text.Equals("grab") || trick.Text.Equals("drop")) return;
 
