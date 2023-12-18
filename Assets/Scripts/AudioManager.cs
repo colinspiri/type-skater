@@ -112,13 +112,11 @@ public class AudioManager : MonoBehaviour {
             };
         }
 
-        if (TrickManager.Instance != null) {
-            TrickManager.Instance.onCompleteTrick += word => {
-                if (word.Equals("push")) {
-                    push.Play();
-                }
-            };
-        }
+        if(TrickManager.Instance) TrickManager.Instance.OnCompleteTrick += trickWord => {
+            if (trickWord.Equals("push")) {
+                push.Play();
+            }
+        };
     }
 
     private void Update() {

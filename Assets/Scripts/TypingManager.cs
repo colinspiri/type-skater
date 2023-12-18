@@ -17,17 +17,12 @@ public class TypingManager : MonoBehaviour {
     // state
     private string _typedText;
     private int _correctLength;
-    private bool _typedAllCorrect => _correctLength == _typedText.Length;
-    private List<Word> _possibleWords = new List<Word>();
-    public List<Word> PossibleWords => _possibleWords;
-    
-    // callbacks
-    public delegate void OnCompleteWord(Word word);
-    public OnCompleteWord onCompleteWord;
+    private bool TypedAllCorrect => _correctLength == _typedText.Length;
+    public List<Word> PossibleWords { get; } = new List<Word>();
 
-    public UnityEvent onType;
-    public UnityEvent onTypeCorrect;
-    public UnityEvent onTypeWrong;
+    // callbacks
+    public static event Action<bool> OnTypeChar;
+    public static event Action<Word> OnTypeWord;
 
     private void Awake() {
         Instance = this;
@@ -68,7 +63,7 @@ public class TypingManager : MonoBehaviour {
         bool checkWords = false;
         if (Input.GetKeyDown(KeyCode.Backspace)) {
             if (_typedText.Length > 1) {
-                if (_typedAllCorrect) {
+                if (TypedAllCorrect) {
                     _correctLength--;
                     _typedText = _typedText.Substring(0, _typedText.Length - 1);
                 }
@@ -81,7 +76,7 @@ public class TypingManager : MonoBehaviour {
             else if (_typedText.Length == 1) {
                 _typedText = "";
                 _correctLength = 0;
-                _possibleWords.Clear();
+                PossibleWords.Clear();
             }
 
             // on backspace
@@ -103,7 +98,7 @@ public class TypingManager : MonoBehaviour {
     private void CheckForWords() {
         bool lastCharIsCorrect = false;
         Word wordCompleted = null;
-        _possibleWords.Clear();
+        PossibleWords.Clear();
         
         // loop through all available words and check if input text matches
         foreach (var word in _wordList) {
@@ -126,25 +121,19 @@ public class TypingManager : MonoBehaviour {
             
             if (correctLength > _correctLength) {
                 _correctLength = correctLength;
-                _possibleWords.Clear();
-                _possibleWords.Add(word);
+                PossibleWords.Clear();
+                PossibleWords.Add(word);
             }
             else if (correctLength == _correctLength) {
                 _correctLength = correctLength;
-                _possibleWords.Add(word);
+                PossibleWords.Add(word);
             }
         }
         
-        onType?.Invoke();
-        if (lastCharIsCorrect) {
-            onTypeCorrect?.Invoke();
-        }
-        else {
-            if(AudioManager.Instance) AudioManager.Instance.PlayTypingWrongSound();
-            onTypeWrong?.Invoke();
-        }
-        
-        if(wordCompleted) onCompleteWord?.Invoke(wordCompleted);
+        OnTypeChar?.Invoke(lastCharIsCorrect);
+        if(lastCharIsCorrect && AudioManager.Instance) AudioManager.Instance.PlayTypingWrongSound();
+
+        if(wordCompleted) OnTypeWord?.Invoke(wordCompleted);
     }
 
     private void UpdateDisplay() {
@@ -156,7 +145,7 @@ public class TypingManager : MonoBehaviour {
         displayText.text = "";
         // displayText.text += _correctLength + " ";
 
-        if (_typedAllCorrect) {
+        if (TypedAllCorrect) {
             displayText.text += _typedText;
         }
         else if(_correctLength > 0) {

@@ -55,7 +55,7 @@ public class Score : MonoBehaviour {
     private void Start() {
         scoreText.text = score.ToString();
 
-        TrickManager.Instance.onCompleteTrick += CountTrick;
+        TrickManager.Instance.OnCompleteTrick += CountTrick;
 
         Player.Instance.onJump += () => {
             // instantiate unsecured score

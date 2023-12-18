@@ -59,16 +59,7 @@ public class Instructions : MonoBehaviour {
             }
         }
 
-        // set finish conditions
-        TrickManager.Instance.onCompleteTrick += word => {
-            if(word.Text == "push") FinishInstruction("push");
-            if(word.Text == "ollie") FinishInstruction("ollie");
-            if(word.trickScore > 0) FinishInstruction("trick");
-            if(word.trickScore > 0 && Score.Instance.GetUnsecuredScore() > 0) FinishInstruction("multiple");
-            if(word.Text == "grab") FinishInstruction("grab");
-            if(word.Text == "drop") FinishInstruction("drop");
-            if(word.availableInStates.Contains(Player.State.OnRail)) FinishInstruction("rail_trick");
-        };
+        TrickManager.Instance.OnCompleteTrick += FinishInstruction;
     }
 
     // Update is called once per frame
@@ -94,6 +85,16 @@ public class Instructions : MonoBehaviour {
         else if(state == DisplayState.Active) {
             
         }
+    }
+
+    private void FinishInstruction(Trick trick) {
+        if(trick.Text == "push") FinishInstruction("push");
+        if(trick.Text == "ollie") FinishInstruction("ollie");
+        if(trick.trickScore > 0) FinishInstruction("trick");
+        if(trick.trickScore > 0 && Score.Instance.GetUnsecuredScore() > 0) FinishInstruction("multiple");
+        if(trick.Text == "grab") FinishInstruction("grab");
+        if(trick.Text == "drop") FinishInstruction("drop");
+        if(trick.availableInStates.Contains(Player.State.OnRail)) FinishInstruction("rail_trick");
     }
 
     private void RemoveCurrentInstruction() {

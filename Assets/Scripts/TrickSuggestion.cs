@@ -27,7 +27,7 @@ public class TrickSuggestion : MonoBehaviour
         suggestedText = "";
 
         // add callbacks
-        TrickManager.Instance.onCompleteTrick += CountTrick;
+        TrickManager.Instance.OnCompleteTrick += CountTrick;
     }
 
     public string SuggestTrick(Player.State state, List<Word> wordList = null) {

@@ -91,33 +91,33 @@ public class TutorialManager : MonoBehaviour {
         Player.Instance.onWipeOut += () => {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         };
-        TrickManager.Instance.onCompleteTrick += word => {
-            if (word.Equals("push")) {
+        TrickManager.Instance.OnCompleteTrick += trick => {
+            if (trick.Equals("push")) {
                 pushText.color = greyedOutColor;
                 ollieCanvas.SetActive(true);
                 if (higherOllieTutorialStatus == TutorialStatus.Triggered) {
                     higherOlliePushText.color = greyedOutColor;
                 }
             }
-            else if (word.Equals("ollie")) {
+            else if (trick.Equals("ollie")) {
                 ollieText.color = greyedOutColor;
                 if (higherOllieTutorialStatus == TutorialStatus.Triggered) {
                     higherOllieOllieText.color = greyedOutColor;
                 }
             }
-            else if (word.Equals("fakie") && fakieTutorialStatus == TutorialStatus.WaitingForInput) {
+            else if (trick.Equals("fakie") && fakieTutorialStatus == TutorialStatus.WaitingForInput) {
                 Time.timeScale = previousTimeScale;
                 fakieText.color = greyedOutColor;
                 fakieTutorialStatus = TutorialStatus.Done;
                 // spawn safe reminder
                 Instantiate(safeReminderPrefab, Player.Instance.transform.position, Quaternion.identity);
             }
-            else if (word.Equals("grab") && grabStatus == TutorialStatus.WaitingForInput) {
+            else if (trick.Equals("grab") && grabStatus == TutorialStatus.WaitingForInput) {
                 Time.timeScale = previousTimeScale;
                 grabText.color = greyedOutColor;
                 grabStatus = TutorialStatus.Done;
             }
-            else if (word.Equals("drop") && dropStatus == TutorialStatus.WaitingForInput) {
+            else if (trick.Equals("drop") && dropStatus == TutorialStatus.WaitingForInput) {
                 Time.timeScale = previousTimeScale;
                 dropText.color = greyedOutColor;
                 dropStatus = TutorialStatus.Done;
