@@ -1006,8 +1006,8 @@ MonoBehaviour:
   score: 0
   multiplierIncrement: 0.1
   maxStaleTricks: 10
-  minimumFontSize: 50
-  maximumFontSize: 150
+  minimumFontSize: 120
+  maximumFontSize: 360
   scoreIsUnsecured: 0
   unsecuredScorePrefab: {fileID: 6941402312752193843, guid: 1480cb9595c844fd899db7ac79448859, type: 3}
   unsecuredScoreLocation: {fileID: 6088278267917446627}
