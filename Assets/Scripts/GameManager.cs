@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start() {
-        Player.Instance.onWipeOut += GameOver;
+        Player.Instance.OnWipeOut += GameOver;
     }
 
     public void Pause(bool pauseAudio = true)

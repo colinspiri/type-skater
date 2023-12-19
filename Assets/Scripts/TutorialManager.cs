@@ -72,13 +72,13 @@ public class TutorialManager : MonoBehaviour {
         higherOllieCanvas.SetActive(false);
         trickList.gameObject.SetActive(false);
         
-        Player.Instance.onJump += () => {
+        Player.Instance.OnJump += () => {
             if(safeTutorialStatus == TutorialStatus.Incomplete) StartSafeTutorial();
             else if(fakieTutorialStatus == TutorialStatus.Incomplete) StartFakieTutorial();
             else if(grabStatus == TutorialStatus.Incomplete) StartGrabTutorial();
             else if(dropStatus == TutorialStatus.Incomplete) StartDropTutorial();
         };
-        Player.Instance.onSafeLanding += (float score) => {
+        Player.Instance.OnSafeLanding += (float score) => {
             safeTutorialStatus = TutorialStatus.Done;
             // higher ollie
             if (higherOllieTutorialStatus == TutorialStatus.Incomplete) {
@@ -88,7 +88,7 @@ public class TutorialManager : MonoBehaviour {
                 higherOllieTutorialStatus = TutorialStatus.Triggered;
             }
         };
-        Player.Instance.onWipeOut += () => {
+        Player.Instance.OnWipeOut += () => {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         };
         TrickManager.Instance.OnCompleteTrick += trick => {

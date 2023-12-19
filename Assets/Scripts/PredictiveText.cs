@@ -22,7 +22,7 @@ public class PredictiveText : MonoBehaviour
     void Start() {
         predictiveText.text = "";
         
-        Player.Instance.onStateChange += OnStateChange;
+        Player.Instance.OnStateChange += OnStateChange;
         TrickManager.Instance.OnTypeChar += OnTypeChar;
         TrickManager.Instance.OnCompleteTrick += trick => {
             TrickSuggestion.Instance.CountTrick(trick);

@@ -83,21 +83,21 @@ public class AudioManager : MonoBehaviour {
 
     private void AddCallbacks() {
         if (Player.Instance != null) {
-            Player.Instance.onJump += () => {
+            Player.Instance.OnJump += () => {
                 jump.Play();
             };
-            Player.Instance.onSafeLanding += score => {
+            Player.Instance.OnSafeLanding += score => {
                 safeLanding.Play();
                 digThis.Play();
             };
-            Player.Instance.onUnsafeLanding += () => {
+            Player.Instance.OnUnsafeLanding += () => {
                 skateboardFalling.Play();
             };
-            Player.Instance.onWipeOut += () => {
+            Player.Instance.OnWipeOut += () => {
                 recordScratch.Play();
                 skid.Play();
             };
-            Player.Instance.onStateChange += state => {
+            Player.Instance.OnStateChange += state => {
                 if (state == Player.State.OnRail) {
                     railland.Play();
                     railgrind.Play();

@@ -28,8 +28,8 @@ public class TrickManager : MonoBehaviour {
     private void Start() {
         _playerAnimator = Player.Instance.GetComponent<Animator>();
 
-        Player.Instance.onStateChange += _ => TypingManager.Instance.Clear();
-        Player.Instance.onStateChange += UpdateAvailableTricks;
+        Player.Instance.OnStateChange += _ => TypingManager.Instance.Clear();
+        Player.Instance.OnStateChange += UpdateAvailableTricks;
         UpdateAvailableTricks(Player.Instance.state);
     }
 

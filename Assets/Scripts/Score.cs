@@ -48,7 +48,7 @@ public class Score : MonoBehaviour {
 
         TrickManager.Instance.OnCompleteTrick += CountTrick;
 
-        Player.Instance.onJump += () => {
+        Player.Instance.OnJump += () => {
             // instantiate unsecured score
             GameObject unsecuredScoreObject = Instantiate(unsecuredScorePrefab, unsecuredScoreLocation.transform, false);
             unsecuredScoreText = unsecuredScoreObject.GetComponent<TextMeshProUGUI>();
@@ -60,10 +60,10 @@ public class Score : MonoBehaviour {
             multiplierText.color = Player.Instance.slowTrailColor;
             multiplierText.text = "x" + multiplier.ToString("F1");
         };
-        Player.Instance.onSafeLanding += s => {
+        Player.Instance.OnSafeLanding += s => {
             SecureScore();
         };
-        Player.Instance.onUnsafeLanding += () => {
+        Player.Instance.OnUnsafeLanding += () => {
             unsecuredScore = 0;
             scoreIsUnsecured = false;
             // destroy unsecured animator

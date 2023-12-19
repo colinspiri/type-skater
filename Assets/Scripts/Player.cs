@@ -41,20 +41,11 @@ public class Player : MonoBehaviour
     private bool _safe;
     
     // callbacks TODO - turn into Action events
-    public delegate void OnJump();
-    public OnJump onJump;
-
-    public delegate void OnUnsafeLanding();
-    public OnUnsafeLanding onUnsafeLanding;
-
-    public delegate void OnSafeLanding(float score);
-    public OnSafeLanding onSafeLanding;
-
-    public delegate void OnWipeOut();
-    public OnWipeOut onWipeOut;
-    
-    public delegate void OnStateChange(State newState);
-    public OnStateChange onStateChange;
+    public event Action OnJump;
+    public event Action OnUnsafeLanding;
+    public event Action<float> OnSafeLanding;
+    public event Action OnWipeOut;
+    public event Action<State> OnStateChange;
 
     // component stuff
     private Rigidbody2D rb;
@@ -71,7 +62,7 @@ public class Player : MonoBehaviour
         
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        onJump += () => transform.eulerAngles = new Vector3(0, 0, unsafeRotationZ);
+        OnJump += () => transform.eulerAngles = new Vector3(0, 0, unsafeRotationZ);
     }
 
     private void Start() {
@@ -85,7 +76,7 @@ public class Player : MonoBehaviour
     }
 
     private void Update() {
-        if (!GameManager.Instance.GameStopped) {
+        if (GameManager.Instance && !GameManager.Instance.GameStopped) {
             // safe
             if (state == State.OnGround || state == State.OnRamp) SetSafe(true);
             else {
@@ -150,7 +141,7 @@ public class Player : MonoBehaviour
             TimeManager.Instance.EndAirTime();
             SetSpeed(rampSpeed);
         }
-        onStateChange?.Invoke(state);
+        OnStateChange?.Invoke(state);
     }
 
     public float GetSpeed() {
@@ -193,7 +184,7 @@ public class Player : MonoBehaviour
         ChangeState(State.Midair);
         Skateboard.Instance.SetAnimation(Skateboard.Animation.Ollie);
 
-        if(newJump) onJump?.Invoke();
+        if(newJump) OnJump?.Invoke();
     }
 
     public void Grab() {
@@ -214,11 +205,11 @@ public class Player : MonoBehaviour
 
     private void SafeLanding() {
         SetSpeed(landingSpeed);
-        onSafeLanding?.Invoke(Score.Instance.GetUnsecuredScore());
+        OnSafeLanding?.Invoke(Score.Instance.GetUnsecuredScore());
     }
     private void UnsafeLanding() {
         WipeOut();
-        onUnsafeLanding?.Invoke();
+        OnUnsafeLanding?.Invoke();
     }
 
     public void WipeOut() {
@@ -231,7 +222,7 @@ public class Player : MonoBehaviour
         // particles?
         
         // callback
-        onWipeOut?.Invoke();
+        OnWipeOut?.Invoke();
     }
 
     private void OnCollisionEnter2D(Collision2D other)
