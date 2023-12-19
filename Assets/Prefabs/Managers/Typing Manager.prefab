@@ -43,14 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cfaf9a2d9554d5686df2a2415b6c1f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayText: {fileID: 0}
   defaultWordList: []
-  onType:
-    m_PersistentCalls:
-      m_Calls: []
-  onTypeCorrect:
-    m_PersistentCalls:
-      m_Calls: []
-  onTypeWrong:
-    m_PersistentCalls:
-      m_Calls: []
+  correctText: {fileID: 11400000, guid: 9a93ffbc6af01db4992734ceb4f8c493, type: 2}
+  wrongText: {fileID: 11400000, guid: 4faaccb62472d354083f16737b20a54a, type: 2}

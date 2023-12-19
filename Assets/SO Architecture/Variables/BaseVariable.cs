@@ -127,8 +127,7 @@ namespace ScriptableObjectArchitecture
         [SerializeField]
         private TEvent _event = default;
 
-        public override T SetValue(T value)
-        {
+        public override T SetValue(T value) { 
             T oldValue = _value;
             T newValue = base.SetValue(value);
 

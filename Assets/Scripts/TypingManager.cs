@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using ScriptableObjectArchitecture;
 using TMPro;
 using UnityEngine;
 
 public class TypingManager : MonoBehaviour {
     // components
     public static TypingManager Instance;
-    [SerializeField] private TextMeshProUGUI displayText;
     
     // input
     private List<Word> _wordList = new List<Word>();
@@ -15,11 +15,14 @@ public class TypingManager : MonoBehaviour {
 
     // state
     private bool _clearOnWrongChar;
-    private string _typedText;
-    public string TypedText => _typedText;
-    private int _correctLength;
-    private bool TypedAllCorrect => _correctLength == _typedText.Length;
+    public string TypedText { get; private set; }
+
+    private int CorrectLength { get; set; }
+
+    private bool TypedAllCorrect => CorrectLength == TypedText.Length;
     public List<Word> PossibleWords { get; } = new List<Word>();
+    public StringVariable correctText;
+    public StringVariable wrongText;
 
     // callbacks
     public static event Action<bool> OnTypeChar;
@@ -47,18 +50,18 @@ public class TypingManager : MonoBehaviour {
     }
 
     public bool CurrentlyTyping() {
-        return _typedText != "";
+        return TypedText != "";
     }
     
     public void Clear() {
-        _typedText = "";
-        _correctLength = 0;
+        TypedText = "";
+        CorrectLength = 0;
     }
 
     private void Update() {
         HandleInput();
 
-        if (displayText != null) {
+        if (correctText && wrongText) {
             UpdateDisplay();
         }
     }
@@ -70,22 +73,31 @@ public class TypingManager : MonoBehaviour {
         // backspace
         bool checkWords = false;
         if (Input.GetKeyDown(KeyCode.Backspace)) {
-            if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) 
-            || Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
-                Clear();
-            }
-            else if (_typedText.Length > 1) {
+            bool controlPressed = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)
+                                                                    || Input.GetKey(KeyCode.LeftShift) ||
+                                                                    Input.GetKey(KeyCode.RightShift);
+            if (TypedText.Length > 1) {
                 if (TypedAllCorrect) {
-                    _correctLength--;
-                    _typedText = _typedText.Substring(0, _typedText.Length - 1);
+                    if (controlPressed) {
+                        Clear();
+                    }
+                    else {
+                        CorrectLength--;
+                        TypedText = TypedText.Substring(0, TypedText.Length - 1);
+                    }
                 }
                 else {
-                    _typedText = _typedText.Substring(0, _correctLength);
+                    if (controlPressed) {
+                        TypedText = TypedText.Substring(0, CorrectLength);
+                    }
+                    else {
+                        TypedText = TypedText.Substring(0, TypedText.Length - 1);
+                    }
                 }
 
                 checkWords = true;
             }
-            else if (_typedText.Length == 1) {
+            else if (TypedText.Length == 1) {
                 Clear();
                 PossibleWords.Clear();
             }
@@ -98,7 +110,7 @@ public class TypingManager : MonoBehaviour {
         // new char typed
         else {
             char inputChar = input[0];
-            _typedText += inputChar;
+            TypedText += inputChar;
             checkWords = true;
         }
 
@@ -120,7 +132,7 @@ public class TypingManager : MonoBehaviour {
 
         if (_clearOnWrongChar && lastCharIsCorrect == false) {
             Clear();
-            _typedText += Input.inputString[0];
+            TypedText += Input.inputString[0];
             lastCharIsCorrect = UpdatePossibleWords(ref wordCompleted);
         }
         
@@ -132,7 +144,7 @@ public class TypingManager : MonoBehaviour {
         // loop through all available words and check if input text matches
         bool lastCharIsCorrect = false;
         foreach (var word in _wordList) {
-            if (word.Equals(_typedText)) {
+            if (word.Equals(TypedText)) {
                 word.Complete();
                 Clear();
 
@@ -140,53 +152,51 @@ public class TypingManager : MonoBehaviour {
                 return true;
             }
             
-            int correctLength = word.StartsWith(_typedText);
+            int correctLength = word.StartsWith(TypedText);
             
             if (correctLength == 0) continue;
             // contains wrong characters
-            if (correctLength < _typedText.Length) continue;
+            if (correctLength < TypedText.Length) continue;
 
             lastCharIsCorrect = true;
             
-            if (correctLength > _correctLength) {
-                _correctLength = correctLength;
+            if (correctLength > CorrectLength) {
+                CorrectLength = correctLength;
                 PossibleWords.Clear();
                 PossibleWords.Add(word);
             }
-            else if (correctLength == _correctLength) {
-                _correctLength = correctLength;
+            else if (correctLength == CorrectLength) {
+                CorrectLength = correctLength;
                 PossibleWords.Add(word);
             }
         }
         return lastCharIsCorrect;
     }
     private void UpdateDisplay() {
-        if (_typedText.Length == 0) {
-            displayText.text = "";
-            return;
-        }
+        //Debug.Log("UpdateDisplay()");
 
-        displayText.text = "";
-        // displayText.text += _correctLength + " ";
+        /*string correctString = "hel";
+        correctText.SetValue(correctString);
 
-        if (TypedAllCorrect) {
-            displayText.text += _typedText;
+        string wrongString = "lo";
+        wrongText.SetValue(wrongString);*/
+
+        if (TypedText.Length == 0) {
+            correctText.Value = "";
+            wrongText.Value = "";
         }
-        else if(_correctLength > 0) {
-            displayText.text += _typedText.Substring(0, _correctLength);
-            displayText.text += "<color=#EC7357>";
-            displayText.text += _typedText.Substring(_correctLength);
-            displayText.text += "</color>";
+        else if (TypedAllCorrect) {
+            correctText.Value = TypedText;
+            wrongText.Value = "";
+        }
+        else if(CorrectLength > 0) {
+            correctText.Value = TypedText.Substring(0, CorrectLength);
+            wrongText.Value = TypedText.Substring(CorrectLength);
         }
         else {
-            displayText.text += "<color=#EC7357>";
-            displayText.text += _typedText;
-            displayText.text += "</color>";
+            correctText.Value = "";
+            wrongText.Value = TypedText;
         }
-
-        /*foreach (var possibleWord in _possibleWords) {
-            displayText.text += "\n" + possibleWord;
-        }*/
     }
     
    

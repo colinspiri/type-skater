@@ -399,6 +399,14 @@ PrefabInstance:
       propertyPath: _previouslyRegisteredEvent
       value: 
       objectReference: {fileID: 11400000, guid: 35f17b25bb492a444b21158b4da5767f, type: 2}
+    - target: {fileID: 4708188542170443970, guid: de0d4f345ffa840be961759f454e2622, type: 3}
+      propertyPath: wrongText._variable
+      value: 
+      objectReference: {fileID: 11400000, guid: 4faaccb62472d354083f16737b20a54a, type: 2}
+    - target: {fileID: 4708188542170443970, guid: de0d4f345ffa840be961759f454e2622, type: 3}
+      propertyPath: wrongText._useConstant
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4958296026748983971, guid: de0d4f345ffa840be961759f454e2622, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
