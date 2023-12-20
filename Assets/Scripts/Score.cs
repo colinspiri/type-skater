@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using ScriptableObjectArchitecture;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,8 +14,7 @@ public class Score : MonoBehaviour {
     // score-keeping data
     [HideInInspector] public int score;
     private int unsecuredScore;
-    private float multiplier;
-    public float multiplierIncrement;
+    [SerializeField] private FloatReference currentMultiplier;
     private List<string> staleTricks = new List<string>();
     public int maxStaleTricks;
     
@@ -28,7 +28,6 @@ public class Score : MonoBehaviour {
     private TextMeshProUGUI unsecuredScoreText;
     private Animator unsecuredScoreAnimator;
     public GameObject unsecuredScoreLocation;
-    private TextMeshProUGUI multiplierText;
     
     // floating score
     public GameObject flyingScorePrefab;
@@ -54,11 +53,6 @@ public class Score : MonoBehaviour {
             unsecuredScoreText = unsecuredScoreObject.GetComponent<TextMeshProUGUI>();
             unsecuredScoreAnimator = unsecuredScoreObject.GetComponent<Animator>();
             scoreIsUnsecured = true;
-            multiplierText = unsecuredScoreObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-            // set multiplier based on player speed
-            multiplier = 1.0f;
-            multiplierText.color = Player.Instance.slowTrailColor;
-            multiplierText.text = "x" + multiplier.ToString("F1");
         };
         Player.Instance.OnSafeLanding += s => {
             SecureScore();
@@ -82,7 +76,6 @@ public class Score : MonoBehaviour {
         score += unsecuredScore;
         unsecuredScore = 0;
         scoreIsUnsecured = false;
-        multiplier = 1;
         scoreText.text = score.ToString();
         // animate score
         scoreText.fontSize = Mathf.Lerp(minimumFontSize, maximumFontSize, score / 400f);
@@ -107,7 +100,7 @@ public class Score : MonoBehaviour {
                 if (trick.Text == staleTrick) appearing++;
             }
             // calculate score
-            float roughScore = trick.trickScore * multiplier;
+            float roughScore = trick.trickScore * currentMultiplier.Value;
             float staleMultiplier = 0.6f;
             for (int i = 0; i < appearing; i++) {
                 var newRoughScore = roughScore * staleMultiplier;
@@ -152,15 +145,11 @@ public class Score : MonoBehaviour {
             unsecuredScore += addition;
             unsecuredScoreText.text = unsecuredScore.ToString();
 
-            multiplier += multiplierIncrement;
-            multiplierText.text = "x" + multiplier.ToString("F1");
-            
             AudioManager.Instance.PlayTrickSound();
             
             var flyingScoreText = Instantiate(flyingScorePrefab, unsecuredScoreText.transform, false)
                 .GetComponent<TextMeshProUGUI>();
             flyingScoreText.text = "+" + addition.ToString();
-            flyingScoreText.color = multiplierText.color;
         }
     }
 
