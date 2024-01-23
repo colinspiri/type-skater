@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectToFollow: {fileID: 0}
   followSpeed: 0.75
+  panSpeed: 5
+  panAcceleration: 2
 --- !u!1 &8784241559984216433
 GameObject:
   m_ObjectHideFlags: 0

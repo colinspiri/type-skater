@@ -557,8 +557,16 @@ PrefabInstance:
       value: PlayBackSound
       objectReference: {fileID: 0}
     - target: {fileID: 5782439873010710659, guid: d4794992ae706044aa4de96991204601, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782439873010710659, guid: d4794992ae706044aa4de96991204601, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782439873010710659, guid: d4794992ae706044aa4de96991204601, type: 3}
+      propertyPath: m_Navigation.m_WrapAround
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5782439873010710659, guid: d4794992ae706044aa4de96991204601, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -714,8 +722,16 @@ PrefabInstance:
       value: PlayBackSound
       objectReference: {fileID: 0}
     - target: {fileID: 5782439873010710659, guid: d4794992ae706044aa4de96991204601, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782439873010710659, guid: d4794992ae706044aa4de96991204601, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782439873010710659, guid: d4794992ae706044aa4de96991204601, type: 3}
+      propertyPath: m_Navigation.m_WrapAround
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5782439873010710659, guid: d4794992ae706044aa4de96991204601, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size

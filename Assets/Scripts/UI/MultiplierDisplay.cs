@@ -36,7 +36,7 @@ public class MultiplierDisplay : MonoBehaviour {
         _currentColorIndex = index;
         
         // if changed, animate
-        if (majorIncrease) {
+        if (majorIncrease && displayText != null) {
             displayText.DOKill();
             displayText.transform.DOScale(1.5f, 0.2f).OnComplete((() => {
                 displayText.transform.DOScale(1, 0.4f);

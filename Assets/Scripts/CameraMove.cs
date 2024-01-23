@@ -14,7 +14,8 @@ public class CameraMove : MonoBehaviour {
     private float levelStartX;
     private float levelEndX;
     private float panVelocity;
-    private float panAcceleration = 2f;
+    [SerializeField] private float panSpeed = 1f;
+    [SerializeField] private float panAcceleration = 2f;
 
     // Start is called before the first frame update
     void Start() {
@@ -33,14 +34,14 @@ public class CameraMove : MonoBehaviour {
         // panning over level
         if (panningOverLevel) {
             if (direction == -1) {
-                if (panVelocity > -followSpeed) {
+                if (panVelocity > -panSpeed) {
                     panVelocity -= panAcceleration * Time.unscaledDeltaTime;
                 }
                 transform.Translate(panVelocity * Time.unscaledDeltaTime, 0, 0);
                 if (transform.position.x < levelStartX) direction = 1;
             }
             else if (direction == 1) {
-                if (panVelocity < followSpeed) {
+                if (panVelocity < panSpeed) {
                     panVelocity += panAcceleration * Time.unscaledDeltaTime;
                 }
                 transform.Translate(panVelocity * Time.unscaledDeltaTime, 0, 0 );
